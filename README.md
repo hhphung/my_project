@@ -13,7 +13,7 @@ Description of the project
 
 
 ## Contributors 
-* Contributor 1(isu-id@iastate.edu)
+* wrwilloz@iastate.edu
 * Contributor 2(isu-id@iastate.edu)
 * ...
 
