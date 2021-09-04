@@ -1,8 +1,7 @@
-package com.example9.Project;
+package com.example9.springboot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootTest
 class ApplicationTests {
