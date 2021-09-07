@@ -22,8 +22,8 @@ public class MainActivity3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
         user= (EditText) findViewById(R.id.editTextTextPersonName2);
-        passWord1 = (EditText) findViewById(R.id.editTextTextPassword2);
-        passWord2 = (EditText) findViewById(R.id.editTextTextPassword3);
+        passWord1 = (EditText) findViewById(R.id.pass1);
+        passWord2 = (EditText) findViewById(R.id.pass2);
         signUp= (Button) findViewById(R.id.button5);
         error = (TextView) findViewById(R.id.error);
         store = new HashMap<String, String>();

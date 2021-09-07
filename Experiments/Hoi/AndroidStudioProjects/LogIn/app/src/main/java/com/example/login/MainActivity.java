@@ -50,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
     }
     private Map<String, String> store = MainActivity3.store;
     private void validate (String user, String password){
+            
 
 
-
-            if ((store.containsKey(user)) && store.containsValue(password)) {
+           else if ((store.containsKey(user)) && store.containsValue(password)) {
                 Intent intent = new Intent(MainActivity.this, MainActivity2.class);
                 startActivity(intent);
                 error.setVisibility(TextView.INVISIBLE);
