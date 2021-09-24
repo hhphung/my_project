@@ -1,6 +1,6 @@
 package com.example.apicalls.api;
 
-public interface LamdaInterface<T> {
+public interface LambdaInterface<T> {
 
     public void doSomething(T result);
 }

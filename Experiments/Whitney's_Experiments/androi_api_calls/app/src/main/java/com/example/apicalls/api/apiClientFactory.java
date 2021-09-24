@@ -19,8 +19,11 @@ public class apiClientFactory {
         return apiClientSeed;
     }
 
-    public static PostApi GetPostApi()
+    public static PostApi GetPostApi() { return GetApiClientSeed().create(PostApi.class); }
+
+    public static PhotoApi GetPhotoApi()
     {
-        return GetApiClientSeed().create(PostApi.class);
+        return GetApiClientSeed().create(PhotoApi.class);
     }
+
 }

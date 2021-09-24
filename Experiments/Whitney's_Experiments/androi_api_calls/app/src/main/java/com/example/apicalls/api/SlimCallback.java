@@ -8,16 +8,16 @@ import retrofit2.Response;
 
 public class SlimCallback<T> implements Callback<T> {
 
-    LamdaInterface<T> lambdaInterface;
+    LambdaInterface<T> lambdaInterface;
 
     String logTag;
 
-    public SlimCallback(LamdaInterface<T> lambdaInterface)
+    public SlimCallback(LambdaInterface<T> lambdaInterface)
     {
         this.lambdaInterface = lambdaInterface;
     }
 
-    public SlimCallback(LamdaInterface<T> l, String CustomTag){
+    public SlimCallback(LambdaInterface<T> l, String CustomTag){
         this.lambdaInterface = l;
         this.logTag = CustomTag;
     }
