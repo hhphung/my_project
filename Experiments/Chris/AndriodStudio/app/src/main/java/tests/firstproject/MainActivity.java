@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         buttonToCounter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(view.getContext(), Counter.class));
+                startActivity(new Intent(view.getContext(), ApiTests.class));
             }
         });
     }

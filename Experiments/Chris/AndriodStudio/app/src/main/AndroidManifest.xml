@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FirstProject">
         <activity
-            android:name=".Counter"
+            android:name=".ApiTests"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

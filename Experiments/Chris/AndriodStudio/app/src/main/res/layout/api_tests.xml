@@ -4,23 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Counter">
+    tools:context=".ApiTests">
 
     <TextView
-        android:id="@+id/counter_counterText"
-        android:layout_width="166dp"
-        android:layout_height="142dp"
-        android:text="0"
-        android:textSize="96sp"
+        android:id="@+id/api_response_TextView"
+        android:layout_width="336dp"
+        android:layout_height="139dp"
+        android:text="No Response"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.118" />
+        app:layout_constraintVertical_bias="0.108" />
 
     <Button
-        android:id="@+id/counter_increment"
+        android:id="@+id/api_call_api_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Increment"
@@ -28,11 +29,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.235"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/counter_counterText"
+        app:layout_constraintTop_toBottomOf="@+id/api_response_TextView"
         app:layout_constraintVertical_bias="0.099" />
 
     <Button
-        android:id="@+id/counter_backButton"
+        android:id="@+id/api_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="47dp"
@@ -40,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.356"
-        app:layout_constraintStart_toEndOf="@+id/counter_increment"
-        app:layout_constraintTop_toBottomOf="@+id/counter_counterText"
+        app:layout_constraintStart_toEndOf="@+id/api_call_api_button"
+        app:layout_constraintTop_toBottomOf="@+id/api_response_TextView"
         app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
