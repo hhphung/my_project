@@ -1,0 +1,10 @@
+/Users/austinrognes/Desktop/tutorials/springboot_example/src/main/java/onetomany/Users/User.java
+/Users/austinrognes/Desktop/tutorials/springboot_example/src/main/java/onetomany/Laptops/Laptop.java
+/Users/austinrognes/Desktop/tutorials/springboot_example/src/main/java/onetomany/Laptops/LaptopController.java
+/Users/austinrognes/Desktop/tutorials/springboot_example/src/main/java/onetomany/Phones/PhoneRepository.java
+/Users/austinrognes/Desktop/tutorials/springboot_example/src/main/java/onetomany/Laptops/LaptopRepository.java
+/Users/austinrognes/Desktop/tutorials/springboot_example/src/main/java/onetomany/Users/UserController.java
+/Users/austinrognes/Desktop/tutorials/springboot_example/src/main/java/onetomany/Users/UserRepository.java
+/Users/austinrognes/Desktop/tutorials/springboot_example/src/main/java/onetomany/Phones/Phone.java
+/Users/austinrognes/Desktop/tutorials/springboot_example/src/main/java/onetomany/Phones/PhoneController.java
+/Users/austinrognes/Desktop/tutorials/springboot_example/src/main/java/onetomany/Main.java
