@@ -1,9 +1,6 @@
 package MeetMe.Meeting;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Date;
 import coms309.MeetMe.Users.User;
@@ -20,11 +17,16 @@ public class Meeting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false, unique = true)
     private String name;
+    @Column(nullable = false,unique = true)
     private User host;
+    @Column(nullable = false)
     private String address;
+    @Column(nullable = false)
     private Date date;
-    private LocalTime time; //
+    @Column(nullable = false)
+    private LocalTime time;
 
     public int getId() {
         return id;

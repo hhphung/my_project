@@ -1,7 +1,7 @@
 package coms309.MeetMe.Users;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import coms309.MeetMe.Users.User;
 /**
  *
  * @author Vivek Bengre

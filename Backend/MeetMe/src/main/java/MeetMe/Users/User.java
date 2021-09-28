@@ -2,6 +2,8 @@ package coms309.MeetMe.Users;
 
 //import coms309.MeetMe.Users.User;
 
+import MeetMe.Users.Role;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,12 +19,21 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false, unique = true)
     private String name;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private Date joiningDate;
+    @Column(nullable = false)
     private Date lastSeen;
+    @Column(nullable = false)
     private String availability; // TODO: Create Availability/Schedule object to pass in
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     /*
      * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User), the cascade option tells springboot
@@ -42,11 +53,12 @@ public class User {
      // =============================== Constructors ================================== //
 
 
-    public User(String name, String password) {
+    public User(String name, String password,Role role) {
         this.name = name;
         this.password = password;
         this.joiningDate = new Date(System.currentTimeMillis());
         this.lastSeen = this.joiningDate;
+        this.role = role;
     }
 
     public User() {
@@ -84,5 +96,12 @@ public class User {
     public String getAvailability() { return availability; }
 
     public void setAvailability(String availability) { this.availability = availability; }
-    
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
