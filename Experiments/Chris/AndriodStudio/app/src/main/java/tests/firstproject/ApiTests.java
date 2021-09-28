@@ -1,5 +1,7 @@
 package tests.firstproject;
 
+import static tests.firstproject.api.ApiClientFactory.GetJsonObjectApi;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -16,6 +18,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 
+import tests.firstproject.api.SlimCallback;
+import tests.firstproject.model.JsonObject;
+
 public class ApiTests extends AppCompatActivity {
 
     @Override
@@ -31,37 +36,18 @@ public class ApiTests extends AppCompatActivity {
         backButton.setText("Back");
         TextView apiResponse = findViewById(R.id.api_response_TextView);
         apiResponse.setText("No Response Yet");
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://90f5d506-b47d-45fe-a176-b7061ac29f55.mock.pstmn.io")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        // Implement Interface via retrofit
-        JsonObjectApi apiClient = retrofit.create(JsonObjectApi.class);
 
         // Listen for the click of the callApiButton
         callApiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Enqueue the request to the server
-                apiClient.getJsonObject().enqueue(new Callback<JsonObject>() {
-
-                    //On a response, display the Object we received.
-                    @Override
-                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                        String toDisplay = "name: " + response.body().getName() +
-                                "\nNumber: " + response.body().getNumber().toString();
-
-                        apiResponse.setText(toDisplay);
-                    }
-
-                    //On a failure, notify user.
-                    @Override
-                    public void onFailure(Call<JsonObject> call, Throwable t) {
-                        //use to log our failures by using throw. (t)
-                        apiResponse.setText("Failed");
-                    }
-                });
+                GetJsonObjectApi().getJsonObject().enqueue(new SlimCallback<JsonObject>(response -> {
+                    String result = "Name: " + response.getName() +
+                            "\nNumber: " + response.getNumber();
+                    apiResponse.setText(result);
+                }));
             }
         });
 
@@ -75,39 +61,6 @@ public class ApiTests extends AppCompatActivity {
     }
 }
 
-//Interface for retrofit to use.
-interface JsonObjectApi {
-    @GET("/JsonObject")
-    Call<JsonObject> getJsonObject();
-}
 
-//Class to represent the object we received from the server. (Based on the postman JsonObject Whitney created)
-class JsonObject {
-    //The @SerializedName tag allows you to retrieve a tag from the body of the JSON response
-    //and call it something else in the program.
-    //If I un-comment line 90, I could rename line 91 to anything I want.
-
-    //@SerializedName("name")
-    private String name;
-
-    //@SerializedName("Number")
-    private Long Number;
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setNumber(Long number) {
-        Number = number;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public Long getNumber(){
-        return Number;
-    }
-}
 
 //{name: "Whitney", Number: 3123099166}
