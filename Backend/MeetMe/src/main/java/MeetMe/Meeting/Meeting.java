@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Date;
 import coms309.MeetMe.Users.User;
-
+import MeetMe.Location.Address;
 
 
 @Entity
@@ -22,7 +22,7 @@ public class Meeting {
     @Column(nullable = false,unique = true)
     private User host;
     @Column(nullable = false)
-    private String address;
+    private Address address;
     @Column(nullable = false)
     private Date date;
     @Column(nullable = false)
@@ -52,11 +52,11 @@ public class Meeting {
         this.host = host;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

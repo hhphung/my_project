@@ -36,7 +36,13 @@ public class MeetingController {
     }
 
 
-    @DeleteMapping(path = "delete/all")
+    @DeleteMapping(path ="meeting/delete/{name}")
+    List<Meeting> deleteByName(@RequestParam String name){
+        MeetingRepository.deleteByName(name);
+        return MeetingRepository.findAll();
+    }
+
+    @DeleteMapping(path = "meeting/delete/all")
     List<Meeting> deleteAllMeetings(){
         MeetingRepository.deleteAll();
         return MeetingRepository.findAll();
