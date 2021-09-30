@@ -1,7 +1,5 @@
 package com.example.meetme;
 
-import static com.example.meetme.api.apiClientFactory.GetUserApi;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,12 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.example.meetme.api.SlimCallback;
-import com.example.meetme.model.User;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(view.getContext(),WelcomePage.class));
+                startActivity(new Intent(view.getContext(), DashboardPage.class));
             }
         });
     }

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WelcomePage">
+    tools:context=".DashboardPage">
 
     <TextView
-        android:id="@+id/activity_welcome_text"
+        android:id="@+id/activity_dashboard_text"
         android:layout_width="231dp"
         android:layout_height="154dp"
         android:password="false"
