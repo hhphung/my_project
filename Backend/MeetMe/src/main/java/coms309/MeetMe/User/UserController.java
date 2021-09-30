@@ -1,7 +1,5 @@
-package coms309.MeetMe.Users;
+package coms309.MeetMe.User;
 
-import coms309.MeetMe.Users.User;
-import coms309.MeetMe.Users.UserController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +7,7 @@ import java.util.List;
 
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -17,17 +16,17 @@ public class UserController {
     private String success = "{\"message\":\"Success\"}";
     private String failure = "{\"message\":\"User not found\"}";
 
-    @GetMapping(path = "/users")
+    @GetMapping(value = "/", produces = "application/json")
     List<User> getAllUsers(){
         return userRepository.findAll();
     }
 
-    @GetMapping(path = "/users/{id}")
+    @GetMapping(value = "/{id}", produces = "application/json")
     User getUserById( @PathVariable int id){
         return userRepository.findById(id);
     }
 
-    @PostMapping(path = "/users")
+    @PostMapping(value = "/", produces = "application/json")
     String createUser(@RequestBody User user){
         if (user == null)
             return failure;

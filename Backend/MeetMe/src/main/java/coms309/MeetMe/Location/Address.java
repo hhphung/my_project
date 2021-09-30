@@ -1,13 +1,25 @@
-package MeetMe.Location;
+package coms309.MeetMe.Location;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Address {
-private double longtitubde;
-private double latitude;
-private String street;
-private String city;
-private String state;
-private String country;
-private int zipCode;
+    private double longtitubde;
+    private double latitude;
+    private String street;
+    private String city;
+    private String state;
+    private String country;
+    private int zipCode;
+
+    // TODO: decompile address variables (string will be formatted in some way)
+    public Address(String address) {
+        this.street = null;
+    }
+
+    public Address() {
+        this.street = null;
+    }
 
     public double getLongtitubde() {
         return longtitubde;
@@ -65,7 +77,7 @@ private int zipCode;
         this.zipCode = zipCode;
     }
 
-    public String getAdress(){
-        return street +", " + city + ", " + state +", " +country + " " +zipCode;
+    public String getAddress() {
+        return street + " " + city + ", " + state + " " + country + " " + zipCode;
     }
 }
