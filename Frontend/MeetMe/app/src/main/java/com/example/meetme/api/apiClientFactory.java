@@ -11,7 +11,7 @@ public class apiClientFactory {
 
         if (apiClientSeed == null) {
             apiClientSeed = new Retrofit.Builder()
-                    .baseUrl("https://90f5d506-b47d-45fe-a176-b7061ac29f55.mock.pstmn.io")
+                    .baseUrl("coms-309-017.cs.iastate.edu")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
