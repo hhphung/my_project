@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GetUserApi().createUser(new User(usernameInput.getText().toString(), passwordInput.getText().toString()))
+                GetUserApi().createUser(new User(usernameInput.getText().toString(), passwordInput.getText().toString()));
                 startActivity(new Intent(view.getContext(), DashboardPage.class));
             }
         });
