@@ -12,12 +12,12 @@ import android.widget.EditText;
 
 import com.example.meetme.model.User;
 
-public class MainActivity extends AppCompatActivity {
+public class RegisterPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_register);
 
         Button createAccountButton = findViewById(R.id.activity_main_btn_to_create_act);
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
