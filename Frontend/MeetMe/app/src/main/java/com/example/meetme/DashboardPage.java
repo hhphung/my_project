@@ -18,7 +18,8 @@ public class DashboardPage extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard_page);
         TextView welcomeText = findViewById(R.id.activity_dashboard_text);
 
-        GetUserApi().getUser().enqueue(new SlimCallback<User>(user ->{
+        //get user id and username
+        GetUserApi().getUser("username").enqueue(new SlimCallback<User>(user ->{
             welcomeText.setText("Welcome " + user.getUsername() + "!");
         }));
     }
