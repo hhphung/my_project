@@ -29,7 +29,7 @@ public class DashboardPage extends AppCompatActivity {
 
         goToCreateMeeting.setText("Create a meeting!");
         //get user id and username
-        GetUserApi().getUser(username).enqueue(new SlimCallback<User>(user ->{
+        GetUserApi().getUserByName(username).enqueue(new SlimCallback<User>(user ->{
             welcomeText.setText("Welcome " + user.getUsername() + "!");
         }));
 
