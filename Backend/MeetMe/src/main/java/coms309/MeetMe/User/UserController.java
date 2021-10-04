@@ -14,8 +14,6 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-
-
     private String success = "{\"message\":\"Success\"}";
     private String failure = "{\"message\":\"User not found\"}";
 
@@ -24,25 +22,37 @@ public class UserController {
         return userRepository.findAll();
     }
 
-
-    @GetMapping(value = "/{id}", produces = "application/json")
-    User getUserById( @PathVariable int id){
+    @GetMapping(value = "/id/{id}", produces = "application/json")
+    User getUserById( @PathVariable int id) {
         return userRepository.findById(id);
     }
 
+    @GetMapping(value = "/name/{name}", produces = "application/json")
+    User getUserByName( @PathVariable String name) {
+        return userRepository.findByName(name);
+    }
+
     @PostMapping(value = "/", produces = "application/json")
-    String createUser(@RequestBody User user){
+    String createUser(@RequestBody User user) {
         if (user == null)
             return failure;
+
+        User checkIfExists = userRepository.findByName(user.getName());
+
+        if (checkIfExists != null) 
+            return "{\"message\":\"Username taken\"}";
+
         userRepository.save(user);
         return success;
     }
 
     @PostMapping(path = "/user/login")
-    String loginUser(@PathVariable String userName,@PathVariable String passWord ){
+    String loginUser(@PathVariable String userName,@PathVariable String passWord ) {
         userRepository.findAll();
         return success;
     }
+
+    
 
 //    @PutMapping("/users/{id}")
 //    User updateUser(@PathVariable int id, @RequestBody User request){

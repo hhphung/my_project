@@ -1,7 +1,5 @@
 package coms309.MeetMe.Meeting;
 
-import coms309.MeetMe.Meeting.Meeting;
-import coms309. MeetMe.Meeting.MeetingRepository;
 import coms309.MeetMe.Message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,52 +7,57 @@ import coms309.MeetMe.User.User;
 import java.util.List;
 import java.util.Optional;
 
-
+@RestController
+@RequestMapping("/meeting")
 public class MeetingController {
 
     @Autowired
-     MeetingRepository MeetingRepository;
-
-    @Autowired
-    coms309.MeetMe.Meeting.MeetingService MeetingService;
+     MeetingRepository meetingRepository;
 
 
-
-    @GetMapping(path = "meeting/get/all")
-    public @ResponseBody List<Meeting> getAllMeeting(){
-        return MeetingService.getAllMeetings();
+    @GetMapping(value = "/get/all", produces = "application/json")
+    public @ResponseBody List<Meeting> getAllMeeting() {
+        return meetingRepository.findAll();
     }
 
-    @GetMapping(path = "/meeting/{id}")
-    Optional<Meeting> getUserById(@PathVariable long id){
-        return MeetingRepository.findById(id);
-    }
+    // @GetMapping(value = "/id/{id}", produces = "application/json")
+    // Meeting getMeetingById( @PathVariable int id) {
+    //     return meetingRepository.findById(id);
+    // }
 
+    // @GetMapping(value = "/name/{name}", produces = "application/json")
+    // Optional<Meeting> getUserByName(@PathVariable String name) {
+    //     return meetingRepository.findByName(name);
+    // }
 
-    @PutMapping(path  = "meeting/create")
-    public @ResponseBody Message createMeeting(@RequestBody Meeting meet){
-        return MeetingService.createMeeting(meet);
-    }
+    @PostMapping(value = "/", produces = "application/json")
+    String createMeeting(@RequestBody Meeting meeting) {
+        if (meeting == null)
+            return "{\"message\":\"Invalid request body\"}";
 
+        Meeting checkIfExists = meetingRepository.findByName(meeting.getName());
 
-    @PostMapping(path = "/meeting/{id}/admin")
-    public User findHost(@RequestBody Meeting meet){
-        return MeetingService.findHost(meet);
-    }
+        if (checkIfExists != null) 
+            return "{\"message\":\"Username taken\"}";
 
-    @PostMapping(path = "/meeting/{id}/address")
-    public String findAddress(@RequestBody Meeting meet){
-        return MeetingService.findAddress(meet);
-    }
-
-
-
-    @DeleteMapping(path = "delete/all")
-    public List<Meeting> deleteAllMeetings(){
-        MeetingRepository.deleteAll();
-        return MeetingRepository.findAll();
+            meetingRepository.save(meeting);
+        return "{\"message\":\"Success!\"}";
     }
 
 
+    // @PutMapping(path  = "meeting/create")
+    // public @ResponseBody Message createMeeting(@RequestBody Meeting meet){
+    //     return MeetingService.createMeeting(meet);
+    // }
 
+
+    // @PostMapping(path = "/meeting/{id}/admin")
+    // public User findHost(@RequestBody Meeting meet){
+    //     return MeetingService.findHost(meet);
+    // }
+
+    // @PostMapping(path = "/meeting/{id}/address")
+    // public String findAddress(@RequestBody Meeting meet){
+    //     return MeetingService.findAddress(meet);
+    // }
 }
