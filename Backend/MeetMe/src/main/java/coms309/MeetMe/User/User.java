@@ -1,52 +1,60 @@
-package coms309.MeetMe.Users;
-
-//import coms309.MeetMe.Users.User;
+package coms309.MeetMe.User;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import coms309.MeetMe.Meeting.Meeting;
+
 import java.util.Date;
 import java.util.List;
 
 @Entity
 public class User {
 
-    /* 
-     * The annotation @ID marks the field below as the primary key for the table created by springboot
-     * The @GeneratedValue generates a value if not already present, The strategy in this case is to start from 1 and increment for each table
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false, unique = true)
     private String name;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private Date joiningDate;
+    @Column(nullable = false)
     private Date lastSeen;
+    @Column(nullable = false)
     private String availability; // TODO: Create Availability/Schedule object to pass in
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    /*
-     * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User), the cascade option tells springboot
-     * to create the child entity if not present already (in this case it is laptop)
-     * @JoinColumn specifies the ownership of the key i.e. The User table will contain a foreign key from the laptop table and the column name will be laptop_id
-     */
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "laptop_id")
-//    private Laptop laptop;
+    @ManyToMany(mappedBy = "userParticipants")
+    // @JoinColumn(nullable = true)
+    @JsonIgnore
+    List<Meeting> meetingParticipation;
 
-     /*
-     * @OneToMany tells springboot that one instance of User can map to multiple instances of Phone OR one user row can map to multiple rows of the phone table 
-     */
-//    @OneToMany
-//    private List<Phone> phones;
+    @ManyToMany(mappedBy = "userRequests")
+    // @JoinColumn(nullable = true)
+    @JsonIgnore
+    List<Meeting> meetingRequests;
+
+    @ManyToMany(mappedBy = "userInvites")
+    // @JoinColumn(nullable = true)
+    @JsonIgnore
+    List<Meeting> meetingInvites;
 
      // =============================== Constructors ================================== //
 
 
-    public User(String name, String password) {
+    public User(String name, String password, Role role) {
         this.name = name;
         this.password = password;
         this.joiningDate = new Date(System.currentTimeMillis());
         this.lastSeen = this.joiningDate;
+        this.role = role;
     }
 
     public User() {
@@ -54,6 +62,7 @@ public class User {
         this.password = "password";
         this.joiningDate = new Date(System.currentTimeMillis());
         this.lastSeen = this.joiningDate;
+        this.role = Role.VIEWER;
     }
 
 
@@ -92,5 +101,12 @@ public class User {
     public String getAvailability() { return availability; }
 
     public void setAvailability(String availability) { this.availability = availability; }
-    
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
