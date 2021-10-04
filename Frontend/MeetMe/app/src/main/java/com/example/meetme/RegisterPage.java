@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.meetme.model.User;
 
@@ -22,15 +23,23 @@ public class RegisterPage extends AppCompatActivity {
         Button createAccountButton = findViewById(R.id.activity_main_btn_to_create_act);
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
         EditText passwordInput = findViewById(R.id.activity_main_password_input);
+        EditText secPasswordInput = findViewById(R.id.activity_main_password_input2);
+        TextView errTxt = findViewById(R.id.activity_register_err_msg);
 
         //use edit text to create user
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GetUserApi().createUser(new User(usernameInput.getText().toString(), passwordInput.getText().toString()));
-                Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
-                myIntent.putExtra("username",usernameInput.getText().toString());
-                startActivity(myIntent);
+                if(passwordInput.equals(secPasswordInput)) {
+                    GetUserApi().createUser(new User(usernameInput.getText().toString(), passwordInput.getText().toString()));
+                    Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
+                    myIntent.putExtra("username", usernameInput.getText().toString());
+                    startActivity(myIntent);
+                }
+                else
+                {
+                    errTxt.setText("Passwords do not match. Try again");
+                }
             }
         });
     }
