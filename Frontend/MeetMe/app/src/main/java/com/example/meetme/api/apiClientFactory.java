@@ -20,4 +20,5 @@ public class apiClientFactory {
 
     public static UserApi GetUserApi() { return GetApiClientSeed().create(UserApi.class); }
 
+    public static MeetingApi GetMeetingApi() { return GetApiClientSeed().create(MeetingApi.class);}
 }
