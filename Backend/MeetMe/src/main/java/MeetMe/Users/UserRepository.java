@@ -1,5 +1,5 @@
 package coms309.MeetMe.Users;
-
+import coms309.MeetMe.Users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findById(int id);
-    void deleteById(int id);
+    User findByEmailAndPassword(String email, String password);
+
 }

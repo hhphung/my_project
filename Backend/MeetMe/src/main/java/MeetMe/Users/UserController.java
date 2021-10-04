@@ -1,11 +1,11 @@
 package coms309.MeetMe.Users;
-
+;
 import coms309.MeetMe.Users.User;
-import coms309.MeetMe.Users.UserController;
+import coms309.MeetMe.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 
 @RestController
@@ -13,6 +13,8 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
+
+
 
     private String success = "{\"message\":\"Success\"}";
     private String failure = "{\"message\":\"User not found\"}";
@@ -23,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/users/{id}")
-    User getUserById( @PathVariable int id){
+    Optional<User> getUserById( @PathVariable long id){
         return userRepository.findById(id);
     }
 
@@ -32,6 +34,12 @@ public class UserController {
         if (user == null)
             return failure;
         userRepository.save(user);
+        return success;
+    }
+
+    @PostMapping(path = "/user/login")
+    String loginUser(@PathVariable String userName,@PathVariable String passWord ){
+        userRepository.findAll();
         return success;
     }
 

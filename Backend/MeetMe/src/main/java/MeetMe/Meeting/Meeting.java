@@ -1,30 +1,81 @@
 package MeetMe.Meeting;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Date;
 import coms309.MeetMe.Users.User;
-
-
-
+import coms309.MeetMe.Location.Address;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.*;
 @Entity
 public class Meeting {
 
-    /*
-     * The annotation @ID marks the field below as the primary key for the table created by springboot
-     * The @GeneratedValue generates a value if not already present, The strategy in this case is to start from 1 and increment for each table
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false, unique = true)
     private String name;
-    private User host;
-    private String address;
+
+    @Column(nullable = false)
+    private Address address;
+
+    @Column(nullable = false)
     private Date date;
-    private LocalTime time; //
+
+    @Column(nullable = false)
+    private LocalTime time;
+
+    @Enumerated(EnumType.STRING)
+    private Privacy privacy;
+
+    // An admin user may host many meetings, but this meeting has one admin
+    @ManyToOne
+    @JoinColumn(nullable = false, unique = true)
+    @JsonIgnore
+    private User admin;
+
+    // Users currently allowed in the meeting
+    @ManyToMany
+    // @JoinColumn(nullable = true)
+    @JsonIgnore
+    List<User> userParticipants;
+
+    // Users who requested to join the meeting but have not been accepted yet
+    @ManyToMany
+    // @JoinColumn(nullable = true)
+    @JsonIgnore
+    List<User> userRequests;
+
+    // Users who were invited to the meeting but have not accepted yet
+    @ManyToMany
+    // @JoinColumn(nullable = true)
+    @JsonIgnore
+    List<User> userInvites;
+
+
+    // =============================== Constructors ================================== //
+
+
+    public Meeting(User admin) {
+        this.admin = admin;
+        this.name = "anonymous";
+        this.address = null;
+        this.date = null;
+        this.time = null;
+        this.privacy = Privacy.HIDDEN;
+    }
+
+    public Meeting(User admin, String name, Address address, Date date, LocalTime time, Privacy privacy) {
+        this.admin = admin;
+        this.name = name;
+        this.address = address;
+        this.date = date;
+        this.time = time;
+        this.privacy = privacy;
+    }
+
+    // =============================== Getters and Setters for each field ================================== //
 
     public int getId() {
         return id;
@@ -42,19 +93,19 @@ public class Meeting {
         this.name = name;
     }
 
-    public User getHost() {
-        return host;
+    public User getAdmin() {
+        return admin;
     }
 
-    public void setHost(User host) {
-        this.host = host;
+    public void setAdmin(User admin) {
+        this.admin = admin;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
@@ -74,5 +125,7 @@ public class Meeting {
         this.time = time;
     }
 }
+
+
 
 
