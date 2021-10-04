@@ -4,10 +4,12 @@ public class Meeting {
     private String name;
     private String location;
     private String time;
+    private String description;
 
-    public Meeting(String name, String location, String time)
+    public Meeting(String name, String description, String location, String time)
     {
         this.location = location;
+        this.description = description;
         this.name = name;
         this.time = time;
     }
@@ -35,5 +37,13 @@ public class Meeting {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

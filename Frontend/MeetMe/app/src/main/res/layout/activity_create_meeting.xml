@@ -8,22 +8,11 @@
     tools:context=".CreateMeetingPage">
 
 
-    <Button
-        android:id="@+id/activity_createMeeting_backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="664dp"
-        android:insetBottom="6dp"
-        android:text="Back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="407dp"
-        android:layout_height="650dp"
+        android:layout_height="400dp"
+        android:clipChildren="true"
         android:scrollbarStyle="outsideInset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +77,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
-                android:id="@+id/activity_createMeeting_DescriptionTitle2"
+                android:id="@+id/activity_createMeeting_TimeTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -101,10 +90,10 @@
                 android:textColor="@color/black" />
 
             <EditText
-                android:id="@+id/activity_createMeeting_editTextTime"
+                android:id="@+id/activity_createMeeting_timeInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="300dp"
+                android:layout_marginBottom="0dp"
                 android:ems="10"
                 android:gravity="center_horizontal"
                 android:hint="12:00"
@@ -112,8 +101,58 @@
                 android:minHeight="48dp"
                 android:paddingTop="10dp" />
 
+            <TextView
+                android:id="@+id/activity_createMeeting_LocationTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="#0000916E"
+                android:fontFamily="sans-serif"
+                android:gravity="center_horizontal"
+                android:outlineProvider="none"
+                android:text="Location"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textColor="@color/black" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activity_createMeeting_LocationInput"
+                android:layout_width="match_parent"
+                android:layout_height="182dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="300dp"
+                android:gravity="start"
+                android:hint="Location..."
+                android:paddingTop="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/activity_createMeeting_createMeetingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="664dp"
+        android:insetBottom="6dp"
+        android:text="Create"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/activity_createMeeting_backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="664dp"
+        android:insetBottom="6dp"
+        android:text="Back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
