@@ -14,7 +14,7 @@ public interface UserApi {
     @GET("/user/{id}")
     Call<User> getUserById(@Path(value = "id") int id);
 
-    @GET("/user/{username}")
+    @GET("/user/name/{username}")
     Call<User> getUserByName(@Path(value = "username") String username);
 
     @POST("/user/")
