@@ -1,37 +1,56 @@
+<<<<<<< HEAD:Backend/MeetMe/src/main/java/MeetMe/Users/UserController.java
 package coms309.MeetMe.Users;
-
+;
 import coms309.MeetMe.Users.User;
-import coms309.MeetMe.Users.UserController;
+import coms309.MeetMe.Users.UserRepository;
+=======
+package coms309.MeetMe.User;
+
+>>>>>>> 75acccd7c929e221ce7262144de5e6c1d4cd4c71:Backend/MeetMe/src/main/java/coms309/MeetMe/User/UserController.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     UserRepository userRepository;
 
+
+
     private String success = "{\"message\":\"Success\"}";
     private String failure = "{\"message\":\"User not found\"}";
 
-    @GetMapping(path = "/users")
+    @GetMapping(value = "/", produces = "application/json")
     List<User> getAllUsers(){
         return userRepository.findAll();
     }
 
+<<<<<<< HEAD:Backend/MeetMe/src/main/java/MeetMe/Users/UserController.java
     @GetMapping(path = "/users/{id}")
+    Optional<User> getUserById( @PathVariable long id){
+=======
+    @GetMapping(value = "/{id}", produces = "application/json")
     User getUserById( @PathVariable int id){
+>>>>>>> 75acccd7c929e221ce7262144de5e6c1d4cd4c71:Backend/MeetMe/src/main/java/coms309/MeetMe/User/UserController.java
         return userRepository.findById(id);
     }
 
-    @PostMapping(path = "/users")
+    @PostMapping(value = "/", produces = "application/json")
     String createUser(@RequestBody User user){
         if (user == null)
             return failure;
         userRepository.save(user);
+        return success;
+    }
+
+    @PostMapping(path = "/user/login")
+    String loginUser(@PathVariable String userName,@PathVariable String passWord ){
+        userRepository.findAll();
         return success;
     }
 
