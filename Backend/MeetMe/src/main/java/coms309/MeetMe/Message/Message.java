@@ -1,4 +1,4 @@
-package MeetMe.Message;
+package coms309.MeetMe.Message;
 
 public class Message {
     private String message;

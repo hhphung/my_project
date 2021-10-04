@@ -1,11 +1,11 @@
-package MeetMe.Meeting;
+package coms309.MeetMe.Meeting;
 
-import MeetMe.Message.Message;
+import coms309.MeetMe.Meeting.Meeting;
+import coms309.MeetMe.Message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
-import coms309.MeetMe.Users.User;
-import coms309.MeetMe.Location.Address;
+import coms309.MeetMe.User.User;
+import coms309.MeetMe.Meeting.MeetingRepository;
 import java.util.List;
-import java.util.Optional;
 
 public class MeetingService {
     @Autowired
