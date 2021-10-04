@@ -10,7 +10,7 @@ import retrofit2.http.Path;
 
 public interface UserApi {
     @GET("/user/{id}")
-    Call<User> getUser(@Path("id")String username);
+    Call<User> getUser(@Path(value = "id") String username);
 
     @POST("/user/")
     Call<User> createUser(@Body User user);

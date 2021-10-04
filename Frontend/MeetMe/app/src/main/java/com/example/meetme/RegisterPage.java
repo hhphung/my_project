@@ -28,7 +28,9 @@ public class RegisterPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 GetUserApi().createUser(new User(usernameInput.getText().toString(), passwordInput.getText().toString()));
-                startActivity(new Intent(view.getContext(), DashboardPage.class));
+                Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
+                myIntent.putExtra("username",usernameInput.getText().toString());
+                startActivity(myIntent);
             }
         });
     }

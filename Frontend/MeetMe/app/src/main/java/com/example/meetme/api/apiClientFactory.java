@@ -11,7 +11,7 @@ public class apiClientFactory {
 
         if (apiClientSeed == null) {
             apiClientSeed = new Retrofit.Builder()
-                    .baseUrl("coms-309-017.cs.iastate.edu")
+                    .baseUrl("http://coms-309-017.cs.iastate.edu")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
