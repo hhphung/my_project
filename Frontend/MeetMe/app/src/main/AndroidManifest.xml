@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MeetMe" >
         <activity
-            android:name=".CreateMeetingActivity"
+            android:name=".CreateMeetingPage"
             android:exported="true" />
         <activity
             android:name=".DashboardPage"
