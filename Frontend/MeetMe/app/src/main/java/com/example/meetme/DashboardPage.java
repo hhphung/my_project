@@ -25,5 +25,4 @@ public class DashboardPage extends AppCompatActivity {
             welcomeText.setText("Welcome " + user.getUsername() + "!");
         }));
     }
-
 }
