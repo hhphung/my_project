@@ -1,12 +1,13 @@
 package coms309.MeetMe.Meeting;
 
+import coms309.MeetMe.Location.Location;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
-import coms309.MeetMe.Location.Address;
 import coms309.MeetMe.User.User;
 
 
@@ -21,10 +22,10 @@ public class Meeting {
     private String name;
 
     @Column(nullable = false)
-    private Address address;
+    private Location address;
 
     @Column(nullable = false)
-    private Date date;
+    private String date;
 
     @Column(nullable = false)
     private LocalTime time;
@@ -59,17 +60,34 @@ public class Meeting {
 
     // =============================== Constructors ================================== //
 
+    public Meeting() {
+        this.admin = new User();
+        this.name = "anonymous";
+        this.address = null;
+        this.date = "Monday";
+        this.time = null;
+        this.privacy = Privacy.HIDDEN;
+    }
 
     public Meeting(User admin) {
         this.admin = admin;
         this.name = "anonymous";
         this.address = null;
-        this.date = null;
+        this.date = "Monday";
         this.time = null;
         this.privacy = Privacy.HIDDEN;
     }
 
-    public Meeting(User admin, String name, Address address, Date date, LocalTime time, Privacy privacy) {
+    public Meeting(User admin, String name, String desc, LocalTime time, Location loc) {
+        this.admin = admin;
+        this.name = name;
+        this.address = loc;
+        this.date = "Monday";
+        this.time = time;
+        this.privacy = Privacy.HIDDEN;
+    }
+
+    public Meeting(User admin, String name, Location address, String date, LocalTime time, Privacy privacy) {
         this.admin = admin;
         this.name = name;
         this.address = address;
@@ -104,19 +122,19 @@ public class Meeting {
         this.admin = admin;
     }
 
-    public Address getAddress() {
+    public Location getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(Location address) {
         this.address = address;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

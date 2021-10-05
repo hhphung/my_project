@@ -3,7 +3,7 @@ package coms309.MeetMe.Location;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class Address {
+public class Location {
     private double longtitubde;
     private double latitude;
     private String street;
@@ -13,11 +13,11 @@ public class Address {
     private int zipCode;
 
     // TODO: decompile address variables (string will be formatted in some way)
-    public Address(String address) {
-        this.street = null;
+    public Location(String address) {
+        this.street = address;
     }
 
-    public Address() {
+    public Location() {
         this.street = null;
     }
 
