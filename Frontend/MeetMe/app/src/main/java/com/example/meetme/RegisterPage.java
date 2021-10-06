@@ -31,14 +31,14 @@ public class RegisterPage extends AppCompatActivity {
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // if(secPasswordInput.equals(passwordInput)) {
+                if(secPasswordInput.getText().toString().equals(passwordInput.getText().toString())) {
                     GetUserApi().createUser(new User(usernameInput.getText().toString(), passwordInput.getText().toString()));
                     Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
                     myIntent.putExtra("username", usernameInput.getText().toString());
                     startActivity(myIntent);
-              //  }else {
-                    //  errTxt.setText("Passwords do not match. Try again");
-              //  }
+               }else {
+                     errTxt.setText("Passwords do not match. Try again");
+               }
             }
         });
     }
