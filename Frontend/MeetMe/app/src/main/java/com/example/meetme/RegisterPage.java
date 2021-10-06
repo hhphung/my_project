@@ -28,22 +28,20 @@ public class RegisterPage extends AppCompatActivity {
         TextView errTxt = findViewById(R.id.activity_register_err_msg);
 
         //use edit text to create user
+        //will make passwords match later
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(true) {
+
+                if(secPasswordInput.getText().toString().equals(passwordInput.getText().toString())) {
                     User user = new User(usernameInput.getText().toString(), passwordInput.getText().toString());
-                    GetUserApi().createUser(user).enqueue(new SlimCallback<>(user1 ->{
-                        errTxt.setText("Sent: " + user.getName() + ". Received: " + user1.getResponse());
-                    }));
+                    GetUserApi().createUser(user).enqueue(new SlimCallback<>(user1 ->{}));
                     Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
                     myIntent.putExtra("username", usernameInput.getText().toString());
                     startActivity(myIntent);
-                }
-                else
-                {
-                    errTxt.setText("Passwords do not match. Try again");
-                }
+               }else {
+                     errTxt.setText("Passwords do not match. Try again");
+               }
             }
         });
 

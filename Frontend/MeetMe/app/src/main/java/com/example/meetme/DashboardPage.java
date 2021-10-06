@@ -36,7 +36,8 @@ public class DashboardPage extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
 
         goToCreateMeeting.setText("Create a meeting!");
-        //get user id and username
+
+        //get username and display it
         GetUserApi().getUserByName(username).enqueue(new SlimCallback<User>(user ->{
             welcomeText.setText("Welcome " + user.getName() + "!");
         }));
