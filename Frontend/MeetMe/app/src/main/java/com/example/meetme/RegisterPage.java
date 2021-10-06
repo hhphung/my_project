@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
 
 public class RegisterPage extends AppCompatActivity {
@@ -20,7 +21,7 @@ public class RegisterPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Button createAccountButton = findViewById(R.id.activity_main_btn_to_create_act);
+        Button createAccountButton = findViewById(R.id.activity_main_create_account_button);
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
         EditText passwordInput = findViewById(R.id.activity_main_password_input);
         EditText secPasswordInput = findViewById(R.id.activity_main_password_input2);
@@ -30,8 +31,11 @@ public class RegisterPage extends AppCompatActivity {
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(passwordInput.equals(secPasswordInput)) {
-                    GetUserApi().createUser(new User(usernameInput.getText().toString(), passwordInput.getText().toString()));
+                if(true) {
+                    User user = new User(usernameInput.getText().toString(), passwordInput.getText().toString());
+                    GetUserApi().createUser(user).enqueue(new SlimCallback<>(user1 ->{
+                        errTxt.setText("Sent: " + user.getName() + ". Received: " + user1.getResponse());
+                    }));
                     Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
                     myIntent.putExtra("username", usernameInput.getText().toString());
                     startActivity(myIntent);
@@ -42,6 +46,8 @@ public class RegisterPage extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
 

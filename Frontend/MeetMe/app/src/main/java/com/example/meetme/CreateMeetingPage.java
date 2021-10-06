@@ -42,16 +42,15 @@ public class CreateMeetingPage extends AppCompatActivity {
                 String mTime = meetingTime_textbox.getText().toString();
                 String mLocation = meetingLocation_textbox.getText().toString();
 
-                if (mTitle != "" && mDesc != "" && mTime != "" && mLocation != "") {
-                    GetMeetingApi().createMeeting(new Meeting(mTitle, mDesc, mLocation, mTime));
-                    finish();
-                }
+                //if (mTitle != "" && mDesc != "" && mTime != "" && mLocation != "") {
+                    GetMeetingApi().createMeeting(new Meeting(mTitle, "Bob", mDesc, mTime, mLocation));
+                /*}
                 else{
                     TextView errorMessage = new TextView(view.getContext());
                     errorMessage.setTextColor(0xFFFF0000);
                     errorMessage.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT));
                     errorMessage.setText("All fields are required");
-                }
+                }*/
             }
         });
     }

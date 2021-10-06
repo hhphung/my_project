@@ -2,16 +2,18 @@ package com.example.meetme.model;
 
 public class Meeting {
     private String name;
-    private String location;
+    private String loc;
     private String time;
-    private String description;
+    private String desc;
+    private String adminName;
 
-    public Meeting(String name, String description, String location, String time)
+    public Meeting(String name, String adminName, String desc, String time, String loc)
     {
-        this.location = location;
-        this.description = description;
+        this.loc = loc;
+        this.desc = desc;
         this.name = name;
         this.time = time;
+        this.adminName = adminName;
     }
 
 
@@ -23,12 +25,12 @@ public class Meeting {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getLoc() {
+        return loc;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLoc(String loc) {
+        this.loc = loc;
     }
 
     public String getTime() {
@@ -39,11 +41,19 @@ public class Meeting {
         this.time = time;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
     }
 }

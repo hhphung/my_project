@@ -26,10 +26,11 @@ public class SlimCallback<T> implements Callback<T> {
     public void onResponse(Call<T> call, Response<T> response) {
         if(response.isSuccessful())
         {
+            Log.d(logTag, "Successful Response: " + response.code() +   ", MSG: " + response.message() + ", Body: " + response.body());
             lambdaInterface.doSomething(response.body());
         }
         else{
-            Log.d(logTag, "Code: " + response.code() + "    Msg: " + response.message());
+            Log.d(logTag, "This is in SlimCallBack --> Code: " + response.code() + "    Msg: " + response.message());
         }
     }
 
