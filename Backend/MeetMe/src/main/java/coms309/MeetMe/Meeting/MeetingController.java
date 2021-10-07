@@ -77,8 +77,14 @@ public class MeetingController {
         Meeting meeting = meetingRepository.findByName(name);
         if (meeting == null)
             return Stringy.error("Name not found");
-            
-        meetingRepository.deleteById(meeting.getId());
+
+        meetingRepository.delete(meeting);
+        return Stringy.success();
+    }
+
+    @DeleteMapping(value = "/")
+    String deleteMeeting() {
+        meetingRepository.deleteAll();
         return Stringy.success();
     }
 }
