@@ -40,19 +40,19 @@ public class MeetingController {
     }
 
     @PostMapping(value = "/", produces = "application/json")
-    String createMeeting(@RequestBody MeetingParams tempMeeting) {
+    String createMeeting(@RequestBody MeetingParams meetingParams) {
 
         // Check parameters exist
-        if (!tempMeeting.isValid())
+        if (!meetingParams.isValid())
             return Stringy.error("Invalid request body");
 
         // Keep meeting name unique
-        Meeting checkIfExists = meetingRepository.findByName(tempMeeting.name);
+        Meeting checkIfExists = meetingRepository.findByName(meetingParams.name);
         if (checkIfExists != null) 
             return Stringy.error("Name already taken");
 
         // Find user associated with adminName
-        User findAdmin = userRepository.findByName(tempMeeting.adminName);
+        User findAdmin = userRepository.findByName(meetingParams.adminName);
 
         if (findAdmin == null) 
             return Stringy.error("Admin not found");
@@ -61,8 +61,24 @@ public class MeetingController {
             return Stringy.error("User is not an Admin");
 
         // Assemble location and meeting and save to database
-        Meeting meeting = new Meeting(findAdmin, tempMeeting.name, tempMeeting.desc, tempMeeting.dateTime, tempMeeting.loc);
+        Meeting meeting = new Meeting(findAdmin, meetingParams.name, meetingParams.desc, meetingParams.dateTime, meetingParams.loc);
         meetingRepository.save(meeting);
+        return Stringy.success();
+    }
+
+    @DeleteMapping(value = "/id/{id}")
+    String deleteMeeting(@PathVariable int id) {
+        meetingRepository.deleteById(id);
+        return Stringy.success();
+    }
+
+    @DeleteMapping(value = "/name/{name}")
+    String deleteMeeting(@PathVariable String name) {
+        Meeting meeting = meetingRepository.findByName(name);
+        if (meeting == null)
+            return Stringy.error("Name not found");
+            
+        meetingRepository.deleteById(meeting.getId());
         return Stringy.success();
     }
 }

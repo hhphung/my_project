@@ -21,13 +21,13 @@ public class Meeting {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column()
+    @Column(nullable = true)
     private String desc;
 
-    @Column()   // null == undecided
+    @Column(nullable = true)   // null == undecided
     private Location location;
 
-    @Column()   // null == undecided
+    @Column(nullable = true)   // null == undecided
     private LocalDateTime dateTime;
 
     @Enumerated(EnumType.STRING)

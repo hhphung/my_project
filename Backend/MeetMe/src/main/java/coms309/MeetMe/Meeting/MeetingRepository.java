@@ -12,6 +12,8 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long> {
     @Query(value = "SELECT * from meeting WHERE name=?1", nativeQuery = true)
     Meeting findByName (String name);
 
+    void deleteById(int id);
+
     // Meeting findMeetingbyLocation (String name);
     // User findHost (Meeting meet);
     // String findAddress(Meeting Meet);
