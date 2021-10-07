@@ -4,29 +4,32 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Location {
-    private double longtitubde;
+    private double longitude;
     private double latitude;
     private String street;
     private String city;
     private String state;
     private String country;
-    private int zipCode;
+    private int zipcode;
 
-    // TODO: decompile address variables (string will be formatted in some way)
-    public Location(String address) {
-        this.street = address;
+    public Location(String street, String city, String state, int zipcode, String country) {
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zipcode = zipcode;
+        this.country = country;
     }
 
     public Location() {
         this.street = null;
     }
 
-    public double getLongtitubde() {
-        return longtitubde;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setLongtitubde(double longtitubde) {
-        this.longtitubde = longtitubde;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public double getLatitude() {
@@ -70,14 +73,14 @@ public class Location {
     }
 
     public int getZipCode() {
-        return zipCode;
+        return zipcode;
     }
 
-    public void setZipCode(int zipCode) {
-        this.zipCode = zipCode;
+    public void setZipCode(int zipcode) {
+        this.zipcode = zipcode;
     }
 
     public String getAddress() {
-        return street + " " + city + ", " + state + " " + country + " " + zipCode;
+        return street + " " + city + ", " + state + " " + country + " " + zipcode;
     }
 }

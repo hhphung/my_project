@@ -5,6 +5,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import coms309.MeetMe.Meeting.Meeting;
+import coms309.MeetMe.Stringy.Stringy;
 
 import java.util.Date;
 import java.util.List;
@@ -32,17 +33,14 @@ public class User {
     private Role role;
 
     @ManyToMany(mappedBy = "userParticipants")
-    // @JoinColumn(nullable = true)
     @JsonIgnore
     List<Meeting> meetingParticipation;
 
     @ManyToMany(mappedBy = "userRequests")
-    // @JoinColumn(nullable = true)
     @JsonIgnore
     List<Meeting> meetingRequests;
 
     @ManyToMany(mappedBy = "userInvites")
-    // @JoinColumn(nullable = true)
     @JsonIgnore
     List<Meeting> meetingInvites;
 
@@ -70,40 +68,13 @@ public class User {
     }
 
     public User() {
-        this.name = getAlphaNumericString(10);
+        this.name = Stringy.getRandom(10);
         this.password = "password";
         this.email = "@";
         this.joiningDate = new Date(System.currentTimeMillis());
         this.lastSeen = this.joiningDate;
         this.role = Role.VIEWER;
         this.availability = "Never free";
-    }
-
-    // https://www.geeksforgeeks.org/generate-random-string-of-given-size-in-java/
-    private String getAlphaNumericString(int n) {
-  
-        // chose a Character random from this String
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                    + "0123456789"
-                                    + "abcdefghijklmnopqrstuvxyz";
-  
-        // create StringBuffer size of AlphaNumericString
-        StringBuilder sb = new StringBuilder(n);
-  
-        for (int i = 0; i < n; i++) {
-  
-            // generate a random number between
-            // 0 to AlphaNumericString variable length
-            int index
-                = (int)(AlphaNumericString.length()
-                        * Math.random());
-  
-            // add Character one by one in end of sb
-            sb.append(AlphaNumericString
-                          .charAt(index));
-        }
-  
-        return sb.toString();
     }
 
 

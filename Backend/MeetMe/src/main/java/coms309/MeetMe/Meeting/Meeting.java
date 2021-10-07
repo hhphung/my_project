@@ -1,11 +1,11 @@
 package coms309.MeetMe.Meeting;
 
 import coms309.MeetMe.Location.Location;
+import coms309.MeetMe.Stringy.Stringy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
-import java.time.LocalTime;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import coms309.MeetMe.User.User;
@@ -21,14 +21,14 @@ public class Meeting {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false)
-    private Location address;
+    @Column()
+    private String desc;
 
-    @Column(nullable = false)
-    private String date;
+    @Column()   // null == undecided
+    private Location location;
 
-    @Column(nullable = false)
-    private LocalTime time;
+    @Column()   // null == undecided
+    private LocalDateTime dateTime;
 
     @Enumerated(EnumType.STRING)
     private Privacy privacy;
@@ -60,39 +60,35 @@ public class Meeting {
 
     // =============================== Constructors ================================== //
 
+    // Should only be used for testing purposes
+    // Creates a new random user to be admin for this meeting
     public Meeting() {
         this.admin = new User();
-        this.name = "anonymous";
-        this.address = null;
-        this.date = "Monday";
-        this.time = null;
+        this.name = Stringy.getRandom(10);
         this.privacy = Privacy.HIDDEN;
     }
 
     public Meeting(User admin) {
         this.admin = admin;
-        this.name = "anonymous";
-        this.address = null;
-        this.date = "Monday";
-        this.time = null;
+        this.name = Stringy.getRandom(10);
         this.privacy = Privacy.HIDDEN;
     }
 
-    public Meeting(User admin, String name, String desc, LocalTime time, Location loc) {
+    public Meeting(User admin, String name, String desc, LocalDateTime dateTime, Location location) {
         this.admin = admin;
         this.name = name;
-        this.address = loc;
-        this.date = "Monday";
-        this.time = time;
+        this.desc = desc;
+        this.location = location;
+        this.dateTime = dateTime;
         this.privacy = Privacy.HIDDEN;
     }
 
-    public Meeting(User admin, String name, Location address, String date, LocalTime time, Privacy privacy) {
+    public Meeting(User admin, String name, String desc, Location location, LocalDateTime dateTime, Privacy privacy) {
         this.admin = admin;
         this.name = name;
-        this.address = address;
-        this.date = date;
-        this.time = time;
+        this.desc = desc;
+        this.location = location;
+        this.dateTime = dateTime;
         this.privacy = privacy;
     }
 
@@ -100,10 +96,6 @@ public class Meeting {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -122,28 +114,20 @@ public class Meeting {
         this.admin = admin;
     }
 
-    public Location getAddress() {
-        return address;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setAddress(Location address) {
-        this.address = address;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
-    public String getDate() {
-        return date;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 }
 
