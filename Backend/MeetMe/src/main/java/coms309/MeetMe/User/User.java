@@ -32,6 +32,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "admin")
+    @JsonIgnore
+    List<Meeting> meetingAdmin;
+
     @ManyToMany(mappedBy = "userParticipants")
     @JsonIgnore
     List<Meeting> meetingParticipation;

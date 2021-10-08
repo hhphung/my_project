@@ -34,7 +34,7 @@ public class Meeting {
 
     // An admin user may host many meetings, but this meeting has one admin
     @ManyToOne
-    @JoinColumn(nullable = false, unique = true)
+    @JoinColumn(nullable = false)
     @JsonIgnore
     private User admin;
 
