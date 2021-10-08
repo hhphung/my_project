@@ -31,6 +31,13 @@ public class DashboardPage extends AppCompatActivity {
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
         Button goToCreateMeeting = findViewById(R.id.activity_dashboard_goToCreateMeeting);
         TextView meetingsList = findViewById(R.id.activity_dashboard_meetingList);
+        meetingsList.setGravity(View.TEXT_ALIGNMENT_CENTER);
+        GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings1->
+        {
+            for (Meeting m : meetings1){
+                meetingsList.append(m.getName() + "\n");
+            }
+        }));
 
 
         username = getIntent().getStringExtra("username");
