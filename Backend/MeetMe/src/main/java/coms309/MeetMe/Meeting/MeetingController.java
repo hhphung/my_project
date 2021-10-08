@@ -11,7 +11,6 @@ import coms309.MeetMe.User.User;
 import coms309.MeetMe.User.UserRepository;
 
 import java.util.List;
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/meeting")
@@ -78,7 +77,7 @@ public class MeetingController {
         if (meeting == null)
             return Stringy.error("Name not found");
 
-        meetingRepository.delete(meeting);
+        meetingRepository.deleteById(meeting.getId());
         return Stringy.success();
     }
 
@@ -96,12 +95,15 @@ public class MeetingController {
  */
 class MeetingParams {
 
-    public String name, adminName, desc;
-    public LocalDateTime dateTime;
+    public String name, adminName, desc, dateTime;
     public Location loc;
 
     MeetingParams(String name, String adminName) {
-        
+        this.name = name;
+        this.adminName = adminName;
+        this.desc = "";
+        this.dateTime = "";
+        this.loc = new Location();
     }
     
     MeetingParams(String name, String adminName, String desc, String dateTime, String street, String city, String state, int zipcode, String country) {
@@ -114,7 +116,7 @@ class MeetingParams {
         this.name = name;
         this.adminName = adminName;
         this.desc = desc;
-        this.dateTime = LocalDateTime.parse(dateTime);
+        this.dateTime = dateTime;
         this.loc = new Location(street, city, state, zipcode, country);
     }
 

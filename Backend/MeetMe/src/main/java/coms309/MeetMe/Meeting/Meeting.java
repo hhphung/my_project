@@ -5,7 +5,6 @@ import coms309.MeetMe.Stringy.Stringy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import coms309.MeetMe.User.User;
@@ -22,13 +21,13 @@ public class Meeting {
     private String name;
 
     @Column(nullable = true)
-    private String desc;
+    private String description;
 
     @Column(nullable = true)   // null == undecided
     private Location location;
 
     @Column(nullable = true)   // null == undecided
-    private LocalDateTime dateTime;
+    private String dateTime;
 
     @Enumerated(EnumType.STRING)
     private Privacy privacy;
@@ -74,19 +73,19 @@ public class Meeting {
         this.privacy = Privacy.HIDDEN;
     }
 
-    public Meeting(User admin, String name, String desc, LocalDateTime dateTime, Location location) {
+    public Meeting(User admin, String name, String desc, String dateTime, Location location) {
         this.admin = admin;
         this.name = name;
-        this.desc = desc;
+        this.description = desc;
         this.location = location;
         this.dateTime = dateTime;
         this.privacy = Privacy.HIDDEN;
     }
 
-    public Meeting(User admin, String name, String desc, Location location, LocalDateTime dateTime, Privacy privacy) {
+    public Meeting(User admin, String name, String desc, Location location, String dateTime, Privacy privacy) {
         this.admin = admin;
         this.name = name;
-        this.desc = desc;
+        this.description = desc;
         this.location = location;
         this.dateTime = dateTime;
         this.privacy = privacy;
@@ -122,11 +121,11 @@ public class Meeting {
         this.location = location;
     }
 
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 }
