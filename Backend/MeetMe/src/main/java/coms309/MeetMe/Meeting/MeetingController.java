@@ -98,15 +98,15 @@ class MeetingParams {
     public String name, adminName, desc, dateTime;
     public Location loc;
 
-    MeetingParams(String name, String adminName) {
-        this.name = name;
-        this.adminName = adminName;
-        this.desc = "";
-        this.dateTime = "";
-        this.loc = new Location();
-    }
+    // MeetingParams(String name, String adminName) {
+    //     this.name = name;
+    //     this.adminName = adminName;
+    //     this.desc = "";
+    //     this.dateTime = "";
+    //     this.loc = new Location();
+    // }
     
-    MeetingParams(String name, String adminName, String desc, String dateTime, String street, String city, String state, int zipcode, String country) {
+    public MeetingParams(String name, String adminName, String desc, String dateTime, String street, String city, String state, int zipcode, String country) {
         System.out.println("Meeting created: \n name:" + name + 
                             "\n adminName: " + adminName + 
                             "\n desc:" + desc + 

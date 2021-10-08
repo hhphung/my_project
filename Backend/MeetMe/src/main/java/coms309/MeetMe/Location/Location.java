@@ -21,7 +21,11 @@ public class Location {
     }
 
     public Location() {
-        this.street = null;
+        this.street = "";
+        this.city = "";
+        this.state = "";
+        this.zipcode = 0;
+        this.country = "";
     }
 
     public double getLongitude() {
