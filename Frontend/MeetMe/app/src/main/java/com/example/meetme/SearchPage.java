@@ -25,6 +25,7 @@ public class SearchPage extends AppCompatActivity {
         TextView meetingResults = findViewById(R.id.activity_search_meeting_display);
         EditText meetingInput = findViewById(R.id.activity_search_meeting_name_input);
         Button backButton = findViewById(R.id.activity_search_btn_to_dash);
+        Button searchButton = findViewById(R.id.activity_search_btn_to_search);
 
 
         meetingResults.setMovementMethod(new ScrollingMovementMethod());
@@ -32,10 +33,16 @@ public class SearchPage extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(view.getContext(), DashboardPage.class));
             }
         });
 
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+            }
+        });
 
 
 
