@@ -32,6 +32,17 @@ public class UserController {
         return userRepository.findByName(name);
     }
 
+    @PostMapping(value = "/{name}/availability", produces = "application/json")
+    User setAvailability(@PathVariable String name, @RequestBody List<availability> list){
+
+        for(int i = 0; i < list.size(); i++){
+            int index = list.get(i).setIndex();
+            userRepository.findByName(name).getAvailability()[index] = true;
+        }
+        return userRepository.findByName(name);
+    }
+
+
     @PostMapping(value = "/", produces = "application/json")
     String createUser(@RequestBody User user) {
         if (user == null)
