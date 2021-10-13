@@ -33,13 +33,11 @@ public class UserController {
     }
 
     @PostMapping(value = "/{name}/availability", produces = "application/json")
-    User setAvailability(@PathVariable String name, @RequestBody List<availability> list){
-
-        for(int i = 0; i < list.size(); i++){
-            int index = list.get(i).setIndex();
-            userRepository.findByName(name).getAvailability()[index] = true;
-        }
-        return userRepository.findByName(name);
+    String setAvailability(@PathVariable String name, @RequestBody boolean [] availability ){
+        User temp =  userRepository.findByName(name);
+        temp.setAvailability(availability);
+        userRepository.save(temp);
+        return success;
     }
 
 
@@ -57,9 +55,12 @@ public class UserController {
         return success;
     }
 
-    @PostMapping(path = "/user/login")
+    @GetMapping(path = "/user/login")
     String loginUser(@PathVariable String userName,@PathVariable String passWord ) {
-        userRepository.findAll();
+        User temp = userRepository.findByName(userName);
+        if(!temp.getPassword().equals(passWord)){
+            return failure;
+        }
         return success;
     }
 
