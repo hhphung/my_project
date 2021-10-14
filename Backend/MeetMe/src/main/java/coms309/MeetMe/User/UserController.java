@@ -55,10 +55,10 @@ public class UserController {
         return success;
     }
 
-    @GetMapping(path = "/user/login")
-    String loginUser(@PathVariable String userName,@PathVariable String passWord ) {
-        User temp = userRepository.findByName(userName);
-        if(!temp.getPassword().equals(passWord)){
+    @GetMapping(path = "/{name}/{password}/login")
+    String loginUser(@PathVariable String name,@PathVariable String password ) {
+        User temp = userRepository.findByName(name);
+        if(!temp.getPassword().equals(password)){
             return failure;
         }
         return success;
