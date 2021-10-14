@@ -15,6 +15,7 @@ public class Meeting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private int id;
 
     @Column(nullable = false, unique = true)

@@ -1,9 +1,14 @@
 
 package coms309.MeetMe.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import java.util.*;
 
 
@@ -58,8 +63,8 @@ public class UserController {
         return success;
     }
 
-    @GetMapping(path = "/{name}/{password}/login", produces = "application/json")
-    String loginUser(@PathVariable String name,@PathVariable String password ) {
+    @GetMapping(path = "/login", produces = "application/json")
+    String loginUser(@RequestParam String name,@RequestParam String password ) {
         User temp = userRepository.findByName(name);
         if(temp != null) {
             if (temp.getPassword().equals(password)) {
@@ -69,7 +74,19 @@ public class UserController {
         return failure;
     }
 
-    
+    @PostMapping("/addFriend")
+    public Set<User> addFriend(@RequestParam String name, @RequestParam String fName) {
+        User user = userRepository.findByName(name);
+        User friend = userRepository.findByName(fName);
+        if(user != null && friend != null) {
+            user .getFriends().add(friend);
+            friend.getFriends().add(user );
+           userRepository.save(user );
+            userRepository.save(friend);
+        }
+        return user .getFriends();
+    }
+
 
 //    @PutMapping("/users/{id}")
 //    User updateUser(@PathVariable int id, @RequestBody User request){
