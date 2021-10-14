@@ -58,7 +58,7 @@ public class UserController {
         return success;
     }
 
-    @GetMapping(path = "/{name}/{password}/login")
+    @GetMapping(path = "/{name}/{password}/login", produces = "application/json")
     String loginUser(@PathVariable String name,@PathVariable String password ) {
         User temp = userRepository.findByName(name);
         if(temp != null) {
