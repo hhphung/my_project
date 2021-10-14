@@ -28,7 +28,7 @@ public class User {
     @Column(nullable = false)
     private Date lastSeen;
     @Column(nullable = false)
-    private String availability; // TODO: Create Availability/Schedule object to pass in
+    private boolean [] availability = new boolean[168]; // TODO: Create Availability/Schedule object to pass in
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -58,7 +58,7 @@ public class User {
         this.joiningDate = new Date(System.currentTimeMillis());
         this.lastSeen = this.joiningDate;
         this.role = role;
-        this.availability = "Never free";
+
     }
 
     public User(String name, String password) {
@@ -68,7 +68,7 @@ public class User {
         this.joiningDate = new Date(System.currentTimeMillis());
         this.lastSeen = this.joiningDate;
         this.role = Role.VIEWER;
-        this.availability = "Never free";
+
     }
 
     public User() {
@@ -78,7 +78,7 @@ public class User {
         this.joiningDate = new Date(System.currentTimeMillis());
         this.lastSeen = this.joiningDate;
         this.role = Role.VIEWER;
-        this.availability = "Never free";
+
     }
 
 
@@ -114,14 +114,17 @@ public class User {
         return joiningDate;
     }
 
-    public String getAvailability() { return availability; }
+    public boolean[] getAvailability() {
+        return availability;
+    }
 
-    public void setAvailability(String availability) { this.availability = availability; }
+    public void setAvailability(boolean[] availability) {
+        this.availability = availability;
+    }
 
     public Role getRole() {
         return role;
     }
-
     public void setRole(Role role) {
         this.role = role;
     }

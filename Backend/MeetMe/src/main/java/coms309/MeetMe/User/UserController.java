@@ -32,6 +32,15 @@ public class UserController {
         return userRepository.findByName(name);
     }
 
+    @PostMapping(value = "/{name}/availability", produces = "application/json")
+    String setAvailability(@PathVariable String name, @RequestBody boolean [] availability ){
+        User temp =  userRepository.findByName(name);
+        temp.setAvailability(availability);
+        userRepository.save(temp);
+        return success;
+    }
+
+
     @PostMapping(value = "/", produces = "application/json")
     String createUser(@RequestBody User user) {
         if (user == null)
@@ -46,9 +55,12 @@ public class UserController {
         return success;
     }
 
-    @PostMapping(path = "/user/login")
-    String loginUser(@PathVariable String userName,@PathVariable String passWord ) {
-        userRepository.findAll();
+    @GetMapping(path = "/{name}/{password}/login")
+    String loginUser(@PathVariable String name,@PathVariable String password ) {
+        User temp = userRepository.findByName(name);
+        if(!temp.getPassword().equals(password)){
+            return failure;
+        }
         return success;
     }
 
