@@ -33,6 +33,13 @@ public class DashboardPage extends AppCompatActivity {
         TextView meetingsList = findViewById(R.id.activity_dashboard_meetingList);
         Button search = findViewById(R.id.activity_dashboard_btn_to_search);
 
+        meetingsList.setGravity(View.TEXT_ALIGNMENT_CENTER);
+        GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings1->
+        {
+            for (Meeting m : meetings1){
+                meetingsList.append(m.getName() + "\n");
+            }
+        }));
 
         username = getIntent().getStringExtra("username");
 
