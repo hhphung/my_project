@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MeetMe"
         android:usesCleartextTraffic="true">
+
+        
         <activity
             android:name=".SearchPage"
             android:exported="true" />

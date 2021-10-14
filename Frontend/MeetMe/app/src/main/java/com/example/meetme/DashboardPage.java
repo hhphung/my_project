@@ -31,6 +31,7 @@ public class DashboardPage extends AppCompatActivity {
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
         Button goToCreateMeeting = findViewById(R.id.activity_dashboard_goToCreateMeeting);
         TextView meetingsList = findViewById(R.id.activity_dashboard_meetingList);
+        Button search = findViewById(R.id.activity_dashboard_btn_to_search);
 
 
         username = getIntent().getStringExtra("username");
@@ -42,14 +43,19 @@ public class DashboardPage extends AppCompatActivity {
             welcomeText.setText("Welcome " + user.getName() + "!");
         }));
 
+        //to go to the create meeting page
         goToCreateMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GetUserApi().getUserByName(username).enqueue(new SlimCallback<User>(user ->{
-                    welcomeText.setText("Welcome " + user.getName() + "!");
-                }));
-
                 startActivity(new Intent(view.getContext(), CreateMeetingPage.class));
+            }
+        });
+
+        //to go to the search page
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(view.getContext(), SearchPage.class));
             }
         });
     }
