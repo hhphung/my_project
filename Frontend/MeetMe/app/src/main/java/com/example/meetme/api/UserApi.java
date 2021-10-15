@@ -24,4 +24,8 @@ public interface UserApi {
 
     @GET("/user/")
     Call<List<User>> getAllUsers();
+
+
+    @GET("/login/")
+    Call<User> canLogin(@Body User user);
 }
