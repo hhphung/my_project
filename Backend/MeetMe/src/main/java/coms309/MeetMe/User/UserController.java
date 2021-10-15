@@ -83,7 +83,7 @@ public class UserController {
     public String addFriend(@RequestParam String name, @RequestParam String fName) {
         User user = userRepository.findByName(name);
         User friend = userRepository.findByName(fName);
-        if(user != null && friend != null) {
+        if(user != null && friend != null && !name.equals(fName)) {
             user.getFriends().add(friend);
             friend.getFriends().add(user );
             userRepository.save(user );
