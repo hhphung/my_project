@@ -54,13 +54,16 @@ public class User {
      // =============================== Constructors ================================== //
 
     @ManyToMany(cascade={CascadeType.ALL})
-    @JoinTable(name="friends_with",
-            joinColumns={@JoinColumn(name="person_id")},
+    @JoinTable(name="friends",
+            joinColumns={@JoinColumn(name="id")},
             inverseJoinColumns={@JoinColumn(name="friend_id")})
     @JsonIgnore
     private Set<User> friends = new HashSet<User>();
 
 
+    @ManyToMany(mappedBy="friends")
+    @JsonIgnore
+    private Set<User> friendsOf = new HashSet<User>();
 
     public User(String name, String password, Role role) {
         this.name = name;

@@ -74,8 +74,13 @@ public class UserController {
         return failure;
     }
 
-    @PostMapping("/addFriend")
-    public Set<User> addFriend(@RequestParam String name, @RequestParam String fName) {
+    @GetMapping(path = "/{name}/getFriends", produces = "application/json")
+    public Set<User> getFriends (@PathVariable String name) {
+        return userRepository.findByName(name).getFriends();
+    }
+
+    @PostMapping(path ="/addFriend", produces = "application/json")
+    public String addFriend(@RequestParam String name, @RequestParam String fName) {
         User user = userRepository.findByName(name);
         User friend = userRepository.findByName(fName);
         if(user != null && friend != null) {
@@ -83,8 +88,9 @@ public class UserController {
             friend.getFriends().add(user );
            userRepository.save(user );
             userRepository.save(friend);
+            return success;
         }
-        return user .getFriends();
+        return failure;
     }
 
 
