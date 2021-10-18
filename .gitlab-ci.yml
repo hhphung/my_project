@@ -31,8 +31,8 @@ android-build:
   tags:
    - android_tag         #this is LINK to the docker runner on the remote-server        
   before_script:
-    - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/gradlew
+    - export GRADLE_USER_HOME=`pwd`/Frontend/.gradle
+    - chmod +x ./Frontend/MeetMe/gradlew
   script:
     - cd Frontend/MeetMe
     - ./gradlew build
@@ -44,8 +44,8 @@ android-test:
   tags:
    - android_tag    
   before_script:
-    - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/gradlew
+    - export GRADLE_USER_HOME=`pwd`/Frontend/.gradle
+    - chmod +x ./Frontend/Meetme/gradlew
   script:
     - cd Frontend/MeetMe
     - ./gradlew build 
