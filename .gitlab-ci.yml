@@ -34,11 +34,8 @@ android-build:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Frontend/gradlew
   script:
-    - cd Frontend
+    - cd Frontend/MeetMe
     - ./gradlew build
-  artifacts:
-    paths:
-      - Android_test/app/build/outputs/
 
 
 android-test:
@@ -50,7 +47,7 @@ android-test:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Frontend/gradlew
   script:
-    - cd Frontend
+    - cd Frontend/MeetMe
     - ./gradlew build 
 
 # Below job builds, deploys, executes jar as service.
