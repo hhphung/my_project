@@ -27,9 +27,9 @@ maven-test:
 
 android-build: #this is another job
   image: javiersantos/android-ci:latest      # this is a directive to DOCKER
-  stage: androidtry
+  stage: androidbuild
   tags:
-   - android         #this is LINK to the docker runner on the remote-server        
+   - android_tag         #this is LINK to the docker runner on the remote-server        
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Frontend/MeetMe/gradlew
