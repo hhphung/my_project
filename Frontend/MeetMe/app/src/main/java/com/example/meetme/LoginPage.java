@@ -47,6 +47,7 @@ public class LoginPage extends AppCompatActivity {
 
                         usernameInput.setError("Check username");
                         usernameInput.requestFocus();
+                        
                     }
                 }));
             }
