@@ -3,6 +3,8 @@ package com.example.meetme.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class Meeting {
 
     @SerializedName("name")
@@ -133,6 +135,10 @@ public class Meeting {
 
     public void setResponseMessage(String responseMessage) {
         this.responseMessage = responseMessage;
+    }
+
+    public ArrayList<User> getParticipants() {
+        return new ArrayList<User>();
     }
 
     public String getError() {
