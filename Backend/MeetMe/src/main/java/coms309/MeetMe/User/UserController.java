@@ -63,7 +63,7 @@ public class UserController {
         return success;
     }
 
-    @GetMapping(path = "/login", produces = "application/json")
+  /*  @GetMapping(path = "/login", produces = "application/json")
     String loginUser(@RequestParam String name,@RequestParam  String password ) {
         User temp = userRepository.findByName(name);
         if(temp != null) {
@@ -73,7 +73,18 @@ public class UserController {
         }
         return failure;
     }
+*/
 
+    @PostMapping(path = "/login", produces = "application/json")
+    String loginUser(@RequestBody User user ) {
+        if(user != null){
+           User temp = userRepository.findByName(user.getName());
+           if(temp != null && temp.getPassword().equals(user.getPassword())){
+                   return success;
+           }
+        }
+        return failure;
+    }
     @GetMapping(path = "/{name}/getFriends", produces = "application/json")
     public Set<User> getFriends (@PathVariable String name) {
         return userRepository.findByName(name).getFriends();
