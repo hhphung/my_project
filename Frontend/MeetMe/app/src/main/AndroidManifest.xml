@@ -13,13 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MeetMe" >
         <activity
-            android:name=".CreateMeetingPage"
+            android:name=".ui.CreateMeetingPage"
             android:exported="true" />
         <activity
-            android:name=".DashboardPage"
+            android:name=".ui.DashboardPage"
             android:exported="true" />
         <activity
-            android:name=".RegisterPage"
+            android:name=".ui.RegisterPage"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

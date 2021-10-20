@@ -1,4 +1,4 @@
-package com.example.meetme;
+package com.example.meetme.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -11,9 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.meetme.R;
 import com.example.meetme.model.Meeting;
 
-public class CreateMeetingPage extends AppCompatActivity {
+public class CreateMeetingPage extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,5 +54,20 @@ public class CreateMeetingPage extends AppCompatActivity {
                 }*/
             }
         });
+    }
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.activity_create_meeting;
+    }
+
+    @Override
+    int getLayoutId() {
+        return R.layout.activity_create_meeting;
+    }
+
+    @Override
+    int getNavigationMenuItemId() {
+        return R.id.action_createMeeting;
     }
 }
