@@ -20,7 +20,7 @@ import com.example.meetme.model.Meeting;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-public class CreateMeetingPage extends BaseActivity {
+public class CreateMeetingPage extends AppCompatActivity {
 
     private TextView errorMsg;
     @Override
@@ -46,29 +46,33 @@ public class CreateMeetingPage extends BaseActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String mTitle = "Title1";//meetingTitle_textbox.getText().toString();
+                String mTitle = "Meeting11";//meetingTitle_textbox.getText().toString();
                 String mDesc = "Description";//meetingDescription_textbox.getText().toString();
                 String mTime = "2007-12-03T10:15:30";//meetingTime_textbox.getText().toString();
                 String mLocation[] = {"123 Duff", "Ames", "IA", "50014", "United States"};//meetingLocation_textbox.getText().toString().split(",");
                 PostMeeting(mTitle, mDesc, mTime, mLocation);
+//                if (errorMsg.getText().toString().equals("Error Message Goes Here") ||
+//                        errorMsg.getText().toString().equals("")) {
+//                    finish();
+//                }
             }
         });
     }
 
-    @Override
-    protected int getContentViewId() {
-        return R.layout.activity_create_meeting;
-    }
-
-    @Override
-    int getLayoutId() {
-        return R.layout.activity_create_meeting;
-    }
-
-    @Override
-    int getNavigationMenuItemId() {
-        return R.id.action_createMeeting;
-    }
+//    @Override
+//    protected int getContentViewId() {
+//        return R.layout.activity_create_meeting;
+//    }
+//
+//    @Override
+//    int getLayoutId() {
+//        return R.layout.activity_create_meeting;
+//    }
+//
+//    @Override
+//    int getNavigationMenuItemId() {
+//        return R.id.action_createMeeting;
+//    }
     protected void PostMeeting(String mTitle, String mDesc, String mTime, String[] mLocation){
 
         try {
@@ -77,15 +81,18 @@ public class CreateMeetingPage extends BaseActivity {
             if (mTitle == null || mDesc == null || mTime == null || mLocation.length < 5) {
                 throw new IllegalArgumentException("missing or incorrectly formatted arguments");
             }
-            Meeting meeting = new Meeting(mTitle, "TestAdmin5", mDesc, mTime, mLocation[0],
+            Meeting meeting = new Meeting(mTitle, "test2", mDesc, mTime, mLocation[0],
                     mLocation[1], mLocation[2], zipcode, mLocation[4]);
             GetMeetingApi().createMeeting(meeting).enqueue(new SlimCallback<>(response ->
             {
-                if (!response.getError().equals("")){
-                    errorMsg.setText("error: " + response.getError() + ", msg: " + response.getResponseMessage());
-                }
-                errorMsg.setText(response.toString());
+//                if (!response.getError().equals("")){
+//
+//                    //errorMsg.setText("error: " + /*response.getError() +*/ ", msg: "); //+ response.getResponseMessage());
+//                }
+                errorMsg.getText();
+//                errorMsg.setText(response.toString());
             }));
+            finish();
         }
         catch (NumberFormatException e){
             errorMsg.setText("Please enter a valid, numeric zip code");

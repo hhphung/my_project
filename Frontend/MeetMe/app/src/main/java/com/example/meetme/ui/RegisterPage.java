@@ -40,6 +40,7 @@ public class RegisterPage extends AppCompatActivity {
                     Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
                     myIntent.putExtra("username", usernameInput.getText().toString());
                     startActivity(myIntent);
+                    finish();
                }else{
                     if(secPasswordInput.getText().toString().equals(""))
                     {

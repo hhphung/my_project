@@ -32,7 +32,8 @@ public class LoginPage extends AppCompatActivity {
         toDashboardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                startActivity(new Intent(view.getContext(),DashboardPage.class));
+                finish();
             }
         });
 

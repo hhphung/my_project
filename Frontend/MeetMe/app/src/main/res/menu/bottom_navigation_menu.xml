@@ -14,10 +14,10 @@
         android:title="Register"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_notification"
+        android:id="@+id/action_search"
         android:enabled="true"
-        android:icon="@drawable/notification"
-        android:title="Notifications"
+        android:icon="@drawable/search_icon"
+        android:title="Search"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_createMeeting"

@@ -22,15 +22,25 @@ import java.util.List;
 public class DashboardPage extends BaseActivity {
 
     String username;
+    TextView meetingsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         TextView welcomeText = findViewById(R.id.activity_dashboard_text);
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
-        TextView meetingsList = findViewById(R.id.activity_dashboard_meetingList);
-        Button search = findViewById(R.id.activity_dashboard_btn_to_search);
-        Button goToCreateMeeting = findViewById(R.id.activity_dashboard_goToCreateMeeting);
+        meetingsList = findViewById(R.id.activity_dashboard_meetingList);
+        username = getIntent().getStringExtra("username");
+        //get username and display it
+        GetUserApi().getUserByName(username).enqueue(new SlimCallback<User>(user ->{
+            welcomeText.setText("Welcome " + user.getName() + "!");
+        }));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        meetingsList.setText("");
 
         meetingsList.setGravity(View.TEXT_ALIGNMENT_CENTER);
         GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings1->
@@ -38,28 +48,6 @@ public class DashboardPage extends BaseActivity {
             for (Meeting m : meetings1){
                 meetingsList.append(m.getName() + "\n");
             }
-        }));
-
-        //to go to the create meeting page
-        goToCreateMeeting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(view.getContext(), CreateMeetingPage.class));
-            }
-        });
-
-        //to go to the search page
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(view.getContext(), SearchPage.class));
-            }
-        });
-
-        username = getIntent().getStringExtra("username");
-        //get username and display it
-        GetUserApi().getUserByName(username).enqueue(new SlimCallback<User>(user ->{
-            welcomeText.setText("Welcome " + user.getName() + "!");
         }));
     }
 

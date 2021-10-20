@@ -50,8 +50,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 startActivity(new Intent(this, RegisterPage.class));
             } else if (itemId == R.id.action_createMeeting) {
                 startActivity(new Intent(this, CreateMeetingPage.class));
+            } else if (itemId == R.id.action_search){
+                startActivity(new Intent(this, SearchPage.class));
             }
-            finish();
+            //finish();
         }, 300);
         return true;
     }
