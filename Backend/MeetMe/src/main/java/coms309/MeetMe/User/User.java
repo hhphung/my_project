@@ -5,6 +5,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import coms309.MeetMe.Meeting.Meeting;
+import coms309.MeetMe.Stringy.Stringy;
 
 import java.util.Date;
 import java.util.List;
@@ -27,22 +28,23 @@ public class User {
     @Column(nullable = false)
     private Date lastSeen;
     @Column(nullable = false)
-    private String availability; // TODO: Create Availability/Schedule object to pass in
+    private boolean [] availability = new boolean[168]; // TODO: Create Availability/Schedule object to pass in
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "admin")
+    @JsonIgnore
+    List<Meeting> meetingAdmin;
+
     @ManyToMany(mappedBy = "userParticipants")
-    // @JoinColumn(nullable = true)
     @JsonIgnore
     List<Meeting> meetingParticipation;
 
     @ManyToMany(mappedBy = "userRequests")
-    // @JoinColumn(nullable = true)
     @JsonIgnore
     List<Meeting> meetingRequests;
 
     @ManyToMany(mappedBy = "userInvites")
-    // @JoinColumn(nullable = true)
     @JsonIgnore
     List<Meeting> meetingInvites;
 
@@ -56,7 +58,7 @@ public class User {
         this.joiningDate = new Date(System.currentTimeMillis());
         this.lastSeen = this.joiningDate;
         this.role = role;
-        this.availability = "Never free";
+
     }
 
     public User(String name, String password) {
@@ -66,44 +68,17 @@ public class User {
         this.joiningDate = new Date(System.currentTimeMillis());
         this.lastSeen = this.joiningDate;
         this.role = Role.VIEWER;
-        this.availability = "Never free";
+
     }
 
     public User() {
-        this.name = getAlphaNumericString(10);
+        this.name = Stringy.getRandom(10);
         this.password = "password";
         this.email = "@";
         this.joiningDate = new Date(System.currentTimeMillis());
         this.lastSeen = this.joiningDate;
         this.role = Role.VIEWER;
-        this.availability = "Never free";
-    }
 
-    // https://www.geeksforgeeks.org/generate-random-string-of-given-size-in-java/
-    private String getAlphaNumericString(int n) {
-  
-        // chose a Character random from this String
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                    + "0123456789"
-                                    + "abcdefghijklmnopqrstuvxyz";
-  
-        // create StringBuffer size of AlphaNumericString
-        StringBuilder sb = new StringBuilder(n);
-  
-        for (int i = 0; i < n; i++) {
-  
-            // generate a random number between
-            // 0 to AlphaNumericString variable length
-            int index
-                = (int)(AlphaNumericString.length()
-                        * Math.random());
-  
-            // add Character one by one in end of sb
-            sb.append(AlphaNumericString
-                          .charAt(index));
-        }
-  
-        return sb.toString();
     }
 
 
@@ -139,14 +114,17 @@ public class User {
         return joiningDate;
     }
 
-    public String getAvailability() { return availability; }
+    public boolean[] getAvailability() {
+        return availability;
+    }
 
-    public void setAvailability(String availability) { this.availability = availability; }
+    public void setAvailability(boolean[] availability) {
+        this.availability = availability;
+    }
 
     public Role getRole() {
         return role;
     }
-
     public void setRole(Role role) {
         this.role = role;
     }

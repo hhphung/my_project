@@ -34,15 +34,22 @@ public class RegisterPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(secPasswordInput.getText().toString().equals(passwordInput.getText().toString())) {
+                if(secPasswordInput.getText().toString().equals(passwordInput.getText().toString()) && !(secPasswordInput.getText().toString().equals(""))) {
                     User user = new User(usernameInput.getText().toString(), passwordInput.getText().toString());
                     GetUserApi().createUser(user).enqueue(new SlimCallback<>(user1 ->{}));
                     Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
                     myIntent.putExtra("username", usernameInput.getText().toString());
                     startActivity(myIntent);
-               }else {
-                     errTxt.setText("Passwords do not match. Try again");
-               }
+               }else{
+                    if(secPasswordInput.getText().toString().equals(""))
+                    {
+                        secPasswordInput.setError("Cannot be empty");
+                        secPasswordInput.requestFocus();
+                    }else {
+                        secPasswordInput.setError("Passwords do not match. Try again");
+                        secPasswordInput.requestFocus();
+                    }
+                }
             }
         });
 

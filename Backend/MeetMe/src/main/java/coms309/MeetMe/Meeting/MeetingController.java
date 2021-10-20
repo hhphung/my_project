@@ -1,6 +1,7 @@
 package coms309.MeetMe.Meeting;
 
 import coms309.MeetMe.Location.Location;
+import coms309.MeetMe.Stringy.Stringy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,6 @@ import coms309.MeetMe.User.User;
 import coms309.MeetMe.User.UserRepository;
 
 import java.util.List;
-import java.time.LocalTime;
 
 @RestController
 @RequestMapping("/meeting")
@@ -39,65 +39,92 @@ public class MeetingController {
     }
 
     @PostMapping(value = "/", produces = "application/json")
-    String createMeeting(@RequestBody MeetingParams tempMeeting) {
+    String createMeeting(@RequestBody MeetingParams meetingParams) {
 
         // Check parameters exist
-        if (tempMeeting.name == null || tempMeeting.desc == null || tempMeeting.time == null || tempMeeting.loc == null)
-            return "{\"message\":\"Invalid request body\"}";
+        if (!meetingParams.isValid())
+            return Stringy.error("Invalid request body");
 
         // Keep meeting name unique
-        Meeting checkIfExists = meetingRepository.findByName(tempMeeting.name);
+        Meeting checkIfExists = meetingRepository.findByName(meetingParams.name);
         if (checkIfExists != null) 
-            return "{\"message\":\"Name taken\"}";
+            return Stringy.error("Name already taken");
 
         // Find user associated with adminName
-        User findAdmin = userRepository.findByName(tempMeeting.adminName);
+        User findAdmin = userRepository.findByName(meetingParams.adminName);
 
         if (findAdmin == null) 
-            return "{\"message\":\"Admin not found\"}";
+            return Stringy.error("Admin not found");
 
         if (findAdmin.getRole() != Role.ADMIN)
-            return "{\"message\":\"User is not an Admin\"}";
+            return Stringy.error("User is not an Admin");
 
         // Assemble location and meeting and save to database
-        Location location = new Location(tempMeeting.loc);
-        Meeting meeting = new Meeting(findAdmin, tempMeeting.name, tempMeeting.desc, LocalTime.now(), location);
+        Meeting meeting = new Meeting(findAdmin, meetingParams.name, meetingParams.desc, meetingParams.dateTime, meetingParams.loc);
         meetingRepository.save(meeting);
-        return "{\"message\":\"Success!\"}";
+        return Stringy.success();
     }
 
+    @DeleteMapping(value = "/id/{id}")
+    String deleteMeeting(@PathVariable int id) {
+        meetingRepository.deleteById(id);
+        return Stringy.success();
+    }
 
-    // @PutMapping(path  = "meeting/create")
-    // public @ResponseBody Message createMeeting(@RequestBody Meeting meet){
-    //     return MeetingService.createMeeting(meet);
-    // }
+    @DeleteMapping(value = "/name/{name}")
+    String deleteMeeting(@PathVariable String name) {
+        Meeting meeting = meetingRepository.findByName(name);
+        if (meeting == null)
+            return Stringy.error("Name not found");
 
+        meetingRepository.deleteById(meeting.getId());
+        return Stringy.success();
+    }
 
-    // @PostMapping(path = "/meeting/{id}/admin")
-    // public User findHost(@RequestBody Meeting meet){
-    //     return MeetingService.findHost(meet);
-    // }
-
-    // @PostMapping(path = "/meeting/{id}/address")
-    // public String findAddress(@RequestBody Meeting meet){
-    //     return MeetingService.findAddress(meet);
-    // }
+    @DeleteMapping(value = "/")
+    String deleteMeeting() {
+        meetingRepository.deleteAll();
+        return Stringy.success();
+    }
 }
 
 
 /**
  * Holds parameters that will be passed into POST meeting. 
+ * @dateTime: 2007-12-03T10:15:30 format
  */
 class MeetingParams {
 
-    public String name, adminName, desc, loc, time;
+    public String name, adminName, desc, dateTime;
+    public Location loc;
 
-    MeetingParams(String name, String adminName, String desc, String time, String loc) {
-        System.out.println(name + adminName + desc + time + loc);
+    // MeetingParams(String name, String adminName) {
+    //     this.name = name;
+    //     this.adminName = adminName;
+    //     this.desc = "";
+    //     this.dateTime = "";
+    //     this.loc = new Location();
+    // }
+    
+    public MeetingParams(String name, String adminName, String desc, String dateTime, String street, String city, String state, int zipcode, String country) {
+        System.out.println("Meeting created: \n name:" + name + 
+                            "\n adminName: " + adminName + 
+                            "\n desc:" + desc + 
+                            "\n desc: " + dateTime + 
+                            "\n loc: " + street + ", " + city + ", " + state + ", " + zipcode+ ", " + country);
+
         this.name = name;
         this.adminName = adminName;
         this.desc = desc;
-        this.time = time;
-        this.loc = loc;
+        this.dateTime = dateTime;
+        this.loc = new Location(street, city, state, zipcode, country);
+    }
+
+    public boolean isValid() {
+        return  name != null && 
+                adminName != null &&
+                desc != null &&
+                dateTime != null &&
+                loc != null;
     }
 }
