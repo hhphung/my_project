@@ -14,7 +14,10 @@ import retrofit2.http.Path;
 public interface MeetingApi {
 
     @GET("/meeting/{id}")
-    Call<Meeting> getMeetingById(@Path(value = "id") String name);
+    Call<Meeting> getMeetingById(@Path(value = "id") int id);
+
+    @GET("/meeting/{name}")
+    Call<Meeting> getMeetingByName(@Path(value = "name") String name);
 
     @Headers("Content-type: application/json")
     @POST("/meeting/")
@@ -22,4 +25,7 @@ public interface MeetingApi {
 
     @GET("/meeting/")
     Call<List<Meeting>> getAllMeetings();
+
+    @GET("/meeting/{name}")
+    Call<List<Meeting>> getResults(@Path(value = "name") String name);
 }
