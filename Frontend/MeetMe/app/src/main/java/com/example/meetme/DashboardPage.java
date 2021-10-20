@@ -54,7 +54,7 @@ public class DashboardPage extends AppCompatActivity {
         goToCreateMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
+                Intent myIntent = new Intent(view.getContext(), CreateMeetingPage.class);
                 myIntent.putExtra("username", username);
                 startActivity(myIntent);
             }
@@ -64,7 +64,7 @@ public class DashboardPage extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
+                Intent myIntent = new Intent(view.getContext(), SearchPage.class);
                 myIntent.putExtra("username", username);
                 startActivity(myIntent);
             }

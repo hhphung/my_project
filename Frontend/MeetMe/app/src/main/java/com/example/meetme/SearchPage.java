@@ -67,7 +67,7 @@ public class SearchPage extends AppCompatActivity {
 
                     String result[] = tempResults.toArray(new String[tempResults.size()]);
 
-                    arr = new ArrayAdapter<String>(this, R.layout.activity_search_page, result);
+                    arr = new ArrayAdapter<String>(getBaseContext(), R.layout.activity_search_page, result);
 
                 } else {
 
@@ -82,9 +82,9 @@ public class SearchPage extends AppCompatActivity {
                     String result[] = tempResults.toArray(new String[tempResults.size()]);
 
                     if (result[0] != null) {
-                        arr = new ArrayAdapter<String>(this, R.layout.activity_search_page, result);
+                        arr = new ArrayAdapter<String>(getBaseContext(), R.layout.activity_search_page, result);
                     } else {
-                        arr = new ArrayAdapter<String>(this, R.layout.activity_search_page, err);
+                        arr = new ArrayAdapter<String>(getBaseContext(), R.layout.activity_search_page, err);
                     }
 
                 }
