@@ -25,7 +25,7 @@ maven-test:
     paths:
       - Backend/MeetMe/target/*.jar
 
-android-build:
+android-build: #this is another job
   image: javiersantos/android-ci:latest      # this is a directive to DOCKER
   stage: androidbuild
   tags:
@@ -35,7 +35,8 @@ android-build:
     - chmod +x ./Frontend/MeetMe/gradlew
   script:
     - cd Frontend/MeetMe
-    - ./gradlew build
+    - ./gradlew assemble
+
 
 
 android-test:
