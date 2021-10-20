@@ -46,7 +46,7 @@ android-test:
    - android_tag    
   before_script:
     - export GRADLE_USER_HOME=`pwd`/Frontend/.gradle
-    - chmod +x ./Frontend/Meetme/gradlew
+    - chmod +x ./Frontend/MeetMe/gradlew
   script:
     - cd Frontend/MeetMe
     - ./gradlew build 
