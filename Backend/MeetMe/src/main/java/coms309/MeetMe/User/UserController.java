@@ -95,8 +95,8 @@ public class UserController {
         User user = userRepository.findByName(name);
         User friend = userRepository.findByName(fName);
         if(user != null && friend != null && !name.equals(fName)) {
-            user.getFriends().add(friend);
-            friend.getFriends().add(user );
+            user.addFriend(friend);
+            friend.addFriend(user );
             userRepository.save(user );
             userRepository.save(friend);
             return success;

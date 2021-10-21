@@ -69,17 +69,6 @@ public class mockTest {
         assertEquals("hoiproa2", acct.getPassword());
     }
 
-    @Test
-    @PostMapping
-    public void createUserTest(){
-        User  hoi = new User ("hoi", "phung");
-        User test = new User ("test", "test");
-
-
-        User acct = repo.findByName("hoiproa2");
-        assertEquals("hoiproa2", acct.getPassword());
-    }
-
 
 
     @Test
