@@ -47,6 +47,19 @@ public class SearchPage extends AppCompatActivity {
             }
         });
 
+//        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//// do something on text submit
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//// do something when text changes
+//                return false;
+//            }
+//        });
 
         meetingInput.setOnClickListener(new View.OnClickListener() {
             @Override
