@@ -1,4 +1,4 @@
-package com.example.meetme;
+package com.example.meetme.ui;
 
 import static com.example.meetme.api.apiClientFactory.GetUserApi;
 
@@ -12,15 +12,15 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 
+import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
 
-public class SearchPage extends AppCompatActivity {
+public class SearchPage extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_page);
 
         ListView meetingResults = findViewById(R.id.activity_search_results);
         SearchView meetingInput = findViewById(R.id.activity_search_bar);
@@ -43,6 +43,21 @@ public class SearchPage extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.activity_search_page;
+    }
+
+    @Override
+    int getLayoutId() {
+        return R.layout.activity_search_page;
+    }
+
+    @Override
+    int getNavigationMenuItemId() {
+        return R.id.action_search;
     }
 
 }

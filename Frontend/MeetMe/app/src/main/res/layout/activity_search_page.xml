@@ -6,15 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchPage">
-
-    //have questions about search
-<!--    <intent-filter>-->
-<!--        <action android:name="android.intent.action.SEARCH" />-->
-<!--    </intent-filter>-->
-<!--    <meta-data android:name="android.app.searchable"-->
-<!--        android:resource="@xml/searchable"/>-->
-
+    tools:context=".ui.SearchPage">
 
     <Button
         android:id="@+id/activity_search_btn_to_dash"
@@ -49,5 +41,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.614" />
+
+    <include
+        layout="@layout/bottom_menu_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
