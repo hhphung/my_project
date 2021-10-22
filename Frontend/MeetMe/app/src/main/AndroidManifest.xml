@@ -14,7 +14,8 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".SearchPage"
-            android:exported="true" />
+            android:exported="true">
+        </activity>
         <activity
             android:name=".LoginPage"
             android:exported="true" />
