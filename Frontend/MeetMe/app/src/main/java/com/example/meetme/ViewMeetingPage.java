@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meetme.api.SlimCallback;
@@ -61,15 +62,16 @@ public class ViewMeetingPage extends AppCompatActivity {
             meetingAdminName.setText(meeting.getAdminName());
             recyclerView = findViewById(R.id.participantsRecycler);
 
-            User testUser = new User("Person", "arst");
-            ArrayList<User> list = new ArrayList<User>();
-            list.add(testUser);
+//            User testUser = new User("Person", "arst");
+//            ArrayList<User> list = new ArrayList<User>();
+//            list.add(testUser);
+//
+//            UserAdapter userAdapter = new UserAdapter(list);
+            UserAdapter userAdapter = new UserAdapter(meeting.getParticipants());
 
-            UserAdapter userAdapter = new UserAdapter(list);
-//            UserAdapter userAdapter = new UserAdapter(meeting.getParticipants());
+            recyclerView.setAdapter(userAdapter);
 
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }));
-
-
     }
 }

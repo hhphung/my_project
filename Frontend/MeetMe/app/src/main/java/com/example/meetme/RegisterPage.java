@@ -39,16 +39,10 @@ public class RegisterPage extends AppCompatActivity {
                     Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
                     myIntent.putExtra("username", usernameInput.getText().toString());
                     startActivity(myIntent);
-               }else {
+               } else {
                      errTxt.setText("Passwords do not match. Try again");
                }
             }
         });
-
-
     }
-
-
-
-
 }

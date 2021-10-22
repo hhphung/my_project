@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MeetMe" >
         <activity
+            android:name=".ViewMeetingPage"
+            android:exported="true" />
+        <activity
             android:name=".CreateMeetingPage"
             android:exported="true" />
         <activity
