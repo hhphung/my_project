@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 
+import com.example.meetme.MeetingAdapter;
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
@@ -48,13 +49,13 @@ public class SearchPage extends BaseActivity {
 
         GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings->
         {
-            //recyclerView = findViewById(R.id.activity_search_results);
+            recyclerView = findViewById(R.id.activity_search_results);
 
-            //MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
+            MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
 
-            //recyclerView.setAdapter(meetingAdapter);
+            recyclerView.setAdapter(meetingAdapter);
 
-            //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         }));
 
@@ -74,13 +75,13 @@ public class SearchPage extends BaseActivity {
 
                 GetMeetingApi().getResults(meetingName).enqueue(new SlimCallback<List<Meeting>>(meetings->
                 {
-                    //recyclerView = findViewById(R.id.activity_search_results);
+                    recyclerView = findViewById(R.id.activity_search_results);
 
-                    //MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
+                    MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
 
-                    //recyclerView.setAdapter(meetingAdapter);
+                    recyclerView.setAdapter(meetingAdapter);
 
-                    //recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
 
                 }));
             }
