@@ -4,6 +4,7 @@ import static com.example.meetme.api.apiClientFactory.GetMeetingApi;
 import static com.example.meetme.api.apiClientFactory.GetUserApi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -32,7 +33,7 @@ public class SearchPage extends AppCompatActivity{
 
     RecyclerView recyclerView;
 
-    String username;
+    String username = getIntent().getStringExtra("username");;
 
     String meetingName;
 
@@ -41,12 +42,23 @@ public class SearchPage extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_page);
 
-        recyclerView = findViewById(R.id.activity_search_results);
         EditText meetingInput = findViewById(R.id.activity_search_input);
         Button searchButton = findViewById(R.id.activity_search_btn_to_search);
         Button backButton = findViewById(R.id.activity_search_btn_to_dash);
 
         String username = getIntent().getStringExtra("username");
+
+        GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings->
+        {
+            recyclerView = findViewById(R.id.activity_search_results);
+
+            //MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
+
+            recyclerView.setAdapter(meetingAdapter);
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        }));
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +72,19 @@ public class SearchPage extends AppCompatActivity{
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                meetingName = meetingInput.getText().toString();
+
+                GetMeetingApi().getResults(meetingName).enqueue(new SlimCallback<List<Meeting>>(meetings->
+                {
+                    recyclerView = findViewById(R.id.activity_search_results);
+
+                    //MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
+
+                    recyclerView.setAdapter(meetingAdapter);
+
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+
+                }));
             }
         });
 
