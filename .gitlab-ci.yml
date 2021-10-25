@@ -25,20 +25,18 @@ maven-test:
     paths:
       - Backend/MeetMe/target/*.jar
 
-android-build:
+android-build: #this is another job
   image: javiersantos/android-ci:latest      # this is a directive to DOCKER
   stage: androidbuild
   tags:
    - android_tag         #this is LINK to the docker runner on the remote-server        
   before_script:
-    - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/gradlew
+    - export GRADLE_USER_HOME=`pwd`/Frontend/.gradle
+    - chmod +x ./Frontend/MeetMe/gradlew
   script:
-    - cd Frontend
-    - ./gradlew build
-  artifacts:
-    paths:
-      - Android_test/app/build/outputs/
+    - cd Frontend/MeetMe
+    - ./gradlew assemble
+
 
 
 android-test:
@@ -47,10 +45,10 @@ android-test:
   tags:
    - android_tag    
   before_script:
-    - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/gradlew
+    - export GRADLE_USER_HOME=`pwd`/Frontend/.gradle
+    - chmod +x ./Frontend/MeetMe/gradlew
   script:
-    - cd Frontend
+    - cd Frontend/MeetMe
     - ./gradlew build 
 
 # Below job builds, deploys, executes jar as service.

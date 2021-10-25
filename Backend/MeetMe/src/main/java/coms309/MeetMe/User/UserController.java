@@ -1,9 +1,14 @@
 
 package coms309.MeetMe.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import java.util.*;
 
 
@@ -32,6 +37,18 @@ public class UserController {
         return userRepository.findByName(name);
     }
 
+    @PostMapping(value = "/{name}/availability", produces = "application/json")
+    String setAvailability(@PathVariable String name, @RequestBody boolean [] availability ){
+        User temp =  userRepository.findByName(name);
+        if(temp ==null){
+            return failure;
+        }
+        temp.setAvailability(availability);
+        userRepository.save(temp);
+        return success;
+    }
+
+
     @PostMapping(value = "/", produces = "application/json")
     String createUser(@RequestBody User user) {
         if (user == null)
@@ -46,13 +63,47 @@ public class UserController {
         return success;
     }
 
-    @PostMapping(path = "/user/login")
-    String loginUser(@PathVariable String userName,@PathVariable String passWord ) {
-        userRepository.findAll();
-        return success;
+  /*  @GetMapping(path = "/login", produces = "application/json")
+    String loginUser(@RequestParam String name,@RequestParam  String password ) {
+        User temp = userRepository.findByName(name);
+        if(temp != null) {
+            if (temp.getPassword().equals(password)) {
+                return success;
+            }
+        }
+        return failure;
+    }
+*/
+
+    @PostMapping(path = "/login", produces = "application/json")
+    String loginUser(@RequestBody User user ) {
+        if(user != null){
+           User temp = userRepository.findByName(user.getName());
+           if(temp != null && temp.getPassword().equals(user.getPassword())){
+                   return success;
+           }
+        }
+        return failure;
+    }
+    @GetMapping(path = "/{name}/getFriends", produces = "application/json")
+    public Set<User> getFriends (@PathVariable String name) {
+        return userRepository.findByName(name).getFriends();
     }
 
-    
+    @PostMapping(path ="/addFriend", produces = "application/json")
+    public String addFriend(@RequestParam String name, @RequestParam String fName) {
+        User user = userRepository.findByName(name);
+        User friend = userRepository.findByName(fName);
+        if(user != null && friend != null && !name.equals(fName)) {
+            user.addFriend(friend);
+            friend.addFriend(user );
+            userRepository.save(user );
+            userRepository.save(friend);
+            return success;
+        }
+        return failure;
+    }
+
 
 //    @PutMapping("/users/{id}")
 //    User updateUser(@PathVariable int id, @RequestBody User request){
