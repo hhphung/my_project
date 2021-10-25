@@ -12,7 +12,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface UserApi {
-    @GET("/user/id/{id}")
+    @GET("/user/{id}")
     Call<User> getUserById(@Path(value = "id") int id);
 
     @GET("/user/name/{username}")

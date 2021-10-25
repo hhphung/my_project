@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meetme.model.Meeting;
-import com.example.meetme.model.User;
+import com.example.meetme.ui.ViewMeetingPage;
 
 import java.util.ArrayList;
 

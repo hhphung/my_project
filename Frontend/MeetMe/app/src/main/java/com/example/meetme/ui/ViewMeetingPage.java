@@ -1,4 +1,4 @@
-package com.example.meetme;
+package com.example.meetme.ui;
 
 import static com.example.meetme.api.apiClientFactory.GetMeetingApi;
 
@@ -11,11 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.meetme.R;
+import com.example.meetme.UserAdapter;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
-import com.example.meetme.model.User;
-
-import java.util.ArrayList;
 
 public class ViewMeetingPage extends AppCompatActivity {
 
@@ -60,6 +59,11 @@ public class ViewMeetingPage extends AppCompatActivity {
         // Get meeting info and display it
         GetMeetingApi().getMeetingById(meetingNameStr).enqueue(new SlimCallback<Meeting>(meeting -> {
             meetingAdminName.setText(meeting.getAdminName());
+            meetingDesc.setText(meeting.getDesc());
+            meetingDateTime.setText(meeting.getDateTime());
+            meetingLocation.setText(meeting.getCountry());
+
+
             recyclerView = findViewById(R.id.participantsRecycler);
 
 //            User testUser = new User("Person", "arst");

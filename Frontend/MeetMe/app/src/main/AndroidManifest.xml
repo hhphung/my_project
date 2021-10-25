@@ -12,12 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MeetMe"
         android:usesCleartextTraffic="true">
-
         <activity
-            android:name=".ui.SearchPage"
+            android:name=".ui.ViewMeetingPage"
             android:exported="true" />
         <activity
-            android:name="ui.ViewMeetingPage"
+            android:name=".ui.SearchPage"
             android:exported="true" />
         <activity
             android:name=".ui.LoginPage"
