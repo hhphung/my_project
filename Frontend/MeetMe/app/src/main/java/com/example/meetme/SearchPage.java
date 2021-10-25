@@ -30,12 +30,18 @@ import java.util.List;
 
 public class SearchPage extends AppCompatActivity{
 
+    RecyclerView recyclerView;
+
+    String username;
+
+    String meetingName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_page);
 
-        RecyclerView meetingResults = findViewById(R.id.activity_search_results);
+        recyclerView = findViewById(R.id.activity_search_results);
         EditText meetingInput = findViewById(R.id.activity_search_input);
         Button searchButton = findViewById(R.id.activity_search_btn_to_search);
         Button backButton = findViewById(R.id.activity_search_btn_to_dash);
