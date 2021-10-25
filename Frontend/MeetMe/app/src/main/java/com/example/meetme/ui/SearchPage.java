@@ -1,4 +1,4 @@
-package com.example.meetme;
+package com.example.meetme.ui;
 
 import static com.example.meetme.api.apiClientFactory.GetMeetingApi;
 import static com.example.meetme.api.apiClientFactory.GetUserApi;
@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 
+import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
 import com.example.meetme.model.User;
@@ -29,18 +30,15 @@ import com.example.meetme.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchPage extends AppCompatActivity{
-
+public class SearchPage extends BaseActivity {
     RecyclerView recyclerView;
 
-    String username = getIntent().getStringExtra("username");;
+    String username = getIntent().getStringExtra("username");
 
     String meetingName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_page);
 
         EditText meetingInput = findViewById(R.id.activity_search_input);
         Button searchButton = findViewById(R.id.activity_search_btn_to_search);
@@ -50,13 +48,13 @@ public class SearchPage extends AppCompatActivity{
 
         GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings->
         {
-            recyclerView = findViewById(R.id.activity_search_results);
+            //recyclerView = findViewById(R.id.activity_search_results);
 
             //MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
 
-            recyclerView.setAdapter(meetingAdapter);
+            //recyclerView.setAdapter(meetingAdapter);
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            //recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         }));
 
@@ -76,13 +74,13 @@ public class SearchPage extends AppCompatActivity{
 
                 GetMeetingApi().getResults(meetingName).enqueue(new SlimCallback<List<Meeting>>(meetings->
                 {
-                    recyclerView = findViewById(R.id.activity_search_results);
+                    //recyclerView = findViewById(R.id.activity_search_results);
 
                     //MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
 
-                    recyclerView.setAdapter(meetingAdapter);
+                    //recyclerView.setAdapter(meetingAdapter);
 
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+                    //recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
 
                 }));
             }
@@ -91,4 +89,21 @@ public class SearchPage extends AppCompatActivity{
 
 
     }
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.activity_search_page;
+    }
+
+    @Override
+    int getLayoutId() {
+        return R.layout.activity_search_page;
+    }
+
+    @Override
+    int getNavigationMenuItemId() {
+        return R.id.action_search;
+    }
+
 }
+

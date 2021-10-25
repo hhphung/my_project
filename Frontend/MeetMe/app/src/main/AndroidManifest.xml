@@ -13,26 +13,27 @@
         android:theme="@style/Theme.MeetMe"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".SearchPage"
+            android:name=".ui.SearchPage"
+            android:exported="true" />
+        <activity
+            android:name=".ui.LoginPage"
             android:exported="true">
-        </activity>
-        <activity
-            android:name=".LoginPage"
-            android:exported="true" />
-        <activity
-            android:name=".CreateMeetingPage"
-            android:exported="true" />
-        <activity
-            android:name=".DashboardPage"
-            android:exported="true" />
-        <activity
-            android:name=".RegisterPage"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.CreateMeetingPage"
+            android:exported="true" />
+        <activity
+            android:name=".ui.DashboardPage"
+            android:exported="true" />
+        <activity
+            android:name=".ui.RegisterPage"
+            android:exported="true" >
         </activity>
     </application>
 

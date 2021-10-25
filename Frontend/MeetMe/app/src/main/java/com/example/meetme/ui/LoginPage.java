@@ -1,4 +1,4 @@
-package com.example.meetme;
+package com.example.meetme.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.meetme.R;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -30,7 +32,8 @@ public class LoginPage extends AppCompatActivity {
         toDashboardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                startActivity(new Intent(view.getContext(),DashboardPage.class));
+                finish();
             }
         });
 

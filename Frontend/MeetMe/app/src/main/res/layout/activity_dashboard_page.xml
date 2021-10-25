@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DashboardPage">
+    tools:context=".ui.DashboardPage">
 
     <TextView
         android:id="@+id/activity_dashboard_text"
@@ -20,23 +20,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.169" />
 
-
-    <Button
-        android:id="@+id/activity_dashboard_goToCreateMeeting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.581" />
-
     <TextView
         android:id="@+id/activity_dashboard_meetingList"
-        android:layout_width="394dp"
-        android:layout_height="76dp"
+        android:layout_width="401dp"
+        android:layout_height="423dp"
         android:layout_marginTop="80dp"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,17 +47,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_dashboard_text"
         app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/activity_dashboard_btn_to_search"
-        android:layout_width="wrap_content"
+    <include
+        layout="@layout/bottom_menu_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.686" />
+        android:layout_gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

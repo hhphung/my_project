@@ -1,4 +1,4 @@
-package com.example.meetme;
+package com.example.meetme.ui;
 
 import static com.example.meetme.api.apiClientFactory.GetUserApi;
 
@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
 
@@ -39,6 +40,7 @@ public class RegisterPage extends AppCompatActivity {
                     Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
                     myIntent.putExtra("username", usernameInput.getText().toString());
                     startActivity(myIntent);
+                    finish();
                }else{
                     if(secPasswordInput.getText().toString().equals(""))
                     {
@@ -54,8 +56,5 @@ public class RegisterPage extends AppCompatActivity {
 
 
     }
-
-
-
 
 }
