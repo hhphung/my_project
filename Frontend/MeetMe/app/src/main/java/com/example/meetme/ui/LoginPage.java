@@ -1,4 +1,4 @@
-package com.example.meetme;
+package com.example.meetme.ui;
 
 import static com.example.meetme.api.apiClientFactory.GetUserApi;
 
@@ -12,6 +12,8 @@ import android.widget.EditText;
 
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
+import com.example.meetme.R;
+
 
 public class LoginPage extends AppCompatActivity {
 
@@ -51,6 +53,5 @@ public class LoginPage extends AppCompatActivity {
                 }));
             }
         });
-
     }
 }
