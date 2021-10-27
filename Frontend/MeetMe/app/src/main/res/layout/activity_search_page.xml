@@ -23,9 +23,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activity_search_results"
-        android:layout_width="345dp"
-        android:layout_height="487dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:clickable="true"
+        android:isScrollContainer="true"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,17 +36,17 @@
 
     <EditText
         android:id="@+id/activity_search_input"
-        android:layout_width="258dp"
-        android:layout_height="63dp"
+        android:layout_width="236dp"
+        android:layout_height="68dp"
         android:ems="10"
         android:hint="Search Meetings here"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/activity_search_results"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.207"
+        app:layout_constraintHorizontal_bias="0.154"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.787" />
+        app:layout_constraintVertical_bias="0.882" />
 
     <Button
         android:id="@+id/activity_search_btn_to_search"

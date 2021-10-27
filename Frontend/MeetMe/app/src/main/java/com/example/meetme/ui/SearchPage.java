@@ -49,13 +49,13 @@ public class SearchPage extends BaseActivity {
         {
             recyclerView = findViewById(R.id.activity_search_results);
 
-            MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
+            recyclerView.setNestedScrollingEnabled(false);
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
 
             recyclerView.setAdapter(meetingAdapter);
 
-            //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setLayoutManager(new LinearLayoutManager(this.getBaseContext()));
 
         }));
 

@@ -26,6 +26,6 @@ public interface MeetingApi {
     @GET("/meeting/")
     Call<List<Meeting>> getAllMeetings();
 
-    @GET("/meeting/{name}")
+    @GET("/meeting/search/{name}")
     Call<List<Meeting>> getResults(@Path(value = "name") String name);
 }

@@ -35,7 +35,6 @@ public class DashboardPage extends BaseActivity {
 
         TextView welcomeText = findViewById(R.id.activity_dashboard_text);
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
-        Button goToCreateMeeting = findViewById(R.id.activity_dashboard_goToCreateMeeting);
 
 
         // load meetings as interactive cards
