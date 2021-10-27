@@ -39,7 +39,7 @@ public class MeetingController {
     }
 
     @GetMapping(value = "/search/{name}", produces = "application/json")
-    Meeting[] getSearch(@PathVariable String name) {
+    List<Meeting> getSearch(@PathVariable String name) {
         return meetingRepository.findBySearch(name);
     }
 
