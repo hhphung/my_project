@@ -34,8 +34,6 @@ import java.util.List;
 public class SearchPage extends BaseActivity {
     RecyclerView recyclerView;
 
-    String username = getIntent().getStringExtra("username");
-
     String meetingName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +51,11 @@ public class SearchPage extends BaseActivity {
 
             MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
 
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
             recyclerView.setAdapter(meetingAdapter);
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            //recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         }));
 
