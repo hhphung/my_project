@@ -17,6 +17,7 @@ import com.example.meetme.model.User;
 
 public class RegisterPage extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,7 @@ public class RegisterPage extends AppCompatActivity {
         EditText secPasswordInput = findViewById(R.id.activity_main_password_input2);
         TextView errTxt = findViewById(R.id.activity_register_err_msg);
 
+
         //use edit text to create user
         //will make passwords match later
         createAccountButton.setOnClickListener(new View.OnClickListener() {
@@ -35,13 +37,16 @@ public class RegisterPage extends AppCompatActivity {
             public void onClick(View view) {
 
                 if(secPasswordInput.getText().toString().equals(passwordInput.getText().toString()) && !(secPasswordInput.getText().toString().equals(""))) {
-                    User user = new User(usernameInput.getText().toString(), passwordInput.getText().toString());
-                    GetUserApi().createUser(user).enqueue(new SlimCallback<>(user1 ->{}));
+
+                    User newUser = new User(usernameInput.getText().toString(), passwordInput.getText().toString());
+                    GetUserApi().createUser(newUser).enqueue(new SlimCallback<>(user1 ->{}));
+
                     Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
                     myIntent.putExtra("username", usernameInput.getText().toString());
                     startActivity(myIntent);
                     finish();
                }else{
+                    //possible error messages
                     if(secPasswordInput.getText().toString().equals(""))
                     {
                         secPasswordInput.setError("Cannot be empty");
