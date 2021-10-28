@@ -1,6 +1,7 @@
 package com.example.meetme;
 
 
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
@@ -27,16 +28,20 @@ import org.robolectric.annotation.Config;
 @Config(sdk = Build.VERSION_CODES.O_MR1)
 public class RegisterTests {
 
+    private RegisterPage activity;
 
-    @Test
-    public void testPassMisMatch()
-    {
+    @Before
+    public void setUp() {
         //Test
         RegisterPage activity = Robolectric.buildActivity(RegisterPage.class)
                 .create()
                 .resume()
                 .get();
+    }
 
+    @Test
+    public void testPassMisMatch()
+    {
         // enter text
         EditText usernameEntry = activity.findViewById(R.id.activity_main_username_input);
         usernameEntry.setText("Whittles1");
@@ -57,12 +62,6 @@ public class RegisterTests {
     @Test
     public void testPassEmpty()
     {
-        //Test
-        RegisterPage activity = Robolectric.buildActivity(RegisterPage.class)
-                .create()
-                .resume()
-                .get();
-
         // enter text
         EditText usernameEntry = activity.findViewById(R.id.activity_main_username_input);
         usernameEntry.setText("Whittles1");
@@ -79,28 +78,9 @@ public class RegisterTests {
 
     }
 
-//    @Test
-//    public void testCorrectPass()
-//    {
-//        //Test
-//        RegisterPage activity = Robolectric.buildActivity(RegisterPage.class)
-//                .create()
-//                .resume()
-//                .get();
-//
-//        // enter text
-//        EditText usernameEntry = activity.findViewById(R.id.activity_main_username_input);
-//        usernameEntry.setText("Whittles1");
-//
-//        EditText passwordEntry = activity.findViewById(R.id.activity_main_password_input);
-//        passwordEntry.setText("123");
-//
-//        //try to leave confirm blank
-//        EditText confirmPassEntry = activity.findViewById(R.id.activity_main_password_input2);
-//        confirmPassEntry.setText("");
-//        activity.findViewById(R.id.activity_main_create_account_button).callOnClick();
-//
-//        verify(confirmPassEntry).setError(null);
-//    }
+    @Test
+    public void NotNullActivity() throws Exception{
+        assertNotNull(activity);
+    }
 
 }

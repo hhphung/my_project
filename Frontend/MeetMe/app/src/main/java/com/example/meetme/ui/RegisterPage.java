@@ -27,7 +27,6 @@ public class RegisterPage extends AppCompatActivity {
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
         EditText passwordInput = findViewById(R.id.activity_main_password_input);
         EditText secPasswordInput = findViewById(R.id.activity_main_password_input2);
-        TextView errTxt = findViewById(R.id.activity_register_err_msg);
 
 
         //use edit text to create user
@@ -45,6 +44,7 @@ public class RegisterPage extends AppCompatActivity {
                     myIntent.putExtra("username", usernameInput.getText().toString());
                     startActivity(myIntent);
                     finish();
+
                }else{
                     //possible error messages
                     if(secPasswordInput.getText().toString().equals(""))
