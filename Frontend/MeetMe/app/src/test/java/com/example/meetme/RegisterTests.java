@@ -23,15 +23,17 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.manifest.AndroidManifest;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Build.VERSION_CODES.O_MR1)
 public class RegisterTests {
 
     private RegisterPage activity;
 
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
+
         //Test
         RegisterPage activity = Robolectric.buildActivity(RegisterPage.class)
                 .create()
