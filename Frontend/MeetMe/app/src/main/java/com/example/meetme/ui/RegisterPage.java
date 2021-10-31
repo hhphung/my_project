@@ -27,6 +27,7 @@ public class RegisterPage extends AppCompatActivity {
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
         EditText passwordInput = findViewById(R.id.activity_main_password_input);
         EditText secPasswordInput = findViewById(R.id.activity_main_password_input2);
+        TextView errMsg = findViewById(R.id.activity_main_err_msg);
 
 
         //use edit text to create user
@@ -49,11 +50,9 @@ public class RegisterPage extends AppCompatActivity {
                     //possible error messages
                     if(secPasswordInput.getText().toString().equals(""))
                     {
-                        secPasswordInput.setError("Cannot be empty");
-                        secPasswordInput.requestFocus();
+                        errMsg.setText("Cannot be empty");
                     }else {
-                        secPasswordInput.setError("Passwords do not match. Try again");
-                        secPasswordInput.requestFocus();
+                        errMsg.setText("Passwords do not match. Try again");
                     }
                 }
             }

@@ -3,12 +3,15 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 30
+
+
+
 
     defaultConfig {
         applicationId "com.example.meetme"
         minSdk 22
-        targetSdk 31
+        targetSdk 30
         versionCode 1
         versionName "1.0"
 
@@ -24,6 +27,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 }
 

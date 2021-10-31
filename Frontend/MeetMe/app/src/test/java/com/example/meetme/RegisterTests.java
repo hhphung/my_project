@@ -1,6 +1,7 @@
 package com.example.meetme;
 
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
@@ -9,6 +10,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.meetme.api.apiClientFactory;
 import com.example.meetme.model.User;
@@ -28,6 +30,7 @@ import org.robolectric.manifest.AndroidManifest;
 @RunWith(RobolectricTestRunner.class)
 public class RegisterTests {
 
+    @Mock
     private RegisterPage activity;
 
     @Before
@@ -35,7 +38,7 @@ public class RegisterTests {
         MockitoAnnotations.initMocks(this);
 
         //Test
-        RegisterPage activity = Robolectric.buildActivity(RegisterPage.class)
+        activity = Robolectric.buildActivity(RegisterPage.class)
                 .create()
                 .resume()
                 .get();
@@ -58,7 +61,11 @@ public class RegisterTests {
         //click create account btn
         activity.findViewById(R.id.activity_main_create_account_button).callOnClick();
 
-        verify(confirmPassEntry).setError("Passwords do not match. Try again");
+        String error = "Passwords do not match. Try again";
+        TextView errMsg = activity.findViewById(R.id.activity_main_err_msg);
+
+        assertEquals(error, errMsg.getText());
+
     }
 
     @Test
@@ -76,7 +83,10 @@ public class RegisterTests {
         confirmPassEntry.setText("");
         activity.findViewById(R.id.activity_main_create_account_button).callOnClick();
 
-        verify(confirmPassEntry).setError("Cannot be empty");
+        String error = "Cannot be empty";
+        TextView errMsg = activity.findViewById(R.id.activity_main_err_msg);
+
+        assertEquals(error, errMsg.getText());
 
     }
 
