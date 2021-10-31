@@ -2,7 +2,9 @@ package com.example.meetme.api;
 
 import com.example.meetme.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -21,6 +23,9 @@ public interface UserApi {
     @Headers("Content-type: application/json")
     @POST("/user/")
     Call<User> createUser(@Body User user);
+
+    @POST("/{username}/availability")
+    Call<ArrayList<Boolean>> sendAvailability(@Path(value = "username") String username, @Body ArrayList<Boolean> availability);
 
     @GET("/user/")
     Call<List<User>> getAllUsers();
