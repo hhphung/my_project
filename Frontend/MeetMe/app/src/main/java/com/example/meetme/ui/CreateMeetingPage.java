@@ -13,16 +13,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.meetme.R;
+import com.example.meetme.api.MeetingApi;
 import com.example.meetme.model.Meeting;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+
 public class CreateMeetingPage extends AppCompatActivity {
 
     private TextView errorMsg;
+    private MeetingApi m;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +52,11 @@ public class CreateMeetingPage extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String mTitle = "Meeting11";//meetingTitle_textbox.getText().toString();
-                String mDesc = "Description";//meetingDescription_textbox.getText().toString();
-                String mTime = "2007-12-03T10:15:30";//meetingTime_textbox.getText().toString();
-                String mLocation[] = {"123 Duff", "Ames", "IA", "50014", "United States"};//meetingLocation_textbox.getText().toString().split(",");
+
+                String mTitle = meetingTitle_textbox.getText().toString();
+                String mDesc = meetingDescription_textbox.getText().toString();
+                String mTime = meetingTime_textbox.getText().toString();
+                String mLocation[] = meetingLocation_textbox.getText().toString().split(",");
                 PostMeeting(mTitle, mDesc, mTime, mLocation);
 //                if (errorMsg.getText().toString().equals("Error Message Goes Here") ||
 //                        errorMsg.getText().toString().equals("")) {
@@ -73,6 +80,13 @@ public class CreateMeetingPage extends AppCompatActivity {
 //    int getNavigationMenuItemId() {
 //        return R.id.action_createMeeting;
 //    }
+
+    public MeetingApi getMeetingApi(){
+        return m;
+    }
+    public void setMeetingApi(MeetingApi newM){
+        m = newM;
+    }
     protected void PostMeeting(String mTitle, String mDesc, String mTime, String[] mLocation){
 
         try {
@@ -105,6 +119,9 @@ public class CreateMeetingPage extends AppCompatActivity {
             if (errorMsg.getVisibility() == View.INVISIBLE) {
                 errorMsg.setVisibility(View.VISIBLE);
             }
+        }
+        catch (IndexOutOfBoundsException e){
+            errorMsg.setText("Please enter a valid location format");
         }
         catch (Exception e){
             errorMsg.setText(e.toString());
