@@ -3,6 +3,7 @@ package com.example.meetme.api;
 import com.example.meetme.model.User;
 
 import java.util.List;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -24,4 +25,7 @@ public interface UserApi {
 
     @GET("/user/")
     Call<List<User>> getAllUsers();
+    @GET("/user/{name}/getFriends")
+    Call<Set<User>> getFriends(@Path(value = "name") String name);
+
 }
