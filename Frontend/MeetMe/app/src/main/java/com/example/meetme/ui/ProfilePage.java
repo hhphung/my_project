@@ -120,7 +120,7 @@ public class ProfilePage extends AppCompatActivity {
                             friend.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Intent myIntent = new Intent(view.getContext(), friendProfilepage.class);
+                                    Intent myIntent = new Intent(view.getContext(), friendProfilePage.class);
                                     myIntent.putExtra("friendname", friend.getText().toString());
                                     startActivity(myIntent);
                                 }

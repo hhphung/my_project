@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MeetMe"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.friendProfilePage"
+            android:exported="true" />
+        <activity
             android:name=".ui.friendProfilepage"
             android:exported="true" />
         <activity
