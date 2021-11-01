@@ -4,11 +4,14 @@ package com.example.meetme;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -26,6 +29,8 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.manifest.AndroidManifest;
+
+import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
 public class RegisterTests {
@@ -45,6 +50,16 @@ public class RegisterTests {
     }
 
     @Test
+    public void mockitoExample()
+    {
+        Button mockButton = mock(Button.class);
+
+        when(mockButton.callOnClick()).thenReturn(true);
+
+        verify(mockButton).callOnClick();
+    }
+
+    @Test
     public void testPassMisMatch()
     {
         // enter text
@@ -59,7 +74,8 @@ public class RegisterTests {
         confirmPassEntry.setText("12");
 
         //click create account btn
-        activity.findViewById(R.id.activity_main_create_account_button).callOnClick();
+        Button createAct = activity.findViewById(R.id.activity_main_create_account_button);
+        createAct.callOnClick();
 
         String error = "Passwords do not match. Try again";
         TextView errMsg = activity.findViewById(R.id.activity_main_err_msg);
