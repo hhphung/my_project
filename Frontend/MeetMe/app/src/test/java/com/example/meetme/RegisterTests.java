@@ -49,15 +49,6 @@ public class RegisterTests {
                 .get();
     }
 
-    @Test
-    public void mockitoExample()
-    {
-        Button mockButton = mock(Button.class);
-
-        when(mockButton.callOnClick()).thenReturn(true);
-
-        verify(mockButton).callOnClick();
-    }
 
     @Test
     public void testPassMisMatch()
