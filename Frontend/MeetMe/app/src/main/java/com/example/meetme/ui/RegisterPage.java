@@ -17,6 +17,10 @@ import com.example.meetme.model.User;
 
 public class RegisterPage extends AppCompatActivity {
 
+    /**
+     * Sets up the register page. Checks input passwords against each other for validity.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

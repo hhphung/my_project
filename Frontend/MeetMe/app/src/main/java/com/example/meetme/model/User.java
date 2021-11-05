@@ -24,6 +24,11 @@ public class User {
     @Expose
     private String password;
 
+    /**
+     * Constructs a new user with the given username and password.
+     * @param username
+     * @param password
+     */
     public User(String username, String password)
     {
         this.name = username;

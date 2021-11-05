@@ -12,6 +12,10 @@ import com.example.meetme.R;
 
 public class LoginPage extends AppCompatActivity {
 
+    /**
+     * Sets up the login page. It will check their credentials.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
