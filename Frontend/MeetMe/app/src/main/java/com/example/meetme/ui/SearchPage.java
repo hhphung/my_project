@@ -18,6 +18,11 @@ import com.example.meetme.model.User;
 
 public class SearchPage extends BaseActivity {
 
+    /**
+     * Sets up the search page. Extends the base activity to gain access to the bottom navigation bar.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

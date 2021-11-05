@@ -25,8 +25,15 @@ import java.util.Set;
 public class ProfilePage extends AppCompatActivity {
 
 
+    /**
+     * Current user's username
+     */
     String username;
 
+    /**
+     * Sets up the page
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

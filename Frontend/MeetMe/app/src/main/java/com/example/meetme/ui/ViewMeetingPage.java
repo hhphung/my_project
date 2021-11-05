@@ -17,7 +17,7 @@ import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
 
 public class ViewMeetingPage extends AppCompatActivity {
-
+    
     String meetingNameStr = "";
 
     RecyclerView recyclerView;

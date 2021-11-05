@@ -13,13 +13,27 @@ import retrofit2.http.Path;
 
 public interface MeetingApi {
 
+    /**
+     * **THIS MIGHT BE DEPRECATED**
+     * @param name meeting name to get
+     * @return On success: A meeting object sent by the server. On failure:
+     * A generic JSON response indicating a failure.
+     */
     @GET("/meeting/{id}")
     Call<Meeting> getMeetingById(@Path(value = "id") String name);
 
+    /**
+     *
+     * @param nMeeting A meeting object to post to the server.
+     * @return a server response indicating success or failure.
+     */
     @Headers("Content-type: application/json")
     @POST("/meeting/")
     Call<Meeting> createMeeting(@Body Meeting nMeeting);
 
+    /**
+     * @return A list of all meetings in the server.
+     */
     @GET("/meeting/")
     Call<List<Meeting>> getAllMeetings();
 }
