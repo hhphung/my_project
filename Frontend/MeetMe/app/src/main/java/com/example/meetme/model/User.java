@@ -4,6 +4,9 @@ package com.example.meetme.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * User model to be sent in Api calls
+ */
 public class User {
 
     public String getResponse() {

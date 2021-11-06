@@ -15,6 +15,9 @@ import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
 
+/**
+ * RegisterPage includes logic for inputs and buttons
+ */
 public class RegisterPage extends AppCompatActivity {
 
     /**

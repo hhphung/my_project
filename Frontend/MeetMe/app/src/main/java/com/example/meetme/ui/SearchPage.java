@@ -16,6 +16,9 @@ import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
 
+/**
+ * SearchPage includes logic for recyclerView and Buttons
+ */
 public class SearchPage extends BaseActivity {
 
     /**

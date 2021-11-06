@@ -10,6 +10,9 @@ import android.widget.EditText;
 
 import com.example.meetme.R;
 
+/**
+ * LoginPage includes logic for inputs and buttons
+ */
 public class LoginPage extends AppCompatActivity {
 
     /**

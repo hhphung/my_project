@@ -12,6 +12,9 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+/**
+ * All mapping for grabbing user data from the server
+ */
 public interface UserApi {
     /**
      * Returns a user with the given id.

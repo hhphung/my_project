@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * ProfilePage includes logic for inputs and buttons
+ */
 public class ProfilePage extends AppCompatActivity {
 
 

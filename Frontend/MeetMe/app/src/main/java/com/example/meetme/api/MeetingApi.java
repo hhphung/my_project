@@ -11,6 +11,9 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+/**
+ * All mapping for grabbing meeting data from the server
+ */
 public interface MeetingApi {
 
     /**

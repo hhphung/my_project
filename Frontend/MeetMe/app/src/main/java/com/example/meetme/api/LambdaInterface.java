@@ -1,5 +1,9 @@
 package com.example.meetme.api;
 
+/**
+ * interface used by SlimCallback class
+ * @param <T>
+ */
 public interface LambdaInterface<T> {
 
     /**

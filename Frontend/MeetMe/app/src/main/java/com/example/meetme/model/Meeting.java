@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+/**
+ * Meeting model to be sent in Api calls
+ */
 public class Meeting {
 
     @SerializedName("name")

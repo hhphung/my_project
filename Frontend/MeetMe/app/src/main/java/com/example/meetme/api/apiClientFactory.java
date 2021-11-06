@@ -3,6 +3,9 @@ package com.example.meetme.api;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Class used for communication between frontend and server
+ */
 public class apiClientFactory {
     /**
      *  This is the retrofit object. It takes the base URL hard-coded in and uses it to

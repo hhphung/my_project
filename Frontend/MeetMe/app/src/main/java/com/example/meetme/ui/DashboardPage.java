@@ -24,6 +24,9 @@ import com.example.meetme.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DashboardPage includes logic for recyclerView
+ */
 public class DashboardPage extends BaseActivity {
 
     /**

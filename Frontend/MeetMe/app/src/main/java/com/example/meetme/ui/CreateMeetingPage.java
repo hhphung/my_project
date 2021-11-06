@@ -20,6 +20,10 @@ import com.example.meetme.model.Meeting;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+/**
+ * CreateMeetingPage includes logic for inputs and buttons
+ */
 public class CreateMeetingPage extends AppCompatActivity {
 
     /**

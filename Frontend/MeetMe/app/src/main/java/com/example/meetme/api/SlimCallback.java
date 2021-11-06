@@ -6,6 +6,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * To make calls easier to the server
+ * @param <T>
+ */
 public class SlimCallback<T> implements Callback<T> {
 
     /**

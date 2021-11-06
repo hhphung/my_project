@@ -11,6 +11,9 @@ import android.view.MenuItem;
 import com.example.meetme.R;
 import com.google.android.material.navigation.NavigationBarView;
 
+/**
+ * BaseActivity includes logic for the navBar
+ */
 public abstract class BaseActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     /**

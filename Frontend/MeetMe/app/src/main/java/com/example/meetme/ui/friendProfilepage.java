@@ -15,7 +15,9 @@ import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
 import com.example.meetme.ui.ProfilePage;
 
-
+/**
+ * friendProfilePage includes logic for displaying the friend info and buttons
+ */
 public class friendProfilepage extends AppCompatActivity {
 
     /**
