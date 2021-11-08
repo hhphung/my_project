@@ -24,11 +24,24 @@ import com.example.meetme.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DashboardPage includes logic for recyclerView
+ */
 public class DashboardPage extends BaseActivity {
 
+    /**
+     * user's name
+     */
     String username;
+    /**
+     * used to display a list of meetings.
+     */
     RecyclerView recyclerView;
 
+    /**
+     * Set up the page and initialize the recyclerview
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

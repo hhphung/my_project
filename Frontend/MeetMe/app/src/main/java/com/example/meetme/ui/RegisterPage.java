@@ -15,8 +15,15 @@ import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
 
+/**
+ * RegisterPage includes logic for inputs and buttons
+ */
 public class RegisterPage extends AppCompatActivity {
 
+    /**
+     * Sets up the register page. Checks input passwords against each other for validity.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

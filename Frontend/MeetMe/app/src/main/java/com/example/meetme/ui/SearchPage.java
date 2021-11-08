@@ -27,14 +27,23 @@ import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
 import com.example.meetme.model.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * SearchPage includes logic for recyclerView and Buttons
+ */
 public class SearchPage extends BaseActivity {
     RecyclerView recyclerView;
 
     String meetingName;
+
+    /**
+     * Sets up the search page. Extends the base activity to gain access to the bottom navigation bar.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

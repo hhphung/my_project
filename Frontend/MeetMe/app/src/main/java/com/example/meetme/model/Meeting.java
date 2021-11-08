@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+/**
+ * Meeting model to be sent in Api calls
+ */
 public class Meeting {
 
     @SerializedName("name")
@@ -45,6 +48,18 @@ public class Meeting {
     //String name, String adminName, String desc, String dateTime, String street,
     // String city, String state, int zipcode, String country)
 
+    /**
+     * Constructor
+     * @param name meeting name
+     * @param adminName name of Admin creating meeting
+     * @param desc meeting description
+     * @param dateTime date & time: must be in correct format
+     * @param street street address of meeting location
+     * @param city city of meeting location
+     * @param state state of meeting location
+     * @param zipcode zip of meeting location
+     * @param country country of meeting location
+     */
     public Meeting(String name, String adminName, String desc, String dateTime, String street,
                    String city, String state, int zipcode, String country)
     {

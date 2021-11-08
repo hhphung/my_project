@@ -16,13 +16,30 @@ import com.example.meetme.UserAdapter;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
 
+/**
+ * For viewing an individual meeting an its attributes
+ */
 public class ViewMeetingPage extends AppCompatActivity {
 
+    /**
+     * name of given meeting
+     */
     String meetingNameStr = "";
 
+    /**
+     * for list of Users in a Meeting
+     */
     RecyclerView recyclerView;
 
+    /**
+     * TextView for errors
+     */
     private TextView errorMsg;
+
+    /**
+     * Sets up page
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

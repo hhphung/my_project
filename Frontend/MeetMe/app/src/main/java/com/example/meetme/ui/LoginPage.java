@@ -10,8 +10,15 @@ import android.widget.EditText;
 
 import com.example.meetme.R;
 
+/**
+ * LoginPage includes logic for inputs and buttons
+ */
 public class LoginPage extends AppCompatActivity {
 
+    /**
+     * Sets up the login page. It will check their credentials.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
