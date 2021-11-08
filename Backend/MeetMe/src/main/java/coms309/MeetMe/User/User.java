@@ -55,7 +55,7 @@ public class User {
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "friends",
-            joinColumns = {@JoinColumn(name = "id")},
+            joinColumns = {@JoinColumn(name = "self_id")},
             inverseJoinColumns = {@JoinColumn(name = "friend_id")})
     @JsonIgnore
     private Set<User> friends = new HashSet<User>();
@@ -63,8 +63,8 @@ public class User {
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "friendReQuest",
-            joinColumns = {@JoinColumn(name = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "friend_id")})
+            joinColumns = {@JoinColumn(name = "self_request_id")},
+            inverseJoinColumns = {@JoinColumn(name = "friend_request_id")})
     @JsonIgnore
     private Set<User> friendReQuestSent = new HashSet<User>();
 

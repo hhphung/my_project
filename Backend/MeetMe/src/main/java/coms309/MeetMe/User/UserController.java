@@ -122,6 +122,7 @@ public class UserController {
         User self = userRepository.findByName(userName);
         User friend = userRepository.findByName(friendName);
         if(self != null && friend != null & !userName.equals(friendName)){
+            int i = friend.getId();
             self.addFriendRequest(friend);
             userRepository.save(friend);
             return success;
@@ -135,15 +136,9 @@ public class UserController {
     }
 
     @GetMapping(path = "/{name}/getFriendRequestFrom", produces = "application/json")
-    public List<User> getFriendRequestFrom(@PathVariable String name) {
+    public  List<User> getFriendRequestFrom(@PathVariable String name) {
         int i = userRepository.findByName(name).getId();
-        List <Integer> list =  userRepository.getFriendRequestFrom(i);
-        List<User> from  = new ArrayList<User>() ;
-        for( int x : list) {
-            User temp = userRepository.findById(x);
-            from.add(temp);
-        }
-        return from;
+        return userRepository.getFriendRequestFrom(i);
     }
 
 
