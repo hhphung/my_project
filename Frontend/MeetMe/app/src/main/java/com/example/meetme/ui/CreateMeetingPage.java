@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -43,9 +44,15 @@ public class CreateMeetingPage extends AppCompatActivity {
         EditText meetingDescription_textbox = findViewById(R.id.activity_createMeeting_DescriptionInput);
         EditText meetingTime_textbox = findViewById(R.id.activity_createMeeting_timeInput);
         EditText meetingLocation_textbox = findViewById(R.id.activity_createMeeting_LocationInput);
+        EditText meetingDate_textbox = findViewById(R.id.activity_createMeeting_dateInput);
+
         Button backButton = findViewById(R.id.activity_createMeeting_backButton);
         Button createButton = findViewById(R.id.activity_createMeeting_createMeetingButton);
+
         errorMsg = findViewById(R.id.activity_createMeeting_errorMsg);
+
+        CheckBox presentation = findViewById(R.id.activity_createMeeting_checkbox_presentation);
+        CheckBox meeting = findViewById(R.id.activity_createMeeting_checkbox_meeting);
 
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -58,11 +65,13 @@ public class CreateMeetingPage extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String mTitle = "Meeting11";//meetingTitle_textbox.getText().toString();
-                String mDesc = "Description";//meetingDescription_textbox.getText().toString();
-                String mTime = "2007-12-03T10:15:30";//meetingTime_textbox.getText().toString();
-                String mLocation[] = {"123 Duff", "Ames", "IA", "50014", "United States"};//meetingLocation_textbox.getText().toString().split(",");
-                PostMeeting(mTitle, mDesc, mTime, mLocation);
+                String mTitle = meetingTitle_textbox.getText().toString();
+                String mDesc = meetingDescription_textbox.getText().toString();
+                String mTime = meetingTime_textbox.getText().toString();
+                String mDate = meetingDate_textbox.getText().toString();
+                String mLocation[] = meetingLocation_textbox.getText().toString().split(",");
+
+                PostMeeting(mTitle, mDesc, mTime, mDate, mLocation);
 //                if (errorMsg.getText().toString().equals("Error Message Goes Here") ||
 //                        errorMsg.getText().toString().equals("")) {
 //                    finish();
@@ -71,24 +80,32 @@ public class CreateMeetingPage extends AppCompatActivity {
         });
     }
 
+
     /**
      * Attempts to create a meeting based on user input and will display any errors
      * encountered in the process.
      * @param mTitle meeting title
      * @param mDesc meeting description
      * @param mTime meeting time
+     * @param mDate meeting Date
      * @param mLocation An array of strings representing the meeting location in format {St Address, City, State, Zip, Country}
      */
-    protected void PostMeeting(String mTitle, String mDesc, String mTime, String[] mLocation){
+    protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation){
 
         try {
             int zipcode = Integer.parseInt(mLocation[3].replaceAll(" ", ""));
 
-            if (mTitle == null || mDesc == null || mTime == null || mLocation.length < 5) {
+            if (mTitle == null || mDesc == null || mTime == null || mDate == null || mLocation.length < 5) {
                 throw new IllegalArgumentException("missing or incorrectly formatted arguments");
             }
-            Meeting meeting = new Meeting(mTitle, "test2", mDesc, mTime, mLocation[0],
+
+            String reformatedDate = reformatDate(mDate);
+
+            String mDateTime = reformatedDate + "T" + mTime + ":00";
+
+            Meeting meeting = new Meeting(mTitle, "test2", mDesc, mDateTime, mLocation[0],
                     mLocation[1], mLocation[2], zipcode, mLocation[4]);
+
             GetMeetingApi().createMeeting(meeting).enqueue(new SlimCallback<>(response ->
             {
 //                if (!response.getError().equals("")){
@@ -118,5 +135,16 @@ public class CreateMeetingPage extends AppCompatActivity {
                 errorMsg.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    public String reformatDate(String mDate){
+        String result = "";
+
+        if(mDate.length() == 9) {
+            result = mDate.substring(mDate.length() - 4);
+            result += "-" + mDate.substring(0,4);
+        }
+
+        return result;
     }
 }

@@ -9,18 +9,19 @@
 
 
     <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:clipChildren="true"
-        android:scrollbarStyle="outsideInset"
-        app:layout_constraintBottom_toTopOf="@+id/activity_createMeeting_errorMsg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    android:id="@+id/scrollView2"
+    android:layout_width="match_parent"
+    android:layout_height="500dp"
+    android:clipChildren="true"
+    android:scrollbarStyle="outsideInset"
+    app:layout_constraintBottom_toTopOf="@+id/activity_createMeeting_errorMsg"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
 
-        <LinearLayout
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layoutDirection="ltr"
@@ -95,7 +96,7 @@
                 android:layout_marginBottom="0dp"
                 android:ems="10"
                 android:gravity="center_horizontal"
-                android:hint="mm/dd/yyyy"
+                android:hint="mm-dd-yyyy"
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:paddingTop="10dp" />
@@ -150,6 +151,33 @@
                 android:hint="123 St Name, City, State, Zip, Country"
                 android:paddingTop="10dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <TextView
+                android:id="@+id/activity_createMeeting_MeetingType_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="#0000916E"
+                android:fontFamily="sans-serif"
+                android:gravity="center_horizontal"
+                android:outlineProvider="none"
+                android:text="Meeting Type"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textColor="@color/black" />
+
+            <CheckBox
+                android:id="@+id/activity_createMeeting_checkbox_presentation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Presentation" />
+
+            <CheckBox
+                android:id="@+id/activity_createMeeting_checkbox_meeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meeting" />
+
 
         </LinearLayout>
     </ScrollView>
