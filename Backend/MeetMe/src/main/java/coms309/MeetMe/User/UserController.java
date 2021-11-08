@@ -1,4 +1,3 @@
-
 package coms309.MeetMe.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -56,32 +55,32 @@ public class UserController {
 
         User checkIfExists = userRepository.findByName(user.getName());
 
-        if (checkIfExists != null) 
+        if (checkIfExists != null)
             return "{\"message\":\"Username taken\"}";
 
         userRepository.save(user);
         return success;
     }
 
-  /*  @GetMapping(path = "/login", produces = "application/json")
-    String loginUser(@RequestParam String name,@RequestParam  String password ) {
-        User temp = userRepository.findByName(name);
-        if(temp != null) {
-            if (temp.getPassword().equals(password)) {
-                return success;
-            }
-        }
-        return failure;
-    }
+ /*  @GetMapping(path = "/login", produces = "application/json")
+   String loginUser(@RequestParam String name,@RequestParam  String password ) {
+       User temp = userRepository.findByName(name);
+       if(temp != null) {
+           if (temp.getPassword().equals(password)) {
+               return success;
+           }
+       }
+       return failure;
+   }
 */
 
     @PostMapping(path = "/login", produces = "application/json")
     String loginUser(@RequestBody User user ) {
         if(user != null){
-           User temp = userRepository.findByName(user.getName());
-           if(temp != null && temp.getPassword().equals(user.getPassword())){
-                   return success;
-           }
+            User temp = userRepository.findByName(user.getName());
+            if(temp != null && temp.getPassword().equals(user.getPassword())){
+                return success;
+            }
         }
         return failure;
     }
@@ -90,19 +89,65 @@ public class UserController {
         return userRepository.findByName(name).getFriends();
     }
 
-    @PostMapping(path ="/addFriend", produces = "application/json")
-    public String addFriend(@RequestParam String name, @RequestParam String fName) {
-        User user = userRepository.findByName(name);
-        User friend = userRepository.findByName(fName);
-        if(user != null && friend != null && !name.equals(fName)) {
-            user.addFriend(friend);
-            friend.addFriend(user );
-            userRepository.save(user );
+    @PostMapping(path = "/addFriend", produces = "application/json")
+    public String addFriend(@RequestBody HashMap<String, String> friendship) {
+        String userName = friendship.get("userName");
+        String friendName = friendship.get("friendName");
+        User self = userRepository.findByName(userName);
+        User friend = userRepository.findByName(friendName);
+        if(self != null && friend != null & !userName.equals(friendName)){
+            self.addFriend(friend);
+            friend.addFriend(self);
+            userRepository.save(self);
             userRepository.save(friend);
             return success;
         }
         return failure;
     }
+
+    @PostMapping(path ="/deleteFriendRequest", produces = "application/json")
+    public String deleteFriendRequestbyIds(@RequestBody HashMap<String, String> friendship){
+        String name = friendship.get("userName");
+        String friend = friendship.get("friendName");
+        int self = userRepository.findByName(name).getId();
+        int f = userRepository.findByName(friend).getId();
+        userRepository.deleteFriendRequest(self, f);
+        return success;
+    }
+
+    @PostMapping(path = "/addFriendRequest", produces = "application/json")
+    public String addFriendRequest(@RequestBody HashMap<String, String> friendship) {
+        String userName = friendship.get("userName");
+        String friendName = friendship.get("friendName");
+        User self = userRepository.findByName(userName);
+        User friend = userRepository.findByName(friendName);
+        if(self != null && friend != null & !userName.equals(friendName)){
+            self.addFriendRequest(friend);
+            userRepository.save(friend);
+            return success;
+        }
+        return failure;
+    }
+
+    @GetMapping(path = "/{name}/getFriendRequest", produces = "application/json")
+    public Set<User> getFriendRequest (@PathVariable String name) {
+        return userRepository.findByName(name).getFriendReQuest();
+    }
+
+    @GetMapping(path = "/{name}/getFriendRequestFrom", produces = "application/json")
+    public List<User> getFriendRequestFrom(@PathVariable String name) {
+        int i = userRepository.findByName(name).getId();
+        List <Integer> list =  userRepository.getFriendRequestFrom(i);
+        List<User> from  = new ArrayList<User>() ;
+        for( int x : list) {
+            User temp = userRepository.findById(x);
+            from.add(temp);
+        }
+        return from;
+    }
+
+
+
 
 
 //    @PutMapping("/users/{id}")
@@ -113,7 +158,7 @@ public class UserController {
 //        userRepository.save(request);
 //        return userRepository.findById(id);
 //    }
-    
+
 //    @PutMapping("/users/{userId}/laptops/{laptopId}")
 //    String assignLaptopToUser(@PathVariable int userId,@PathVariable int laptopId){
 //        User user = userRepository.findById(userId);

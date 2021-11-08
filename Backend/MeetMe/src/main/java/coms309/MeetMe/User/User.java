@@ -31,7 +31,7 @@ public class User {
     @Column(nullable = false)
     private Date lastSeen;
     @Column(nullable = false)
-    private boolean [] availability = new boolean[168]; // TODO: Create Availability/Schedule object to pass in
+    private boolean[] availability = new boolean[168]; // TODO: Create Availability/Schedule object to pass in
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -51,19 +51,23 @@ public class User {
     @JsonIgnore
     List<Meeting> meetingInvites;
 
-     // =============================== Constructors ================================== //
+    // =============================== Constructors ================================== //
 
-    @ManyToMany(cascade={CascadeType.ALL})
-    @JoinTable(name="friends",
-            joinColumns={@JoinColumn(name="id")},
-            inverseJoinColumns={@JoinColumn(name="friend_id")})
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "friends",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "friend_id")})
     @JsonIgnore
     private Set<User> friends = new HashSet<User>();
 
 
-    @ManyToMany(mappedBy="friends")
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "friendReQuest",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "friend_id")})
     @JsonIgnore
-    private Set<User> friendsOf = new HashSet<User>();
+    private Set<User> friendReQuestSent = new HashSet<User>();
+
 
     public User(String name, String password, Role role) {
         this.name = name;
@@ -96,19 +100,18 @@ public class User {
     }
 
 
-    
     // =============================== Getters and Setters for each field ================================== //
 
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
@@ -120,11 +123,11 @@ public class User {
         this.password = password;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public Date getJoiningDate(){
+    public Date getJoiningDate() {
         return joiningDate;
     }
 
@@ -139,19 +142,32 @@ public class User {
     public Role getRole() {
         return role;
     }
+
     public void setRole(Role role) {
         this.role = role;
     }
 
 
-
     public Set<User> getFriends() {
         return friends;
     }
+
     public void setFriends(Set<User> friends) {
         this.friends = friends;
     }
-    public void addFriend(User friend){
+
+    public void addFriend(User friend) {
         friends.add(friend);
     }
+
+    public void addFriendRequest(User friend) {
+        friendReQuestSent.add(friend);
+    }
+
+
+    public Set<User> getFriendReQuest() {
+        return friendReQuestSent;
+    }
+
+
 }
