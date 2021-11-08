@@ -1,5 +1,7 @@
 package coms309.MeetMe.Meeting;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,7 +15,7 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long> {
     Meeting findByName (String name);
 
     @Query(value = "SELECT * from meeting WHERE name LIKE %?1% OR description LIKE %?1%", nativeQuery = true)
-    Meeting[] findBySearch (String name);
+    List<Meeting> findBySearch (String name);
 
     void deleteById(int id);
     void deleteAll();

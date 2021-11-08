@@ -3,10 +3,20 @@ package com.example.meetme.api;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Class used for communication between frontend and server
+ */
 public class apiClientFactory {
-
+    /**
+     *  This is the retrofit object. It takes the base URL hard-coded in and uses it to
+     *  make HTTP Requests.
+     */
     static Retrofit apiClientSeed;
 
+    /**
+     * Builds a new retrofit object iff there is not one already.
+     * @return apiClientSeed: The retrofit object the client uses to communicate with the server
+     */
     static Retrofit GetApiClientSeed() {
 
         if (apiClientSeed == null) {
@@ -19,7 +29,15 @@ public class apiClientFactory {
         return apiClientSeed;
     }
 
+    /**
+     *
+     * @return A retrofit implementation of the UserApi
+     */
     public static UserApi GetUserApi() { return GetApiClientSeed().create(UserApi.class); }
 
+    /**
+     *
+     * @return A retrofit implementation of the MeetingApi
+     */
     public static MeetingApi GetMeetingApi() { return GetApiClientSeed().create(MeetingApi.class);}
 }
