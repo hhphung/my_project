@@ -105,15 +105,21 @@ public class UserController {
         return failure;
     }
 
+
     @PostMapping(path ="/deleteFriendRequest", produces = "application/json")
-    public String deleteFriendRequestbyIds(@RequestBody HashMap<String, String> friendship){
-        String name = friendship.get("userName");
-        String friend = friendship.get("friendName");
-        int self = userRepository.findByName(name).getId();
-        int f = userRepository.findByName(friend).getId();
-        userRepository.deleteFriendRequest(self, f);
-        return success;
+    public String deleteFriendRequestbyNames(@RequestBody HashMap<String, String> friendship){
+        String name = friendship.get("sender");
+        String friend = friendship.get("receiver");
+        User self = userRepository.findByName(name);
+        User f = userRepository.findByName(friend);
+        if(!name.equals(friend) && self != null && f != null) {
+            userRepository.deleteFriendRequest(self.getId(), f.getId());
+            return success;
+        }
+        return failure;
     }
+
+
 
     @PostMapping(path = "/addFriendRequest", produces = "application/json")
     public String addFriendRequest(@RequestBody HashMap<String, String> friendship) {
@@ -140,6 +146,8 @@ public class UserController {
         int i = userRepository.findByName(name).getId();
         return userRepository.getFriendRequestFrom(i);
     }
+
+
 
 
 

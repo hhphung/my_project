@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Stringy.Stringy;
 
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -61,7 +62,8 @@ public class User {
     private Set<User> friends = new HashSet<User>();
 
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinTable(name = "friendReQuest",
             joinColumns = {@JoinColumn(name = "self_request_id")},
             inverseJoinColumns = {@JoinColumn(name = "friend_request_id")})

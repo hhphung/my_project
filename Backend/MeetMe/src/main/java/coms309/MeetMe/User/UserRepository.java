@@ -22,10 +22,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT * from user WHERE name=?1", nativeQuery = true)
     User findByName(String name);
 
-    @Query(value = "delete*from friend_re_quest where id = ?1 and friend_id = ?2", nativeQuery = true)
-    String deleteFriendRequest(int self, int f);
+    @Query(value = "delete from friend_re_quest where self_request_id = ?1 and friend_request_id = ?2", nativeQuery = true)
+    String deleteFriendRequest(int self, int f );
 
     @Query(value = "select * from user inner join friend_re_quest on friend_re_quest.self_request_id = user.id where friend_re_quest.friend_request_id = ?1", nativeQuery = true)
     List<User> getFriendRequestFrom(int f);
+
+
 }
 
