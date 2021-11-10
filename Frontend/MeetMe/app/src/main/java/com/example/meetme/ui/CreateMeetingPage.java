@@ -1,11 +1,13 @@
 package com.example.meetme.ui;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import static com.example.meetme.api.apiClientFactory.GetMeetingApi;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +19,10 @@ import com.example.meetme.R;
 import com.example.meetme.model.Meeting;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,6 +69,7 @@ public class CreateMeetingPage extends AppCompatActivity {
         });
 
         createButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 String mTitle = meetingTitle_textbox.getText().toString();
@@ -92,6 +99,7 @@ public class CreateMeetingPage extends AppCompatActivity {
      * @param mLocation An array of strings representing the meeting location in format {St Address, City, State, Zip, Country}
      * @param mPresentation a boolean val for whether or not it is a presentation
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation, boolean mPresentation){
 
         try {
@@ -101,13 +109,18 @@ public class CreateMeetingPage extends AppCompatActivity {
                 throw new IllegalArgumentException("missing or incorrectly formatted arguments");
             }
 
-            String reformatedDate = reformatDate(mDate);
-            String reformatedTime = reformatTime(mTime);
+            int year = Integer.parseInt(mDate.substring(mDate.length() - 4));
+            int month = Integer.parseInt(mDate.substring(0,2));
+            int day = Integer.parseInt(mDate.substring(3,5));
 
-            String mDateTime = reformatedDate + "T" + reformatedTime;
+            int hour = Integer.parseInt(mTime.substring(0,2));
+            int min = Integer.parseInt(mTime.substring(mTime.length()-2));
 
-            Meeting meeting = new Meeting(mTitle, "test2", mDesc, mDateTime, mLocation[0],
-                    mLocation[1], mLocation[2], zipcode, mLocation[4], mPresentation);
+            LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, min);
+
+
+            Meeting meeting = new Meeting(mTitle, "test2", mDesc, dateTime.toString(), mLocation[0],
+                    mLocation[1], mLocation[2], zipcode, mLocation[4]);
 
             GetMeetingApi().createMeeting(meeting).enqueue(new SlimCallback<>(response ->
             {
@@ -140,30 +153,4 @@ public class CreateMeetingPage extends AppCompatActivity {
         }
     }
 
-    static String reformatDate(String mDate){
-        String result = "";
-
-        if(mDate.length() == 9) {
-            result = mDate.substring(mDate.length() - 4);
-            result += "-" + mDate.substring(0,4);
-        }
-
-        return result;
-    }
-
-    static String reformatTime(String mTime){
-        String result = "";
-
-        if(mTime.length() == 5)
-        {
-            result = mTime + ":00";
-        }
-
-        if(mTime.length() == 4)
-        {
-            result = "0" + mTime + ":00";
-        }
-
-        return result;
-    }
 }

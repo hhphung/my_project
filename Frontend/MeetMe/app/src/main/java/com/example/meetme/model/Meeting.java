@@ -66,7 +66,7 @@ public class Meeting {
      * @param country country of meeting location
      */
     public Meeting(String name, String adminName, String desc, String dateTime, String street,
-                   String city, String state, int zipcode, String country, boolean isPresentation)
+                   String city, String state, int zipcode, String country)
     {
         this.name = name;
         this.adminName = adminName;
@@ -77,7 +77,7 @@ public class Meeting {
         this.state = state;
         this.zipcode = zipcode;
         this.country = country;
-        this.isPresentation = isPresentation;
+
     }
 
     public String getName() {
@@ -160,15 +160,15 @@ public class Meeting {
         this.responseMessage = responseMessage;
     }
 
-    public boolean getIsPresentation()
-    {
-        return this.isPresentation;
-    }
-
-    public void setIsPresentation(boolean isPresentation)
-    {
-        this.isPresentation = isPresentation;
-    }
+//    public boolean getIsPresentation()
+//    {
+//        return this.isPresentation;
+//    }
+//
+//    public void setIsPresentation(boolean isPresentation)
+//    {
+//        this.isPresentation = isPresentation;
+//    }
 
     public ArrayList<User> getParticipants() {
         return new ArrayList<User>();
