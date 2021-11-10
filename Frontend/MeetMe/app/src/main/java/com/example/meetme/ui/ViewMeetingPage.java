@@ -74,7 +74,7 @@ public class ViewMeetingPage extends AppCompatActivity {
         });
 
         // Get meeting info and display it
-        GetMeetingApi().getMeetingById(meetingNameStr).enqueue(new SlimCallback<Meeting>(meeting -> {
+        GetMeetingApi().getMeetingByName(meetingNameStr).enqueue(new SlimCallback<Meeting>(meeting -> {
             meetingAdminName.setText(meeting.getAdminName());
             meetingDesc.setText(meeting.getDesc());
             meetingDateTime.setText(meeting.getDateTime());
