@@ -100,8 +100,9 @@ public class CreateMeetingPage extends AppCompatActivity {
             }
 
             String reformatedDate = reformatDate(mDate);
+            String reformatedTime = reformatTime(mTime);
 
-            String mDateTime = reformatedDate + "T" + mTime + ":00";
+            String mDateTime = reformatedDate + "T" + reformatedTime;
 
             Meeting meeting = new Meeting(mTitle, "test2", mDesc, mDateTime, mLocation[0],
                     mLocation[1], mLocation[2], zipcode, mLocation[4]);
@@ -137,12 +138,28 @@ public class CreateMeetingPage extends AppCompatActivity {
         }
     }
 
-    public String reformatDate(String mDate){
+    static String reformatDate(String mDate){
         String result = "";
 
         if(mDate.length() == 9) {
             result = mDate.substring(mDate.length() - 4);
             result += "-" + mDate.substring(0,4);
+        }
+
+        return result;
+    }
+
+    static String reformatTime(String mTime){
+        String result = "";
+
+        if(mTime.length() == 5)
+        {
+            result = mTime + ":00";
+        }
+
+        if(mTime.length() == 4)
+        {
+            result = "0" + mTime + ":00";
         }
 
         return result;
