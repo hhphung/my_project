@@ -162,7 +162,7 @@
                 android:fontFamily="sans-serif"
                 android:gravity="center_horizontal"
                 android:outlineProvider="none"
-                android:text="Meeting Type"
+                android:text="Meeting Type (check if presentation)"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
                 android:textColor="@color/black" />
 
@@ -171,13 +171,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Presentation" />
-
-            <CheckBox
-                android:id="@+id/activity_createMeeting_checkbox_meeting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Meeting" />
-
 
         </LinearLayout>
     </ScrollView>

@@ -52,7 +52,7 @@ public class CreateMeetingPage extends AppCompatActivity {
         errorMsg = findViewById(R.id.activity_createMeeting_errorMsg);
 
         CheckBox presentation = findViewById(R.id.activity_createMeeting_checkbox_presentation);
-        CheckBox meeting = findViewById(R.id.activity_createMeeting_checkbox_meeting);
+
 
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +70,9 @@ public class CreateMeetingPage extends AppCompatActivity {
                 String mTime = meetingTime_textbox.getText().toString();
                 String mDate = meetingDate_textbox.getText().toString();
                 String mLocation[] = meetingLocation_textbox.getText().toString().split(",");
+                Boolean presentationVal = presentation.isChecked();
 
-                PostMeeting(mTitle, mDesc, mTime, mDate, mLocation);
+                PostMeeting(mTitle, mDesc, mTime, mDate, mLocation, presentationVal);
 //                if (errorMsg.getText().toString().equals("Error Message Goes Here") ||
 //                        errorMsg.getText().toString().equals("")) {
 //                    finish();
@@ -89,8 +90,9 @@ public class CreateMeetingPage extends AppCompatActivity {
      * @param mTime meeting time
      * @param mDate meeting Date
      * @param mLocation An array of strings representing the meeting location in format {St Address, City, State, Zip, Country}
+     * @param mPresentation a boolean val for whether or not it is a presentation
      */
-    protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation){
+    protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation, boolean mPresentation){
 
         try {
             int zipcode = Integer.parseInt(mLocation[3].replaceAll(" ", ""));
@@ -105,7 +107,7 @@ public class CreateMeetingPage extends AppCompatActivity {
             String mDateTime = reformatedDate + "T" + reformatedTime;
 
             Meeting meeting = new Meeting(mTitle, "test2", mDesc, mDateTime, mLocation[0],
-                    mLocation[1], mLocation[2], zipcode, mLocation[4]);
+                    mLocation[1], mLocation[2], zipcode, mLocation[4], mPresentation);
 
             GetMeetingApi().createMeeting(meeting).enqueue(new SlimCallback<>(response ->
             {
