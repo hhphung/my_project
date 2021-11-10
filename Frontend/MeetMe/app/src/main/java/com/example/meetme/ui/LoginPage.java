@@ -1,5 +1,7 @@
 package com.example.meetme.ui;
 
+import static com.example.meetme.api.apiClientFactory.GetUserApi;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,7 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.meetme.api.SlimCallback;
+import com.example.meetme.model.User;
 import com.example.meetme.R;
+
 
 /**
  * LoginPage includes logic for inputs and buttons
@@ -39,8 +44,20 @@ public class LoginPage extends AppCompatActivity {
         toDashboardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(view.getContext(),DashboardPage.class));
-                finish();
+                User user = new User(usernameInput.getText().toString(), passwordInput.getText().toString());
+                GetUserApi().canLogin(user).enqueue(new SlimCallback<User>(response -> {
+                    if (response.getResponse().equals("Success")) {
+                        Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
+                        myIntent.putExtra("username", usernameInput.getText().toString());
+                        startActivity(myIntent);
+                    } else {
+                        passwordInput.setError("Check Password again");
+                        passwordInput.requestFocus();
+
+                        usernameInput.setError("Check username");
+                        usernameInput.requestFocus();
+                    }
+                }));
             }
         });
     }
