@@ -18,6 +18,8 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+
+
     private String success = "{\"message\":\"Success\"}";
     private String failure = "{\"message\":\"User not found\"}";
 
@@ -106,6 +108,8 @@ public class UserController {
     }
 
 
+
+
     @PostMapping(path ="/deleteFriendRequest", produces = "application/json")
     public String deleteFriendRequestbyNames(@RequestBody HashMap<String, String> friendship){
         String name = friendship.get("sender");
@@ -113,6 +117,7 @@ public class UserController {
         User self = userRepository.findByName(name);
         User f = userRepository.findByName(friend);
         if(!name.equals(friend) && self != null && f != null) {
+            self.getFriendReQuest().remove(f);
             userRepository.deleteFriendRequest(self.getId(), f.getId());
             return success;
         }
@@ -146,6 +151,8 @@ public class UserController {
         int i = userRepository.findByName(name).getId();
         return userRepository.getFriendRequestFrom(i);
     }
+
+
 
 
 
