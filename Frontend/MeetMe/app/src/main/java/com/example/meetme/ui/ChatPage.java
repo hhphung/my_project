@@ -37,6 +37,8 @@ public class ChatPage extends AppCompatActivity {
         e2 = (EditText) findViewById(R.id.et2);
         t1 = (TextView) findViewById(R.id.tx1);
 
+        WebSocketClient cc = null;
+
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,6 +52,7 @@ public class ChatPage extends AppCompatActivity {
                  * If running on the emulator, you can use localhost.
                  */
                 String w = "ws://10.26.13.93:8080/websocket/" + e1.getText().toString();
+                WebSocketClient cc = null;
 
                 try {
                     Log.d("Socket:", "Trying socket");
