@@ -90,12 +90,12 @@ public class UserController {
     }
 
     @PostMapping(path = "/addFriend", produces = "application/json")
-    public String addFriend(@RequestBody HashMap<String, String> friendship) {
-        String userName = friendship.get("userName");
-        String friendName = friendship.get("friendName");
-        User self = userRepository.findByName(userName);
-        User friend = userRepository.findByName(friendName);
-        if(self != null && friend != null & !userName.equals(friendName)){
+    public String addFriend(@RequestBody FriendShip s) {
+        int senderId = s.getSenderId();
+        int receiverId = s.getRecieverId();
+        User self = userRepository.findById(senderId);
+        User friend = userRepository.findById(receiverId);
+        if(self != null && friend != null & senderId != receiverId){
             self.addFriend(friend);
             friend.addFriend(self);
             userRepository.save(self);
@@ -107,13 +107,13 @@ public class UserController {
 
 
     @PostMapping(path ="/deleteFriendRequest", produces = "application/json")
-    public String deleteFriendRequestbyNames(@RequestBody HashMap<String, String> friendship){
-        String name = friendship.get("sender");
-        String friend = friendship.get("receiver");
-        User self = userRepository.findByName(name);
-        User f = userRepository.findByName(friend);
-        if(!name.equals(friend) && self != null && f != null) {
-            userRepository.deleteFriendRequest(self.getId(), f.getId());
+    public String deleteFriendRequestbyNames(@RequestBody FriendShip s){
+        int senderId = s.getSenderId();
+        int receiverId = s.getRecieverId();
+        User self = userRepository.findById(senderId);
+        User friend = userRepository.findById(receiverId);
+        if(senderId != receiverId && self != null && friend != null) {
+            userRepository.deleteFriendRequest(self.getId(), friend.getId());
             return success;
         }
         return failure;
@@ -121,13 +121,13 @@ public class UserController {
 
 
 
-    @PostMapping(path = "/addFriendRequest", produces = "application/json")
-    public String addFriendRequest(@RequestBody HashMap<String, String> friendship) {
-        String userName = friendship.get("userName");
-        String friendName = friendship.get("friendName");
-        User self = userRepository.findByName(userName);
-        User friend = userRepository.findByName(friendName);
-        if(self != null && friend != null & !userName.equals(friendName)){
+        @PostMapping(path = "/addFriendRequest", produces = "application/json")
+        public String addFriendRequest(@RequestBody FriendShip s) {
+        int senderId = s.getSenderId();
+        int receiverId = s.getRecieverId();
+        User self = userRepository.findById(senderId);
+        User friend = userRepository.findById(receiverId);
+        if(self != null && friend != null && senderId != receiverId){
             int i = friend.getId();
             self.addFriendRequest(friend);
             userRepository.save(friend);

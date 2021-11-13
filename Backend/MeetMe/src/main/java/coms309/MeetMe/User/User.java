@@ -54,21 +54,24 @@ public class User {
 
     // =============================== Constructors ================================== //
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+        @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "friends",
             joinColumns = {@JoinColumn(name = "self_id")},
             inverseJoinColumns = {@JoinColumn(name = "friend_id")})
+
     @JsonIgnore
     private Set<User> friends = new HashSet<User>();
 
 
 
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "friendReQuest",
             joinColumns = {@JoinColumn(name = "self_request_id")},
             inverseJoinColumns = {@JoinColumn(name = "friend_request_id")})
     @JsonIgnore
     private Set<User> friendReQuestSent = new HashSet<User>();
+
+
 
 
     public User(String name, String password, Role role) {
