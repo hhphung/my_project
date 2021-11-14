@@ -2,6 +2,7 @@ package com.example.meetme.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentManager;
 
 import static com.example.meetme.api.apiClientFactory.GetMeetingApi;
 
@@ -26,61 +27,55 @@ import retrofit2.Response;
 public class AvailabilityPage extends AppCompatActivity {
 
     Button confirm;
-    Spinner mondayStart, mondayEnd, tuesdayStart, tuesdayEnd, wednesdayStart, wednesdayEnd, thursdayStart, thursdayEnd;
-    Spinner fridayStart, fridayEnd, saturdayStart, saturdayEnd, sundayStart, sundayEnd;
+    private static final String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+    String username;
+    private int currentDay = 0;
+
+    private FragmentManager fm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //TODO add a DayAvailabilityFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_availability_page);
-        init_dropdownMenus();
-
-        confirm = findViewById(R.id.activity_availability_confirm);
+        username = getIntent().getStringExtra("username");
+        confirm = (Button) findViewById(R.id.activity_availability_confirm);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PostAvailability();
+                completeDayAvailability();
             }
         });
+        fm = getSupportFragmentManager();
+        replaceFragment();
+
     }
 
-    private void init_dropdownMenus(){
-        mondayStart = findViewById(R.id.activity_availability_mondayStart);
-        mondayEnd = findViewById(R.id.activity_availability_mondayEnd);
-        tuesdayStart = findViewById(R.id.activity_availability_tuesdayStart);
-        tuesdayEnd = findViewById(R.id.activity_availability_tuesdayEnd);
-        wednesdayStart = findViewById(R.id.activity_availability_wednesdayStart);
-        wednesdayEnd = findViewById(R.id.activity_availability_wednesdayEnd);
-        thursdayStart = findViewById(R.id.activity_availability_thursdayStart);
-        thursdayEnd = findViewById(R.id.activity_availability_thursdayEnd);
-        fridayStart = findViewById(R.id.activity_availability_fridayStart);
-        fridayEnd = findViewById(R.id.activity_availability_fridayEnd);
-        saturdayStart = findViewById(R.id.activity_availability_saturdayStart);
-        saturdayEnd = findViewById(R.id.activity_availability_saturdayEnd);
-        sundayStart = findViewById(R.id.activity_availability_sundayStart);
-        sundayEnd = findViewById(R.id.activity_availability_sundayEnd);
 
-        Spinner[] starts = new Spinner[] {mondayStart, tuesdayStart, wednesdayStart, thursdayStart, fridayStart, saturdayStart, sundayStart};
-        Spinner[] ends = new Spinner[] {mondayEnd, tuesdayEnd, wednesdayEnd, thursdayEnd, fridayEnd, saturdayEnd, sundayEnd};
-        String[] startHours = new String[25];
-        String[] endHours = new String[25];
-        endHours[0] = "End time";
-        startHours[0] = "Start time";
-        for (Integer i = 0; i < 24; i++){
-            startHours[i+1] = i.toString() + ":00";
-            endHours[i+1] = i.toString() + ":00";
+    protected void completeDayAvailability(){
+        /*
+         * TODO
+         *  1. Call confirmDayAvailability from the fragment
+         *  2. Increment currentDay
+         *  3. Replace the fragment with the next day's fragment
+         */
+        DayAvailabilityFragment fragment =  (DayAvailabilityFragment) fm.findFragmentByTag("availabilityFragment");
+        if (fragment.confirmDayAvailability()){
+            //Go to dashboard
         }
-        ArrayAdapter<String> endHoursAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, endHours);
-        ArrayAdapter<String> startHoursAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, startHours);
-
-        for (int i = 0; i < 7; i++){
-            starts[i].setAdapter(startHoursAdapter);
-            ends[i].setAdapter(endHoursAdapter);
+        else{
+            currentDay++;
+            replaceFragment();
         }
     }
 
-    protected boolean PostAvailability(){
-        startActivity(new Intent(this.getBaseContext(), DashboardPage.class));
-        finish();
-        return false;
+    private void replaceFragment(){
+        Bundle bundle = new Bundle();
+        bundle.putInt("day", currentDay);
+        bundle.putString("username", username);
+        fm.beginTransaction()
+                .replace(R.id.fragment_container_view, DayAvailabilityFragment.class, bundle, "availabilityFragment")
+                .setReorderingAllowed(true)
+                .addToBackStack(days[currentDay])
+                .commit();
     }
 }

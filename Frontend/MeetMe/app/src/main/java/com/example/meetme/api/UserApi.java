@@ -25,7 +25,7 @@ public interface UserApi {
     Call<User> createUser(@Body User user);
 
     @POST("/{username}/availability")
-    Call<ArrayList<Boolean>> sendAvailability(@Path(value = "username") String username, @Body ArrayList<Boolean> availability);
+    Call<Boolean[]> sendAvailability(@Path(value = "username") String username, @Body Boolean[] availability);
 
     @GET("/user/")
     Call<List<User>> getAllUsers();
