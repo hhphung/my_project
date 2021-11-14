@@ -102,24 +102,9 @@ public class UserController {
         return failure;
     }
 
-    @PostMapping(path ="/deleteFriendRequest", produces = "application/json")
-    public String deleteFriendRequestbyIds(int self, int f){
-        userRepository.deleteFriendRequest(self, f);
-        userRepository.deleteFriendRequest(f, self);
-        return success;
-    }
 
-    @PostMapping(path ="/addFriendRequest", produces = "application/json")
-    public String addFriendRequest(@RequestBody User name, @RequestBody User fName) {
-        if(name != null && fName != null && !name.equals(fName)) {
-            name.addFriendRequest(fName);
-            fName.addFriendRequest(name);
-            userRepository.save(name);
-            userRepository.save(fName);
-            return success;
-        }
-        return failure;
-    }
+
+
 
 
 //    @PutMapping("/users/{id}")
