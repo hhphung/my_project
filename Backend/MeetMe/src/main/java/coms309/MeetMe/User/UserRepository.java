@@ -19,6 +19,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT * from user WHERE name=?1", nativeQuery = true)
     User findByName(String name);
 
-    @Query(value = "delete*from friend_re_quest where id = self and friend_id = f", nativeQuery = true)
-    String deleteFriendRequest(int self, int f);
+ 
 }
