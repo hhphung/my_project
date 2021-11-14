@@ -13,6 +13,7 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import coms309.MeetMe.User.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class ChatSocketController {
     // cannot autowire static directly (instead we do it by the below
     // method
     private static MessageRepository msgRepo;
+    private static UserRepository userRepository;
 
     /*
      * Grabs the MessageRepository singleton from the Spring Application
@@ -48,6 +50,7 @@ public class ChatSocketController {
     public void onOpen(Session session, @PathParam("username") String username)
             throws IOException {
 
+    
         logger.info("Entered into Open");
 
         // store connecting user information
