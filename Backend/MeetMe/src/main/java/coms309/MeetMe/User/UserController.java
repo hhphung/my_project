@@ -90,17 +90,7 @@ public class UserController {
         return userRepository.findByName(name).getFriends();
     }
 
-    @PostMapping(path ="/addFriend", produces = "application/json")
-    public String addFriend(@RequestBody User name, @RequestBody User fName) {
-        if(name != null && fName != null && !name.equals(fName)) {
-            name.addFriend(fName);
-            fName.addFriend(name);
-            userRepository.save(name);
-            userRepository.save(fName);
-            return success;
-        }
-        return failure;
-    }
+
 
 
 
