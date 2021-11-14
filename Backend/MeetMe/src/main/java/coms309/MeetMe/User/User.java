@@ -171,6 +171,15 @@ public class User {
 
 
 
+    public void addFriendRequest(User friend) {
+        friendReQuestSent.add(friend);
+    }
+
+
+    public Set<User> getFriendReQuest() {
+        return friendReQuestSent;
+    }
+
 
 
 
