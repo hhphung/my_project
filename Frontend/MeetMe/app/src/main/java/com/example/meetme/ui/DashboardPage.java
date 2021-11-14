@@ -48,7 +48,7 @@ public class DashboardPage extends BaseActivity {
 
         TextView welcomeText = findViewById(R.id.activity_dashboard_text);
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
-        Button goToCreateMeeting = findViewById(R.id.activity_dashboard_goToCreateMeeting);
+
 
         // load meetings as interactive cards
         GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings->
@@ -69,6 +69,7 @@ public class DashboardPage extends BaseActivity {
     protected int getContentViewId() {
         return R.layout.activity_dashboard_page;
     }
+
 
     @Override
     int getLayoutId() {

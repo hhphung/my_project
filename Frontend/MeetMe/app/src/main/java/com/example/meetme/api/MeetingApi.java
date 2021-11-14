@@ -23,7 +23,10 @@ public interface MeetingApi {
      * A generic JSON response indicating a failure.
      */
     @GET("/meeting/{id}")
-    Call<Meeting> getMeetingById(@Path(value = "id") String name);
+    Call<Meeting> getMeetingById(@Path(value = "id") int id);
+
+    @GET("/meeting/{name}")
+    Call<Meeting> getMeetingByName(@Path(value = "name") String name);
 
     /**
      *
@@ -39,4 +42,7 @@ public interface MeetingApi {
      */
     @GET("/meeting/")
     Call<List<Meeting>> getAllMeetings();
+
+    @GET("/meeting/search/{name}")
+    Call<List<Meeting>> getResults(@Path(value = "name") String name);
 }

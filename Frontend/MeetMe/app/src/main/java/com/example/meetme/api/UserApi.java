@@ -49,11 +49,20 @@ public interface UserApi {
     Call<List<User>> getAllUsers();
 
     /**
+     * Checks if a user can login
+     * @param user
+     * @return "success" or "failure"
+     */
+    @GET("/login/")
+    Call<User> canLogin(@Body User user);
+
+    /**
      * Calls the server for a list of users that the user {name} is friends with.
      * @param name name of user to get friends of
      * @return a list of friends of the user given by name
      */
     @GET("/user/{name}/getFriends")
     Call<Set<User>> getFriends(@Path(value = "name") String name);
+
 
 }

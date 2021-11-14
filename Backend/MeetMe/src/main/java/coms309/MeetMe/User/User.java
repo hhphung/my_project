@@ -65,12 +65,14 @@ public class User {
 
 
 
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "friendReQuest",
             joinColumns = {@JoinColumn(name = "self_request_id")},
             inverseJoinColumns = {@JoinColumn(name = "friend_request_id")}
     )
     private Set<User> friendReQuestSent = new HashSet<User>();
+
 
 
 
@@ -168,14 +170,7 @@ public class User {
     }
 
 
-    public void addFriendRequest(User friend) {
-        friendReQuestSent.add(friend);
-    }
 
-
-    public Set<User> getFriendReQuest() {
-        return friendReQuestSent;
-    }
 
 
 

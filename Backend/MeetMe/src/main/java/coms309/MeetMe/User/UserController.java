@@ -91,6 +91,7 @@ public class UserController {
         return userRepository.findByName(name).getFriends();
     }
 
+
     @PostMapping(path = "/addFriend", produces = "application/json")
     public String addFriend(@RequestBody FriendShip s) {
         int senderId = s.getSenderId();
@@ -121,6 +122,7 @@ return success;
         }
         return failure;
     }
+
 
 
     @PostMapping(path = "/addFriendRequest", produces = "application/json")
