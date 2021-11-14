@@ -28,7 +28,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Query(value = "delete from friend_re_quest where self_request_id = ?1 and ?2", nativeQuery = true)
     void deleteFriendRequest(int self, int f );
-    
+
 
     @Query(value = "select * from user inner join friend_re_quest on friend_re_quest.self_request_id = user.id where friend_re_quest.friend_request_id = ?1", nativeQuery = true)
     List<User> getFriendRequestFrom(int f);

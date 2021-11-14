@@ -111,7 +111,7 @@ public class UserController {
 
 
     @PostMapping(path ="/deleteFriendRequest", produces = "application/json")
-<<<<<<< HEAD
+
     public String deleteFriendRequestbyNames(@RequestBody FriendShip s){
         int senderId = s.getSenderId();
         int receiverId = s.getRecieverId();
@@ -119,16 +119,7 @@ public class UserController {
         User friend = userRepository.findById(receiverId);
         if(senderId != receiverId && self != null && friend != null) {
             userRepository.deleteFriendRequest(self.getId(), friend.getId());
-=======
-    public String deleteFriendRequestbyNames(@RequestBody HashMap<String, String> friendship){
-        String name = friendship.get("sender");
-        String friend = friendship.get("receiver");
-        User self = userRepository.findByName(name);
-        User f = userRepository.findByName(friend);
-        if(!name.equals(friend) && self != null && f != null) {
-            self.getFriendReQuest().remove(f);
-            userRepository.deleteFriendRequest(self.getId(), f.getId());
->>>>>>> d8388a940679b99d7623c40249b2beff305e6523
+
             return success;
         }
         return failure;

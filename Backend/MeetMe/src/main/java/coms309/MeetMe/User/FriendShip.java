@@ -3,7 +3,7 @@ package coms309.MeetMe.User;
 public class FriendShip {
   private int senderId;
 
-  private int recieverId;
+      private int recieverId;
 
 
     public FriendShip(int senderId, int recieverId) {
