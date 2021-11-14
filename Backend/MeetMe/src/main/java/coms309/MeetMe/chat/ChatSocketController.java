@@ -50,7 +50,7 @@ public class ChatSocketController {
     public void onOpen(Session session, @PathParam("username") String username)
             throws IOException {
 
-    
+
         logger.info("Entered into Open");
 
         // store connecting user information
