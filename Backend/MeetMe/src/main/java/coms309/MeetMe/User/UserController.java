@@ -19,29 +19,28 @@ public class UserController {
     UserRepository userRepository;
 
 
-
     private String success = "{\"message\":\"Success\"}";
     private String failure = "{\"message\":\"User not found\"}";
 
     @GetMapping(value = "/", produces = "application/json")
-    List<User> getAllUsers(){
+    List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     @GetMapping(value = "/id/{id}", produces = "application/json")
-    User getUserById( @PathVariable int id) {
+    User getUserById(@PathVariable int id) {
         return userRepository.findById(id);
     }
 
     @GetMapping(value = "/name/{name}", produces = "application/json")
-    User getUserByName( @PathVariable String name) {
+    User getUserByName(@PathVariable String name) {
         return userRepository.findByName(name);
     }
 
     @PostMapping(value = "/{name}/availability", produces = "application/json")
-    String setAvailability(@PathVariable String name, @RequestBody boolean [] availability ){
-        User temp =  userRepository.findByName(name);
-        if(temp ==null){
+    String setAvailability(@PathVariable String name, @RequestBody boolean[] availability) {
+        User temp = userRepository.findByName(name);
+        if (temp == null) {
             return failure;
         }
         temp.setAvailability(availability);
@@ -77,58 +76,45 @@ public class UserController {
 */
 
     @PostMapping(path = "/login", produces = "application/json")
-    String loginUser(@RequestBody User user ) {
-        if(user != null){
+    String loginUser(@RequestBody User user) {
+        if (user != null) {
             User temp = userRepository.findByName(user.getName());
-            if(temp != null && temp.getPassword().equals(user.getPassword())){
+            if (temp != null && temp.getPassword().equals(user.getPassword())) {
                 return success;
             }
         }
         return failure;
     }
+
     @GetMapping(path = "/{name}/getFriends", produces = "application/json")
-    public Set<User> getFriends (@PathVariable String name) {
+    public Set<User> getFriends(@PathVariable String name) {
         return userRepository.findByName(name).getFriends();
     }
 
-<<<<<<< HEAD
     @PostMapping(path = "/addFriend", produces = "application/json")
     public String addFriend(@RequestBody FriendShip s) {
         int senderId = s.getSenderId();
         int receiverId = s.getRecieverId();
         User self = userRepository.findById(senderId);
         User friend = userRepository.findById(receiverId);
-        if(self != null && friend != null & senderId != receiverId){
+        if (self != null && friend != null & senderId != receiverId) {
             self.addFriend(friend);
             friend.addFriend(self);
             userRepository.save(self);
             userRepository.save(friend);
-=======
-    @PostMapping(path ="/addFriend", produces = "application/json")
-    public String addFriend(@RequestBody User name, @RequestBody User fName) {
-        if(name != null && fName != null && !name.equals(fName)) {
-            name.addFriend(fName);
-            fName.addFriend(name);
-            userRepository.save(name);
-            userRepository.save(fName);
->>>>>>> main
-            return success;
+return success;
+
         }
         return failure;
     }
 
-<<<<<<< HEAD
-
-
-
-    @PostMapping(path ="/deleteFriendRequest", produces = "application/json")
-
-    public String deleteFriendRequestbyNames(@RequestBody FriendShip s){
+    @PostMapping(path = "/deleteFriendRequest", produces = "application/json")
+    public String deleteFriendRequestbyNames(@RequestBody FriendShip s) {
         int senderId = s.getSenderId();
         int receiverId = s.getRecieverId();
         User self = userRepository.findById(senderId);
         User friend = userRepository.findById(receiverId);
-        if(senderId != receiverId && self != null && friend != null) {
+        if (senderId != receiverId && self != null && friend != null) {
             userRepository.deleteFriendRequest(self.getId(), friend.getId());
 
             return success;
@@ -137,37 +123,23 @@ public class UserController {
     }
 
 
-
-        @PostMapping(path = "/addFriendRequest", produces = "application/json")
-        public String addFriendRequest(@RequestBody FriendShip s) {
+    @PostMapping(path = "/addFriendRequest", produces = "application/json")
+    public String addFriendRequest(@RequestBody FriendShip s) {
         int senderId = s.getSenderId();
         int receiverId = s.getRecieverId();
         User self = userRepository.findById(senderId);
         User friend = userRepository.findById(receiverId);
-        if(self != null && friend != null && senderId != receiverId){
+        if (self != null && friend != null && senderId != receiverId) {
             int i = friend.getId();
             self.addFriendRequest(friend);
             userRepository.save(friend);
-=======
-    @PostMapping(path ="/deleteFriendRequest", produces = "application/json")
-    public String deleteFriendRequestbyIds(int self, int f){
-        userRepository.deleteFriendRequest(self, f);
-        userRepository.deleteFriendRequest(f, self);
-        return success;
-    }
-
-    @PostMapping(path ="/addFriendRequest", produces = "application/json")
-    public String addFriendRequest(@RequestBody User name, @RequestBody User fName) {
-        if(name != null && fName != null && !name.equals(fName)) {
-            name.addFriendRequest(fName);
-            fName.addFriendRequest(name);
-            userRepository.save(name);
-            userRepository.save(fName);
->>>>>>> main
-            return success;
+return success;
         }
         return failure;
     }
+
+
+
 
     @GetMapping(path = "/{name}/getFriendRequest", produces = "application/json")
     public Set<User> getFriendRequest (@PathVariable String name) {

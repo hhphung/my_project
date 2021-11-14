@@ -63,7 +63,7 @@ public class User {
     private Set<User> friends = new HashSet<User>();
 
 
-<<<<<<< HEAD
+
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "friendReQuest",
@@ -71,20 +71,7 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "friend_request_id")}
     )
     private Set<User> friendReQuestSent = new HashSet<User>();
-=======
-    @ManyToMany(cascade={CascadeType.ALL})
-    @JoinTable(name="friendReQuest",
-            joinColumns={@JoinColumn(name="id")},
-            inverseJoinColumns={@JoinColumn(name="friend_id")})
-    @JsonIgnore
-    private Set<User> friendReQuest = new HashSet<User>();
 
-
-    @ManyToMany(mappedBy="friends")
-    @JsonIgnore
-    private Set<User>  requestFrom = new HashSet<User>();
-
->>>>>>> main
 
 
 
@@ -180,7 +167,7 @@ public class User {
         friends.add(friend);
     }
 
-<<<<<<< HEAD
+
     public void addFriendRequest(User friend) {
         friendReQuestSent.add(friend);
     }
@@ -194,18 +181,4 @@ public class User {
 
 
 }
-=======
-    public void addFriendRequest(User friend){
-        friendReQuest.add(friend);
-    }
 
-    public Set<User> getFriendReQuest(){
-        return friendReQuest;
-    }
-
-    public Set<User> getRequestFrom(){
-        return requestFrom;
-    }
-
-}
->>>>>>> main
