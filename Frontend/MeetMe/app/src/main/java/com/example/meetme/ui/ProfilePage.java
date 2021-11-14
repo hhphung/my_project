@@ -22,11 +22,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * ProfilePage includes logic for inputs and buttons
+ */
 public class ProfilePage extends AppCompatActivity {
 
 
+    /**
+     * Current user's username
+     */
     String username;
 
+    /**
+     * Sets up the page
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

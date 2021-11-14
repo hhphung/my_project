@@ -15,16 +15,21 @@ import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
 import com.example.meetme.ui.ProfilePage;
 
-
+/**
+ * friendProfilePage includes logic for displaying the friend info and buttons
+ */
 public class friendProfilepage extends AppCompatActivity {
 
+    /**
+     * Set up the friend's profile page. Get the friend's name from the intent
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_profilepage);
         Button back = findViewById(R.id.friendProfileBack);
         TextView friend = findViewById(R.id.friendProfileUsername);
-
         String username = getIntent().getStringExtra("friendname");
         GetUserApi().getUserByName(username).enqueue(new SlimCallback<User>(user ->{
             friend.setText("Name: " + user.getName());

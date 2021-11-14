@@ -91,6 +91,7 @@ public class UserController {
         return userRepository.findByName(name).getFriends();
     }
 
+<<<<<<< HEAD
     @PostMapping(path = "/addFriend", produces = "application/json")
     public String addFriend(@RequestBody FriendShip s) {
         int senderId = s.getSenderId();
@@ -102,11 +103,21 @@ public class UserController {
             friend.addFriend(self);
             userRepository.save(self);
             userRepository.save(friend);
+=======
+    @PostMapping(path ="/addFriend", produces = "application/json")
+    public String addFriend(@RequestBody User name, @RequestBody User fName) {
+        if(name != null && fName != null && !name.equals(fName)) {
+            name.addFriend(fName);
+            fName.addFriend(name);
+            userRepository.save(name);
+            userRepository.save(fName);
+>>>>>>> main
             return success;
         }
         return failure;
     }
 
+<<<<<<< HEAD
 
 
 
@@ -137,6 +148,22 @@ public class UserController {
             int i = friend.getId();
             self.addFriendRequest(friend);
             userRepository.save(friend);
+=======
+    @PostMapping(path ="/deleteFriendRequest", produces = "application/json")
+    public String deleteFriendRequestbyIds(int self, int f){
+        userRepository.deleteFriendRequest(self, f);
+        userRepository.deleteFriendRequest(f, self);
+        return success;
+    }
+
+    @PostMapping(path ="/addFriendRequest", produces = "application/json")
+    public String addFriendRequest(@RequestBody User name, @RequestBody User fName) {
+        if(name != null && fName != null && !name.equals(fName)) {
+            name.addFriendRequest(fName);
+            fName.addFriendRequest(name);
+            userRepository.save(name);
+            userRepository.save(fName);
+>>>>>>> main
             return success;
         }
         return failure;
