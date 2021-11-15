@@ -22,7 +22,7 @@ import com.example.meetme.R;
 public class ChatPage extends AppCompatActivity {
 
     Button b1, b2;
-    EditText e1, e2;
+    EditText e1;
     TextView t1;
 
 
@@ -33,9 +33,9 @@ public class ChatPage extends AppCompatActivity {
 
         b1 = (Button) findViewById(R.id.bt1);
         b2 = (Button) findViewById(R.id.bt2);
-        e1 = (EditText) findViewById(R.id.et1);
-        e2 = (EditText) findViewById(R.id.et2);
+        e1 = (EditText) findViewById(R.id.et2);
         t1 = (TextView) findViewById(R.id.tx1);
+        String username = getIntent().getStringExtra("username");
 
         WebSocketClient cc = null;
 
@@ -61,7 +61,7 @@ public class ChatPage extends AppCompatActivity {
                         public void onMessage(String message) {
                             Log.d("", "run() returned: " + message);
                             String s = t1.getText().toString();
-                            t1.setText(s + " Server:" + message);
+                            t1.setText(s + "\n" + username +": " + message);
                         }
 
                         @Override
@@ -92,7 +92,7 @@ public class ChatPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    cc.send(e2.getText().toString());
+                    cc.send(e1.getText().toString());
                 } catch (Exception e) {
                     Log.d("ExceptionSendMessage:", e.getMessage().toString());
                 }
