@@ -171,8 +171,12 @@ public class User {
         friendReQuest.add(friend);
     }
 
-    public Set<User> getFriendReQuest(){
+    public Set<User> getFriendRequests() {
         return friendReQuest;
+    }
+
+    public boolean removeFriendRequest(User friend) {
+        return friendReQuest.remove(friend);
     }
 
     public Set<User> getRequestFrom(){

@@ -9,6 +9,7 @@ package coms309.MeetMe.PushNotifications.controller;
 
 import coms309.MeetMe.PushNotifications.model.PushNotificationRequest;
 import coms309.MeetMe.PushNotifications.model.PushNotificationResponse;
+import coms309.MeetMe.PushNotifications.model.Topic;
 import coms309.MeetMe.PushNotifications.service.PushNotificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,28 +28,36 @@ public class PushNotificationController {
         this.pushNotificationService = pushNotificationService;
     }
 
-    @PostMapping("/notification/topic")
-    public ResponseEntity sendNotification(@RequestBody PushNotificationRequest request) {
-        pushNotificationService.sendPushNotificationWithoutData(request);
-        return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
-    }
+    // @PostMapping("/addFriend")
+    // public ResponseEntity sendNotification(@RequestBody String searchFriend) {
+    //     // Lookup friend in database
 
-    @PostMapping("/notification/token")
-    public ResponseEntity sendTokenNotification(@RequestBody PushNotificationRequest request) {
-        pushNotificationService.sendPushNotificationToToken(request);
-        return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
-    }
 
-    @PostMapping("/notification/data")
-    public ResponseEntity sendDataNotification(@RequestBody PushNotificationRequest request) {
-        pushNotificationService.sendPushNotification(request);
-        return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
-    }
+    //     if (false) return new ResponseEntity<>("User was not found", HttpStatus.CONFLICT);
 
-    @GetMapping("/notification")
-    public ResponseEntity sendSampleNotification() {
-        // pushNotificationService.sendSamplePushNotification();
-        pushNotificationService.sendPushNotificationWithoutData(new PushNotificationRequest("Title", "Message", "common"));
-        return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
-    }
+    //     // If friend found, send out notification to friend's token
+    //     pushNotificationService.sendPushNotificationToToken("title", "message", Topic.COMMON, "putTokenHere");
+
+    //     return new ResponseEntity<>("User has been notified", HttpStatus.OK);
+    // }
+    
+    // Examples
+
+    // @PostMapping("/notification/topic")
+    // public ResponseEntity sendNotification(@RequestBody PushNotificationRequest request) {
+    //     pushNotificationService.sendPushNotificationWithoutData(request);
+    //     return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
+    // }
+
+    // @PostMapping("/notification/token")
+    // public ResponseEntity sendTokenNotification(@RequestBody PushNotificationRequest request) {
+    //     pushNotificationService.sendPushNotificationToToken(request);
+    //     return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
+    // }
+
+    // @PostMapping("/notification/data")
+    // public ResponseEntity sendDataNotification(@RequestBody PushNotificationRequest request) {
+    //     pushNotificationService.sendPushNotification(request);
+    //     return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
+    // }
 }
