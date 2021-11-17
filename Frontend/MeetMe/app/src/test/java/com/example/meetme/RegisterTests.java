@@ -3,45 +3,29 @@ package com.example.meetme;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import android.app.Activity;
-import android.content.Context;
-import android.os.Build;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.meetme.api.apiClientFactory;
-import com.example.meetme.model.User;
+
 import com.example.meetme.ui.RegisterPage;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-import org.robolectric.manifest.AndroidManifest;
 
-import java.util.List;
 
 @RunWith(RobolectricTestRunner.class)
 public class RegisterTests {
 
-    @Mock
     private RegisterPage activity;
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
-
         //Test
         activity = Robolectric.buildActivity(RegisterPage.class)
                 .create()
