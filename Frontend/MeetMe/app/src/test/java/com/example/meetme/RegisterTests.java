@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import android.app.Activity;
+import android.os.Build;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
