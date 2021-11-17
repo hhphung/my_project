@@ -117,9 +117,9 @@ public class CreateMeetingPage extends AppCompatActivity {
             int min = Integer.parseInt(mTime.substring(mTime.length()-2));
 
             LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, min);
+            String username = getIntent().getStringExtra("username");
 
-
-            Meeting meeting = new Meeting(mTitle, "test2", mDesc, dateTime.toString(), mLocation[0],
+            Meeting meeting = new Meeting(mTitle, username, mDesc, dateTime.toString(), mLocation[0],
                     mLocation[1], mLocation[2], zipcode, mLocation[4]);
 
             GetMeetingApi().createMeeting(meeting).enqueue(new SlimCallback<>(response ->
