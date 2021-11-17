@@ -24,18 +24,30 @@ import com.example.meetme.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DashboardPage includes logic for recyclerView
+ */
 public class DashboardPage extends BaseActivity {
 
+    /**
+     * user's name
+     */
     String username;
+    /**
+     * used to display a list of meetings.
+     */
     RecyclerView recyclerView;
 
+    /**
+     * Set up the page and initialize the recyclerview
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         TextView welcomeText = findViewById(R.id.activity_dashboard_text);
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
-        //Button goToCreateMeeting = findViewById(R.id.activity_dashboard_goToCreateMeeting);
 
         // load meetings as interactive cards
         GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings->
@@ -56,6 +68,7 @@ public class DashboardPage extends BaseActivity {
     protected int getContentViewId() {
         return R.layout.activity_dashboard_page;
     }
+
 
     @Override
     int getLayoutId() {

@@ -20,9 +20,21 @@ import com.example.meetme.model.Meeting;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+/**
+ * CreateMeetingPage includes logic for inputs and buttons
+ */
 public class CreateMeetingPage extends AppCompatActivity {
 
+    /**
+     * The error message displayed to the user
+     */
     private TextView errorMsg;
+
+    /**
+     * Set up the page.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,20 +71,14 @@ public class CreateMeetingPage extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    protected int getContentViewId() {
-//        return R.layout.activity_create_meeting;
-//    }
-//
-//    @Override
-//    int getLayoutId() {
-//        return R.layout.activity_create_meeting;
-//    }
-//
-//    @Override
-//    int getNavigationMenuItemId() {
-//        return R.id.action_createMeeting;
-//    }
+    /**
+     * Attempts to create a meeting based on user input and will display any errors
+     * encountered in the process.
+     * @param mTitle meeting title
+     * @param mDesc meeting description
+     * @param mTime meeting time
+     * @param mLocation An array of strings representing the meeting location in format {St Address, City, State, Zip, Country}
+     */
     protected void PostMeeting(String mTitle, String mDesc, String mTime, String[] mLocation){
 
         try {
