@@ -91,7 +91,7 @@ public class UserController {
         return userRepository.findByName(name).getFriends();
     }
 
-
+/*
     @PostMapping(path = "/addFriend", produces = "application/json")
     public String addFriend(@RequestBody FriendShip s) {
         int senderId = s.getSenderId();
@@ -103,7 +103,7 @@ public class UserController {
             friend.addFriend(self);
             userRepository.save(self);
             userRepository.save(friend);
-return success;
+            return success;
 
         }
         return failure;
@@ -132,10 +132,9 @@ return success;
         User self = userRepository.findById(senderId);
         User friend = userRepository.findById(receiverId);
         if (self != null && friend != null && senderId != receiverId) {
-            int i = friend.getId();
             self.addFriendRequest(friend);
             userRepository.save(friend);
-return success;
+            return success;
         }
         return failure;
     }
@@ -153,6 +152,8 @@ return success;
         int i = userRepository.findByName(name).getId();
         return userRepository.getFriendRequestFrom(i);
     }
+
+ */
 
 
 

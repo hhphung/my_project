@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import coms309.MeetMe.FriendShip.FriendShip;
 import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Stringy.Stringy;
 
@@ -19,7 +20,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
-    private int id;
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -62,17 +63,8 @@ public class User {
     @JsonIgnore
     private Set<User> friends = new HashSet<User>();
 
-
-
-
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "friendReQuest",
-            joinColumns = {@JoinColumn(name = "self_request_id")},
-            inverseJoinColumns = {@JoinColumn(name = "friend_request_id")}
-    )
-    private Set<User> friendReQuestSent = new HashSet<User>();
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "senderId")
+    public List<FriendShip> sent;
 
 
 
@@ -112,11 +104,11 @@ public class User {
     // =============================== Getters and Setters for each field ================================== //
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -170,15 +162,6 @@ public class User {
     }
 
 
-
-    public void addFriendRequest(User friend) {
-        friendReQuestSent.add(friend);
-    }
-
-
-    public Set<User> getFriendReQuest() {
-        return friendReQuestSent;
-    }
 
 
 
