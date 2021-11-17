@@ -15,9 +15,16 @@ import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
 
+/**
+ * RegisterPage includes logic for inputs and buttons
+ */
 public class RegisterPage extends AppCompatActivity {
 
 
+    /**
+     * Sets up the register page. Checks input passwords against each other for validity.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +34,11 @@ public class RegisterPage extends AppCompatActivity {
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
         EditText passwordInput = findViewById(R.id.activity_main_password_input);
         EditText secPasswordInput = findViewById(R.id.activity_main_password_input2);
+
         TextView errMsg = findViewById(R.id.activity_main_err_msg);
+
+
+        Button toLoginScreen = findViewById(R.id.activity_register_btn_to_login);
 
 
         //use edit text to create user
@@ -35,7 +46,6 @@ public class RegisterPage extends AppCompatActivity {
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if(secPasswordInput.getText().toString().equals(passwordInput.getText().toString()) && !(secPasswordInput.getText().toString().equals(""))) {
 
                     User newUser = new User(usernameInput.getText().toString(), passwordInput.getText().toString());
@@ -58,6 +68,12 @@ public class RegisterPage extends AppCompatActivity {
             }
         });
 
+        toLoginScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(view.getContext(), LoginPage.class));
+            }
+        });
 
     }
 

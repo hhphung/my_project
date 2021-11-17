@@ -14,9 +14,19 @@ import com.example.meetme.ui.ViewMeetingPage;
 
 import java.util.ArrayList;
 
+/**
+ * MeetingAdapter class allows us to manipulate Array lists of meeting objects to display in RecyclerViews
+ */
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHolder> {
 
+    /**
+     * context to provide for view
+     */
     private Context context;
+
+    /**
+     *list of meeting objects to be instantiated
+     */
     private ArrayList<Meeting> meetings;
 
     /**
@@ -24,8 +34,16 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
      * (custom ViewHolder).
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * textview object
+         */
         private final TextView textView;
 
+        /**
+         * constructor for viewholder with given context and view
+         * @param context
+         * @param view
+         */
         public ViewHolder(Context context, View view) {
             super(view);
             // Define click listener for the ViewHolder's View
@@ -47,6 +65,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
             });
         }
 
+        /**
+         *
+         * @return given textView object
+         */
         public TextView getTextView() {
             return textView;
         }
@@ -60,7 +82,12 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         this.meetings = meetings;
     }
 
-    // Create new views (invoked by the layout manager)
+    /**
+     * This allows the layout manager to create new views
+     * @param viewGroup
+     * @param viewType
+     * @return new view object
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
@@ -71,7 +98,11 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         return new ViewHolder(context, view);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+    /**
+     * allows the layout manager to replace the contents of a view
+     * @param viewHolder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
@@ -80,7 +111,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         viewHolder.getTextView().setText(meetings.get(position).getName());
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    /**
+     * Allows layout manager to see size of dataset
+     * @return size of dataset in arraylist
+     */
     @Override
     public int getItemCount() {
         return meetings.size();
