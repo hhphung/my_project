@@ -34,7 +34,6 @@ public class AvailabilityPage extends AppCompatActivity {
     private FragmentManager fm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //TODO add a DayAvailabilityFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_availability_page);
         username = getIntent().getStringExtra("username");
@@ -53,7 +52,7 @@ public class AvailabilityPage extends AppCompatActivity {
 
     protected void completeDayAvailability(){
         /*
-         * TODO
+         *
          *  1. Call confirmDayAvailability from the fragment
          *  2. Increment currentDay
          *  3. Replace the fragment with the next day's fragment
@@ -77,5 +76,7 @@ public class AvailabilityPage extends AppCompatActivity {
                 .setReorderingAllowed(true)
                 .addToBackStack(days[currentDay])
                 .commit();
+        TextView t = findViewById(R.id.fragment_availability_title);
+        //t.setText("Set Availability for " + days[currentDay] + "s");
     }
 }

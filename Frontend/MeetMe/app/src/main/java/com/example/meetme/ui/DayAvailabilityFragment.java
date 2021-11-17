@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.example.meetme.R;
 
@@ -25,6 +26,8 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class DayAvailabilityFragment extends Fragment {
+
+    private static final String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "day";
@@ -63,14 +66,22 @@ public class DayAvailabilityFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             day = getArguments().getInt(ARG_PARAM1);
+            username = getArguments().getString("username");
+        }
+        if (view != null) {
+            TextView t = view.findViewById(R.id.fragment_availability_title);
+            t.setText("Set Availability for " + days[day]);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_day_availability, container, false);
         // Inflate the layout for this fragment
+        if (view != null) {
+            TextView t = view.findViewById(R.id.fragment_availability_title);
+            t.setText("Set Availability for " + days[day]);
+        }
         return view;
     }
 
