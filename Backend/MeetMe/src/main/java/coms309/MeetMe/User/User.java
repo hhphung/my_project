@@ -59,12 +59,14 @@ public class User {
     @JoinTable(name = "friends",
             joinColumns = {@JoinColumn(name = "self_id")},
             inverseJoinColumns = {@JoinColumn(name = "friend_id")})
-
     @JsonIgnore
     private Set<User> friends = new HashSet<User>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "senderId")
     public List<FriendShip> sent;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "receiverId")
+    public List<FriendShip> from;
 
 
 

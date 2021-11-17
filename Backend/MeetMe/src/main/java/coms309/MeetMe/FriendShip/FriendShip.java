@@ -13,13 +13,14 @@ public class FriendShip {
     @Column(nullable = false, unique = true)
     private int id;
 
+
+
+
     @Column(nullable = false, name = "senderId")
     private Integer senderId;
 
     @Column(nullable = false, name = "receiverId")
     private Integer receiverId;
-
-
 
     public FriendShip(Integer senderId, Integer receiverId) {
         this.senderId = senderId;
