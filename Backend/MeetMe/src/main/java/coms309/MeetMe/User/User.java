@@ -53,9 +53,8 @@ public class User {
     @JsonIgnore
     List<Meeting> meetingInvites;
 
-    // =============================== Constructors ================================== //
 
-        @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "friends",
             joinColumns = {@JoinColumn(name = "self_id")},
             inverseJoinColumns = {@JoinColumn(name = "friend_id")})
@@ -69,9 +68,9 @@ public class User {
     public List<FriendShip> from;
 
 
+    // =============================== Constructors ================================== //
 
-
-
+    
     public User(String name, String password, Role role) {
         this.name = name;
         this.password = password;

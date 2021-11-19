@@ -1,4 +1,4 @@
-package coms309.MeetMe.FriendShip;
+package coms309.MeetMe.Friendship;
 
 public enum status {
     OPEN, ACCEPT, REJECT

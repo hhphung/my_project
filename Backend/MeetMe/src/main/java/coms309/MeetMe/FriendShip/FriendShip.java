@@ -1,4 +1,4 @@
-package coms309.MeetMe.FriendShip;
+package coms309.MeetMe.Friendship;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import coms309.MeetMe.User.User;
@@ -6,23 +6,20 @@ import coms309.MeetMe.User.User;
 import javax.persistence.*;
 
 @Entity
-public class FriendShip {
+public class Friendship {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
     private int id;
-
-
-
-
+    
     @Column(nullable = false, name = "senderId")
     private Integer senderId;
 
     @Column(nullable = false, name = "receiverId")
     private Integer receiverId;
 
-    public FriendShip(Integer senderId, Integer receiverId) {
+    public Friendship(Integer senderId, Integer receiverId) {
         this.senderId = senderId;
         this.receiverId = receiverId;
     }
@@ -34,9 +31,5 @@ public class FriendShip {
     public void setId(int id) {
         this.id = id;
     }
-
-
-
-
 
 }
