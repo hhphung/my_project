@@ -22,8 +22,10 @@ public class availability {
     @Column(nullable = false, unique = true)
     private int id;
 
-    @OneToOne(targetEntity =  User.class)
+    @OneToOne
+    @JsonIgnore
     private User user;
+
 
 
 

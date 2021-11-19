@@ -34,8 +34,8 @@ public class User {
 
 
 
-    @OneToOne
-    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL,targetEntity = availability.class)
+    @JoinColumn(name = "id")
     private availability availability;
 
 

@@ -2,9 +2,11 @@ package coms309.MeetMe.Availability;
 
 import coms309.MeetMe.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -25,8 +27,13 @@ public interface AvailabilityRepository extends JpaRepository<availability, Long
     boolean[] getUserAvalibilityById(int id);
 
 
+    @Modifying
+    @Transactional
+    @Query(value = "update availability set availability = ?1  where ?2", nativeQuery = true)
+    void updateAvailability(boolean[] f ,String name);
 
 
 
- 
+
+
 }

@@ -28,7 +28,7 @@ public class AvailabilityController {
     private String failure = "{\"message\":\"User not found\"}";
 
 
-    @GetMapping(value = "/getAllAvailability", produces = "application/json")
+    @GetMapping(value = "/", produces = "application/json")
     public List<availability> getAllAvalibility (){
         return availabilityRepository.findAll();
     }
@@ -70,23 +70,47 @@ public class AvailabilityController {
 
 
 
-    @PostMapping(value = "/setAvailability", produces = "application/json")
-    public String setAvailability(@RequestBody availability availability) {
+    @PostMapping(value = "/{name}/setAvailability", produces = "application/json")
+    public String setAvailability(@RequestBody boolean[] availability, @PathVariable String name) {
         if (availability == null){
             return "the availability is invalid";
         }
 
+        User user = userRepository.findByName(name);
 
-        if(availability.getUser() == null){
+        if(user == null){
             return failure;
         }
-        if(availabilityRepository.findUserbyId(availability.getUser().getId()) != null){
+        if(availabilityRepository.findUserbyId(user.getId()) != null){
             return "The user ready has the availability";
         }
 
+        availability ava = new availability(availability, user);
 
-      availabilityRepository.save(availability);
+      availabilityRepository.save(ava);
      return success;
+    }
+
+
+
+    @PostMapping(value = "/{name}/updateAvailability", produces = "application/json")
+    public String updateAvailability(@RequestBody boolean[] availability, @PathVariable String name) {
+        if (availability == null){
+            return "the availability is invalid";
+        }
+
+        User user = userRepository.findByName(name);
+
+        if(user == null){
+            return failure;
+        }
+        if(availabilityRepository.findUserbyId(user.getId()) == null){
+            return "The user does not have availability";
+        }
+
+
+        availabilityRepository.updateAvailability(availability, name);
+        return success;
     }
 
 
