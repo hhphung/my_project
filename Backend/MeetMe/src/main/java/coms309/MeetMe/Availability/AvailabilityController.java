@@ -50,7 +50,7 @@ public class AvailabilityController {
         return temp.getAvailability();
     }
 
-    @GetMapping(value = "/UserbyName/{name}/", produces = "application/json")
+        @GetMapping(value = "/UserbyName/{name}/", produces = "application/json")
     public boolean[] getUserAvailibilityName(@PathVariable String name){
        User user = userRepository.findByName(name);
        if(user == null){
@@ -109,7 +109,7 @@ public class AvailabilityController {
         }
 
 
-        availabilityRepository.updateAvailability(availability, name);
+        availabilityRepository.updateAvailability(availability, user.getId());
         return success;
     }
 
