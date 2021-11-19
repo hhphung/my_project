@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import coms309.MeetMe.Availability.availability;
 import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Stringy.Stringy;
 
@@ -30,8 +31,19 @@ public class User {
     private Date joiningDate;
     @Column(nullable = false)
     private Date lastSeen;
-    @Column(nullable = false)
-    private boolean [] availability = new boolean[168]; // TODO: Create Availability/Schedule object to pass in
+
+
+
+    @OneToOne
+    @JsonIgnore
+    private availability availability;
+
+
+
+
+
+
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -137,11 +149,11 @@ public class User {
         return joiningDate;
     }
 
-    public boolean[] getAvailability() {
+    public availability getAvailability() {
         return availability;
     }
 
-    public void setAvailability(boolean[] availability) {
+    public void setAvailability(availability availability) {
         this.availability = availability;
     }
 

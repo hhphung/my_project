@@ -54,16 +54,7 @@ public class UserController {
     }
 
 
-    @PostMapping(value = "/{name}/availability", produces = "application/json")
-    String setAvailability(@PathVariable String name, @RequestBody boolean [] availability ){
-        User temp =  userRepository.findByName(name);
-        if(temp ==null){
-            return failure;
-        }
-        temp.setAvailability(availability);
-        userRepository.save(temp);
-        return success;
-    }
+
 
 
     @PostMapping(value = "/", produces = "application/json")

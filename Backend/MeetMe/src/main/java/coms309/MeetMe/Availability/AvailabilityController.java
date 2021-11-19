@@ -1,7 +1,9 @@
 
 package coms309.MeetMe.Availability;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import coms309.MeetMe.User.User;
+import coms309.MeetMe.User.UserNamePair;
+import coms309.MeetMe.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,13 +11,6 @@ import coms309.MeetMe.PushNotifications.model.Topic;
 import coms309.MeetMe.PushNotifications.service.PushNotificationService;
 import coms309.MeetMe.Stringy.Stringy;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import javax.persistence.CascadeType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import java.util.*;
 
 
@@ -26,61 +21,101 @@ public class AvailabilityController {
     @Autowired
     AvailabilityRepository availabilityRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
+    private String success = "{\"message\":\"Success\"}";
+    private String failure = "{\"message\":\"User not found\"}";
+
+
+    @GetMapping(value = "/getAllAvailability", produces = "application/json")
+    public List<availability> getAllAvalibility (){
+        return availabilityRepository.findAll();
+    }
+
+
+
+
+    @GetMapping(value = "/{id}/", produces = "application/json")
+    public availability getAllAvalibility (@PathVariable int id){
+        return availabilityRepository.findById(id);
+    }
+
+    @GetMapping(value = "/UserbyId/{id}/", produces = "application/json")
+    public boolean[] getUserAvailibilitybyID(@PathVariable int id){
+        availability temp =availabilityRepository.findUserbyId(id);
+        if (temp == null){
+            return null;
+        }
+        return temp.getAvailability();
+    }
+
+    @GetMapping(value = "/UserbyName/{name}/", produces = "application/json")
+    public boolean[] getUserAvailibilityName(@PathVariable String name){
+       User user = userRepository.findByName(name);
+       if(user == null){
+           return null;
+       }
+        availability temp =availabilityRepository.findUserbyId(user.getId());
+        if (temp == null){
+            return null;
+        }
+        return temp.getAvailability();
+    }
+
+
+
+
+
+
+
+
+    @PostMapping(value = "/setAvailability", produces = "application/json")
+    public String setAvailability(@RequestBody availability availability) {
+        if (availability == null){
+            return "the availability is invalid";
+        }
+
+
+        if(availability.getUser() == null){
+            return failure;
+        }
+        if(availabilityRepository.findUserbyId(availability.getUser().getId()) != null){
+            return "The user ready has the availability";
+        }
+
+
+      availabilityRepository.save(availability);
+     return success;
+    }
+
+
+
+
+    /*
     private PushNotificationService pushNotificationService;
 
     public AvailabilityController(PushNotificationService pushNotificationService) {
         this.pushNotificationService = pushNotificationService;
     }
 
-    private String success = "{\"message\":\"Success\"}";
-    private String failure = "{\"message\":\"User not found\"}";
 
 
-    @GetMapping(value = "/", produces = "application/json")
-    List<Availability> getAllUsers(){
-        return availabilityRepository.findAll();
-    }
 
 
-    @GetMapping(value = "/id/{id}", produces = "application/json")
-    User getUserById( @PathVariable int id) {
-        return availabilityRepository.findById(id);
-    }
 
 
-    @GetMapping(value = "/name/{name}", produces = "application/json")
-    User getUserByName( @PathVariable String name) {
-        return availabilityRepository.findByName(name);
-    }
 
 
-    @PostMapping(value = "/{name}/availability", produces = "application/json")
-    String setAvailability(@PathVariable String name, @RequestBody boolean [] availability ){
-        User temp =  availabilityRepository.findByName(name);
-        if(temp ==null){
-            return failure;
-        }
-        temp.setAvailability(availability);
-        availabilityRepository.save(temp);
-        return success;
-    }
 
 
-    @PostMapping(value = "/", produces = "application/json")
-    String createUser(@RequestBody User user) {
-        if (user == null)
-            return failure;
 
-        User checkIfExists = availabilityRepository.findByName(user.getName());
 
-        if (checkIfExists != null) 
-            return "{\"message\":\"Username taken\"}";
 
-        availabilityRepository.save(user);
-        return success;
-    }
 
-  /*  @GetMapping(path = "/login", produces = "application/json")
+
+
+    @GetMapping(path = "/login", produces = "application/json")
     String loginUser(@RequestParam String name,@RequestParam  String password ) {
         User temp = availabilityRepository.findByName(name);
         if(temp != null) {
@@ -90,24 +125,10 @@ public class AvailabilityController {
         }
         return failure;
     }
-*/
-
-    @PostMapping(path = "/login", produces = "application/json")
-    String loginUser(@RequestBody User user ) {
-        if(user != null){
-           User temp = availabilityRepository.findByName(user.getName());
-           if (temp != null && temp.getPassword().equals(user.getPassword())) {
-                   return success;
-           }
-        }
-        return failure;
-    }
 
 
-    @GetMapping(path = "/{name}/getFriends", produces = "application/json")
-    public Set<User> getFriends (@PathVariable String name) {
-        return availabilityRepository.findByName(name).getFriends();
-    }
+
+
 
 
     @PostMapping(path ="/addFriendRequest", produces = "application/json")
@@ -235,6 +256,9 @@ public class AvailabilityController {
 
         return new User[] { userA, userB };
     }
+
+     */
+
 
 
 }
