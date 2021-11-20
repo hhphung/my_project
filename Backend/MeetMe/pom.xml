@@ -27,6 +27,12 @@
 
   <dependencies>
 
+  <dependency>
+    <groupId>com.google.firebase</groupId>
+    <artifactId>firebase-admin</artifactId>
+    <version>6.8.1</version>
+  </dependency>
+
     <!-- Spring Boot Web dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>

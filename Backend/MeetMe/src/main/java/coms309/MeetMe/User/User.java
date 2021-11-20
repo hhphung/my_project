@@ -39,38 +39,37 @@ public class User {
 
     @OneToMany(mappedBy = "admin")
     @JsonIgnore
-    List<Meeting> meetingAdmin;
+    private Set<Meeting> meetingAdmin;
 
     @ManyToMany(mappedBy = "userParticipants")
     @JsonIgnore
-    List<Meeting> meetingParticipation;
+    private Set<Meeting> meetingParticipation;
 
     @ManyToMany(mappedBy = "userRequests")
     @JsonIgnore
-    List<Meeting> meetingRequests;
+    private Set<Meeting> meetingRequests;
 
     @ManyToMany(mappedBy = "userInvites")
     @JsonIgnore
-    List<Meeting> meetingInvites;
+    private Set<Meeting> meetingInvites;
 
-
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "friends",
-            joinColumns = {@JoinColumn(name = "self_id")},
-            inverseJoinColumns = {@JoinColumn(name = "friend_id")})
+    // Freind mappings
+    @ManyToMany(mappedBy = "friends")
     @JsonIgnore
-    private Set<User> friends = new HashSet<User>();
+    private Set<User> friends;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "senderId")
-    public List<FriendShip> sent;
+    @OneToMany(mappedBy = "userA")
+    @JsonIgnore
+    private Set<FriendRequest> friendRequestsSent;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "receiverId")
-    public List<FriendShip> from;
+    @OneToMany(mappedBy = "userB")
+    @JsonIgnore
+    private Set<FriendRequest> friendRequestsReceived;
 
 
     // =============================== Constructors ================================== //
 
-    
+
     public User(String name, String password, Role role) {
         this.name = name;
         this.password = password;
@@ -78,7 +77,6 @@ public class User {
         this.joiningDate = new Date(System.currentTimeMillis());
         this.lastSeen = this.joiningDate;
         this.role = role;
-
     }
 
     public User(String name, String password) {
@@ -158,7 +156,44 @@ public class User {
         this.friends = friends;
     }
 
-    public void addFriend(User friend) {
-        friends.add(friend);
+    public void addFriend(FriendRequest friendRequest) {
+        if (name.equals(friendRequest.getUserA().getName())) {
+            // friendRequestsSent.remove(friendRequest);
+            friends.add(friendRequest.getUserB());
+        }
+        else {
+            // friendRequestsReceived.remove(friendRequest);
+            friends.add(friendRequest.getUserA());
+        }
+    }
+
+    public void removeFriend(User friend) {
+        friends.remove(friend);
+    }
+
+    // Sent
+    public Set<FriendRequest> getFriendRequestsSent() {
+        return friendRequestsSent;
+    }
+
+    public void sendFriendRequest(FriendRequest friendRequest) {
+        friendRequestsSent.add(friendRequest);
+    }
+
+    public boolean removeFriendRequestSent(FriendRequest friendRequestSent) {
+        return friendRequestsSent.remove(friendRequestSent);
+    }
+
+    // Received
+    public Set<FriendRequest> getFriendRequestsReceived() {
+        return friendRequestsReceived;
+    }
+
+    public void receiveFriendRequest(FriendRequest friendRequest) {
+        friendRequestsReceived.add(friendRequest);
+    }
+
+    public boolean removeFriendRequestReceived(FriendRequest friendRequestReceived) {
+        return friendRequestsReceived.remove(friendRequestReceived);
     }
 }
