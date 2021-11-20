@@ -4,14 +4,10 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import coms309.MeetMe.FriendShip.FriendShip;
 import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Stringy.Stringy;
 
-
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
