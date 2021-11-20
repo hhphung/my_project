@@ -70,7 +70,7 @@ public class AvailabilityController {
 
 
 
-    @PostMapping(value = "/{name}/setAvailability", produces = "application/json")
+    @PostMapping(value = "/{name}/setAvailability/", produces = "application/json")
     public String setAvailability(@RequestBody boolean[] availability, @PathVariable String name) {
         if (availability == null){
             return "the availability is invalid";
