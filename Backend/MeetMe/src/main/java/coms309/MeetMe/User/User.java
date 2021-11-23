@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Stringy.Stringy;
+import coms309.MeetMe.chat.Message;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -52,6 +53,8 @@ public class User {
     List<Meeting> meetingInvites;
 
      // =============================== Constructors ================================== //
+
+
 
     @ManyToMany(cascade={CascadeType.ALL})
     @JoinTable(name="friends",

@@ -13,6 +13,7 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import coms309.MeetMe.User.User;
 import coms309.MeetMe.User.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,11 @@ public class ChatSocketController {
     // cannot autowire static directly (instead we do it by the below
     // method
     private static MessageRepository msgRepo;
+
+
     private static UserRepository userRepository;
+
+   private static User user;
 
     /*
      * Grabs the MessageRepository singleton from the Spring Application
@@ -37,12 +42,19 @@ public class ChatSocketController {
      */
     @Autowired
     public void setMessageRepository(MessageRepository repo) {
-        msgRepo = repo;  // we are setting the static variable
+        msgRepo = repo;
+        // we are setting the static variable
+    }
+
+    @Autowired
+    public void setUserRepository(UserRepository repo) {
+        userRepository = repo;
     }
 
     // Store all socket session and their corresponding username.
     private static Map<Session, String> sessionUsernameMap = new Hashtable<>();
     private static Map<String, Session> usernameSessionMap = new Hashtable<>();
+
 
     private final Logger logger = LoggerFactory.getLogger(ChatSocketController.class);
 
@@ -50,19 +62,28 @@ public class ChatSocketController {
     public void onOpen(Session session, @PathParam("username") String username)
             throws IOException {
 
+user = userRepository.findByName(username);
 
-        logger.info("Entered into Open");
+if(user != null) {
 
-        // store connecting user information
-        sessionUsernameMap.put(session, username);
-        usernameSessionMap.put(username, session);
+    logger.info("Entered into Open");
 
-        //Send chat history to the newly connected user
-        sendMessageToPArticularUser(username, getChatHistory());
+    // store connecting user information
+    sessionUsernameMap.put(session, username);
+    usernameSessionMap.put(username, session);
 
-        // broadcast that new user joined
-        String message = "User:" + username + " has Joined the Chat";
-        broadcast(message);
+    //Send chat history to the newly connected user
+    sendMessageToPArticularUser(username, getChatHistory());
+
+    // broadcast that new user joined
+    String message = "User:" + username + " has Joined the Chat";
+    broadcast(message);
+}
+else{
+    String message = "User:" + username + " does not exist";
+    broadcast(message);
+}
+
     }
 
 
@@ -70,39 +91,46 @@ public class ChatSocketController {
     public void onMessage(Session session, String message) throws IOException {
 
         // Handle new messages
-        logger.info("Entered into Message: Got Message:" + message);
-        String username = sessionUsernameMap.get(session);
+        if (user != null) {
+            logger.info("Entered into Message: Got Message:" + message);
+            String username = sessionUsernameMap.get(session);
 
-        // Direct message to a user using the format "@username <message>"
-        if (message.startsWith("@")) {
-            String destUsername = message.split(" ")[0].substring(1);
+            // Direct message to a user using the format "@username <message>"
+            if (message.startsWith("@")) {
+                String destUsername = message.split(" ")[0].substring(1);
 
-            // send the message to the sender and receiver
-            sendMessageToPArticularUser(destUsername, "[DM] " + username + ": " + message);
-            sendMessageToPArticularUser(username, "[DM] " + username + ": " + message);
+                // send the message to the sender and receiver
+                sendMessageToPArticularUser(destUsername, "[DM] " + username + ": " + message);
+                sendMessageToPArticularUser(username, "[DM] " + username + ": " + message);
 
+            } else { // broadcast
+                broadcast(username + ": " + message);
+            }
+
+            User user = userRepository.findByName(username);
+
+            // Saving chat history to repository
+            msgRepo.save(new Message(user, message));
         }
-        else { // broadcast
-            broadcast(username + ": " + message);
-        }
 
-        // Saving chat history to repository
-        msgRepo.save(new Message(username, message));
     }
-
-
     @OnClose
     public void onClose(Session session) throws IOException {
-        logger.info("Entered into Close");
 
-        // remove the user connection information
-        String username = sessionUsernameMap.get(session);
-        sessionUsernameMap.remove(session);
-        usernameSessionMap.remove(username);
+        if(user != null) {
+            logger.info("Entered into Close");
 
-        // broadcase that the user disconnected
-        String message = username + " disconnected";
-        broadcast(message);
+            // remove the user connection information
+            String username = sessionUsernameMap.get(session);
+
+            sessionUsernameMap.remove(session);
+            usernameSessionMap.remove(username);
+
+            // broadcase that the user disconnected
+            String message = username + " disconnected";
+
+            broadcast(message);
+        }
     }
 
 
@@ -148,10 +176,14 @@ public class ChatSocketController {
         StringBuilder sb = new StringBuilder();
         if(messages != null && messages.size() != 0) {
             for (Message message : messages) {
-                sb.append(message.getUserName() + ": " + message.getContent() + "\n");
+                sb.append(message.getUser().getName() + ": " + message.getContent() + "\n");
             }
         }
         return sb.toString();
     }
+
+
+
+
 
 }

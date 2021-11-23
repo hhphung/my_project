@@ -2,32 +2,25 @@ package coms309.MeetMe.chat;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import coms309.MeetMe.User.User;
 import lombok.Data;
 
 @Entity
-@Table(name = "messages")
-@Data
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(nullable = false, unique = true)
+    private int id;
 
-    @NotNull
-    @Size(max = 100)
-    @Column
-    private String userName;
+    @ManyToOne(targetEntity =   User.class)
+    @JsonIgnore
+    private User user;
+
 
     @NotNull
     @Lob
@@ -41,25 +34,25 @@ public class Message {
 
     public Message() {};
 
-    public Message(String userName, String content) {
-        this.userName = userName;
+    public Message(User user, String content) {
+        this.user = user;
         this.content = content;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getContent() {
