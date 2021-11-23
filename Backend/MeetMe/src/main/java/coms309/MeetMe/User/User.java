@@ -64,9 +64,16 @@ public class User {
     private Set<User> friends = new HashSet<User>();
 
 
+<<<<<<< HEAD
+=======
+    @ManyToMany(cascade={CascadeType.ALL})
+    @JoinTable(name="friendRequest",
+            joinColumns={@JoinColumn(name="id")},
+            inverseJoinColumns={@JoinColumn(name="friend_id")})
+    @JsonIgnore
+    private Set<User> friendRequest = new HashSet<User>();
 
-
-
+>>>>>>> main
 
 
 
@@ -160,6 +167,22 @@ public class User {
         friends.add(friend);
     }
 
+<<<<<<< HEAD
 
 
+=======
+
+
+    public Set<User> getFriendRequests() {
+        return friendRequest;
+    }
+
+    public boolean removeFriendRequest(User friend) {
+        return friendRequest.remove(friend);
+    }
+
+    public Set<User> getRequestFrom(){
+        return requestFrom;
+    }
+>>>>>>> main
 }
