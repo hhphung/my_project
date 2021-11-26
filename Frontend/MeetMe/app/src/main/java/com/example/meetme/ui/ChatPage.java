@@ -79,6 +79,7 @@ public class ChatPage extends AppCompatActivity {
                 // If the message is not empty, send the message
                 if(message != null && message.length() > 0){
                     mWebSocketClient.send(message);
+                    mInput.setText("");
                 }
             }
         });
