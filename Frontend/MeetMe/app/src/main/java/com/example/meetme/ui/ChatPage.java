@@ -98,8 +98,8 @@ public class ChatPage extends AppCompatActivity {
              * To test the clientside without the backend, simply connect to an echo server such as:
              *  "ws://echo.websocket.org"
              */
-            uri = new URI("ws://coms-309-017.cs.iastate.edu:8080/chat/");
-            // uri = new URI("ws://echo.websocket.org");
+            uri = new URI("ws://coms-309-017.cs.iastate.edu:8080/chat/" + username);
+
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return;
@@ -109,7 +109,7 @@ public class ChatPage extends AppCompatActivity {
 
             @Override
             public void onOpen(ServerHandshake serverHandshake) {
-                
+
                 Log.i("Websocket", "Opened");
             }
 
