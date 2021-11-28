@@ -14,11 +14,15 @@ import android.widget.TextView;
 
 import com.example.meetme.R;
 
+import com.example.meetme.api.SlimCallback;
 import com.example.meetme.api.UserApi;
+import com.example.meetme.model.Availability;
 
+import static com.example.meetme.api.apiClientFactory.GetAvailabilityApi;
 import static com.example.meetme.api.apiClientFactory.GetUserApi;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +43,9 @@ public class DayAvailabilityFragment extends Fragment {
 
     private static final Boolean[] weeklyAvailability = new Boolean[168];
 
+    //1-->2
+    //2-->3
+    //1-->3
 
     public DayAvailabilityFragment() {
         // Required empty public constructor
@@ -100,11 +107,18 @@ public class DayAvailabilityFragment extends Fragment {
             if (b.isChecked()){
                 weeklyAvailability[i+day*24] = true;
             }
+            else{
+                weeklyAvailability[i+day*24] = false;
+            }
         }
 
         if (day == 6){
             //TODO implement the post method here
-            GetUserApi().sendAvailability(username, weeklyAvailability);
+            Availability a = new Availability(username, weeklyAvailability);
+            GetAvailabilityApi().sendAvailability(a).enqueue(
+                    new SlimCallback<>(response -> {}
+            ));
+
 
             Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
             myIntent.putExtra("username", username);

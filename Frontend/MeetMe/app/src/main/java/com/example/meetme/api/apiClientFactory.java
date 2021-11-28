@@ -1,5 +1,7 @@
 package com.example.meetme.api;
 
+import com.example.meetme.model.Availability;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -40,4 +42,5 @@ public class apiClientFactory {
      * @return A retrofit implementation of the MeetingApi
      */
     public static MeetingApi GetMeetingApi() { return GetApiClientSeed().create(MeetingApi.class);}
+    public static AvailabilityApi GetAvailabilityApi() {return GetApiClientSeed().create(AvailabilityApi.class);}
 }

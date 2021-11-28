@@ -1,5 +1,6 @@
 package com.example.meetme.api;
 
+import com.example.meetme.model.Availability;
 import com.example.meetme.model.User;
 
 import java.util.ArrayList;
@@ -40,10 +41,7 @@ public interface UserApi {
      */
     @Headers("Content-type: application/json")
     @POST("/user/")
-    Call<User> createUser(@Body User user);
-
-    @POST("/{username}/availability")
-    Call<Boolean[]> sendAvailability(@Path(value = "username") String username, @Body Boolean[] availability);
+    Call<POST> createUser(@Body User user);
 
     /**
      *
