@@ -29,7 +29,7 @@ public interface AvailabilityRepository extends JpaRepository<availability, Long
 
     @Modifying
     @Transactional
-    @Query(value = "update availability set availability.availability = ?1  where ?2", nativeQuery = true)
+    @Query(value = "update availability set availability.availability = ?1 where availability.user_id= ?2", nativeQuery = true)
     void updateAvailability(boolean[] f ,int id);
 
 

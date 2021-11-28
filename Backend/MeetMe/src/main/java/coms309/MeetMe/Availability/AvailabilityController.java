@@ -73,7 +73,7 @@ public class AvailabilityController {
     @PostMapping(value = "/{name}/setAvailability/", produces = "application/json")
     public String setAvailability(@RequestBody boolean[] availability, @PathVariable String name) {
         if (availability == null){
-            return "the availability is invalid";
+            return "{\"message\":\"Availability is invalid\"}";
         }
 
         User user = userRepository.findByName(name);
@@ -82,7 +82,8 @@ public class AvailabilityController {
             return failure;
         }
         if(availabilityRepository.findUserbyId(user.getId()) != null){
-            return "The user ready has the availability";
+            availabilityRepository.updateAvailability(availability, user.getId());
+            return success;
         }
 
         availability ava = new availability(availability, user);
@@ -93,25 +94,7 @@ public class AvailabilityController {
 
 
 
-    @PostMapping(value = "/{name}/updateAvailability", produces = "application/json")
-    public String updateAvailability(@RequestBody boolean[] availability, @PathVariable String name) {
-        if (availability == null){
-            return "the availability is invalid";
-        }
 
-        User user = userRepository.findByName(name);
-
-        if(user == null){
-            return failure;
-        }
-        if(availabilityRepository.findUserbyId(user.getId()) == null){
-            return "The user does not have availability";
-        }
-
-
-        availabilityRepository.updateAvailability(availability, user.getId());
-        return success;
-    }
 
 
 

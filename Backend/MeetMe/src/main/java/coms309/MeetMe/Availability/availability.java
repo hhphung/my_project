@@ -5,6 +5,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.firebase.database.annotations.NotNull;
 import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Stringy.Stringy;
 import coms309.MeetMe.User.User;
@@ -22,10 +23,10 @@ public class availability {
     @Column(nullable = false, unique = true)
     private int id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false, targetEntity =  User.class)
+    @JoinColumn( unique = true, nullable = false)
     @JsonIgnore
     private User user;
-
 
 
 
