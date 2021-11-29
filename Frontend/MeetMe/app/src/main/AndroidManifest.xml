@@ -21,7 +21,6 @@
         <activity
             android:name=".ui.ProfilePage"
             android:exported="true" />
->>>>>>> 954e280122100bf3f5a72603cb391d7deb0ac58d
         <activity
             android:name=".ui.ViewMeetingPage"
             android:exported="true" />
@@ -45,7 +44,7 @@
             android:exported="true" />
         <activity
             android:name=".ui.RegisterPage"
-            android:exported="true"></activity>
+            android:exported="true"/>
 
     </application>
 
