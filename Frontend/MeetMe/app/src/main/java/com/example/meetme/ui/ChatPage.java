@@ -52,7 +52,7 @@ public class ChatPage extends AppCompatActivity {
         mInput = findViewById(R.id.m_input);
 
         //get username of current client
-        username = "ww";//getIntent().getStringExtra("username");
+        username = getIntent().getStringExtra("username");
 
         // Add handlers to the buttons
         bConnect.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +118,7 @@ public class ChatPage extends AppCompatActivity {
             public void onMessage(String msg) {
                 Log.i("Websocket", "Message Received");
                 // Appends the message received to the previous messages
-                mOutput.append("\n" + "ww" + ": " + msg);
+                mOutput.append("\n" + username + ": " + msg);
             }
 
             @Override
