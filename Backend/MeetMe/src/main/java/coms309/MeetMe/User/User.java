@@ -174,8 +174,8 @@ public class User {
         return friendRequest.remove(friend);
     }
 
-    public Set<User> getRequestFrom(){
-        return requestFrom;
-    }
+//    public Set<User> getRequestFrom(){
+//        return requestFrom;
+//    }
 
 }
