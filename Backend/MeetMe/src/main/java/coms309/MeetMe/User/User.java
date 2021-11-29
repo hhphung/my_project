@@ -64,8 +64,7 @@ public class User {
     private Set<User> friends = new HashSet<User>();
 
 
-<<<<<<< HEAD
-=======
+
     @ManyToMany(cascade={CascadeType.ALL})
     @JoinTable(name="friendRequest",
             joinColumns={@JoinColumn(name="id")},
@@ -73,7 +72,6 @@ public class User {
     @JsonIgnore
     private Set<User> friendRequest = new HashSet<User>();
 
->>>>>>> main
 
 
 
@@ -156,7 +154,6 @@ public class User {
     }
 
 
-
     public Set<User> getFriends() {
         return friends;
     }
@@ -167,10 +164,6 @@ public class User {
         friends.add(friend);
     }
 
-<<<<<<< HEAD
-
-
-=======
 
 
     public Set<User> getFriendRequests() {
@@ -184,5 +177,5 @@ public class User {
     public Set<User> getRequestFrom(){
         return requestFrom;
     }
->>>>>>> main
+
 }
