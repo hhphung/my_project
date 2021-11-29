@@ -8,6 +8,7 @@ import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Stringy.Stringy;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -50,9 +51,18 @@ public class User {
     private Set<Meeting> meetingInvites;
 
     // Freind mappings
-    @ManyToMany(mappedBy = "friends")
+    // @ManyToMany(mappedBy = "friends")
+    // @JsonIgnore
+    // private Set<User> friends;
+
+    
+    @ManyToMany(cascade={CascadeType.ALL})
+    @JoinTable(name="friends",
+            joinColumns={@JoinColumn(name="id")},
+            inverseJoinColumns={@JoinColumn(name="friend_id")})
     @JsonIgnore
-    private Set<User> friends;
+    private Set<User> friends = new HashSet<User>();
+
 
     @OneToMany(mappedBy = "userA")
     @JsonIgnore

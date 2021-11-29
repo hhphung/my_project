@@ -28,7 +28,18 @@ class FriendRequest {
 
 
     // =============================== Constructors ================================== //
+    
+    public FriendRequest() {
+        this.state = FriendRequestState.PENDING;
+        this.created = new Date(System.currentTimeMillis());
+    }
 
+    public FriendRequest(User userA, User userB) {
+        this.userA = userA;
+        this.userB = userB;
+        this.state = FriendRequestState.PENDING;
+        this.created = new Date(System.currentTimeMillis());
+    }
 
     public FriendRequest(User userA, User userB, FriendRequestState state) {
         this.userA = userA;

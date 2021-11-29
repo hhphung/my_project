@@ -118,8 +118,11 @@ public class UserController {
     @PostMapping(path ="/addFriendRequest", produces = "application/json")
     public String addFriendRequest(@RequestBody UserNamePair userNamePair) {
 
-        FriendRequest friendRequest = friendRequestRepository.findByNames(userNamePair.getUserNameA(), userNamePair.getUserNameB());
-
+        User userA = userRepository.findByName(userNamePair.getUserNameA());
+        User userB = userRepository.findByName(userNamePair.getUserNameB());
+        
+        FriendRequest friendRequest = friendRequestRepository.findByNames(userA.getId(), userB.getId());
+        
         // Friend request already exists
         if (friendRequest != null) {
             friendRequest.reset();
@@ -128,8 +131,6 @@ public class UserController {
             friendRequest = getUsers(userNamePair);
 
             if (friendRequest == null) return Stringy.error("User was not found");
-    
-            User userA = friendRequest.getUserA(), userB = friendRequest.getUserB();
     
             // Save friend request in database (Not currently working) (but should work now)
             userA.sendFriendRequest(friendRequest);
@@ -151,8 +152,11 @@ public class UserController {
 
     @PostMapping(path ="/acceptFriendRequest", produces = "application/json")
     public String acceptFriendRequest(@RequestBody UserNamePair userNamePair) {
+
+        User userA = userRepository.findByName(userNamePair.getUserNameA());
+        User userB = userRepository.findByName(userNamePair.getUserNameB());
         
-        FriendRequest friendRequest = friendRequestRepository.findByNames(userNamePair.getUserNameA(), userNamePair.getUserNameB());
+        FriendRequest friendRequest = friendRequestRepository.findByNames(userA.getId(), userB.getId());
         
         if (friendRequest == null) return Stringy.error("Friend Request was not found");
 
@@ -175,7 +179,10 @@ public class UserController {
     @PostMapping(path ="/rejectFriendRequest", produces = "application/json")
     public String rejectFriendRequest(@RequestBody UserNamePair userNamePair) {
         
-        FriendRequest friendRequest = friendRequestRepository.findByNames(userNamePair.getUserNameA(), userNamePair.getUserNameB());
+        User userA = userRepository.findByName(userNamePair.getUserNameA());
+        User userB = userRepository.findByName(userNamePair.getUserNameB());
+        
+        FriendRequest friendRequest = friendRequestRepository.findByNames(userA.getId(), userB.getId());
         
         if (friendRequest == null) return Stringy.error("Friend Request was not found");
 

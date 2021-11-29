@@ -12,8 +12,8 @@ import java.util.List;
 @Repository
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, Integer> {
 
-    @Query(value = "SELECT * from friend_request WHERE userA.name = ?1 AND userA.name = ?2", nativeQuery = true)
-    FriendRequest findByNames(String nameA, String nameB);
+    @Query(value = "SELECT * from friend_request WHERE usera = ?1 AND userb = ?2", nativeQuery = true)
+    FriendRequest findByNames(int idA, int idB);
 
     @Query(value = "SELECT * from friend_request WHERE id=?1", nativeQuery = true)
     FriendRequest findById(int id);
@@ -23,9 +23,9 @@ public interface FriendRequestRepository extends JpaRepository<FriendRequest, In
     @Query(value = "delete from friend_request where id = ?1", nativeQuery = true)
     void deleteFriendRequest(int id);
 
-    @Query(value = "SELECT * FROM freind_request WHERE userA.name = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM friend_request WHERE usera = ?1", nativeQuery = true)
     List<FriendRequest> findFriendRequestsSent(int id);
 
-    @Query(value = "SELECT * FROM freind_request WHERE userB.name = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM friend_request WHERE userb = ?1", nativeQuery = true)
     List<FriendRequest> findFriendRequestsReceived(int id);
 }
