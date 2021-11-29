@@ -21,6 +21,7 @@ import com.example.meetme.model.User;
  */
 public class RegisterPage extends AppCompatActivity {
 
+
     /**
      * Sets up the register page. Checks input passwords against each other for validity.
      * @param savedInstanceState
@@ -34,7 +35,12 @@ public class RegisterPage extends AppCompatActivity {
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
         EditText passwordInput = findViewById(R.id.activity_main_password_input);
         EditText secPasswordInput = findViewById(R.id.activity_main_password_input2);
+
+        TextView errMsg = findViewById(R.id.activity_main_err_msg);
+
+
         Button toLoginScreen = findViewById(R.id.activity_register_btn_to_login);
+
 
         //use edit text to create user
         //will make passwords match later
@@ -44,20 +50,18 @@ public class RegisterPage extends AppCompatActivity {
                 if(secPasswordInput.getText().toString().equals(passwordInput.getText().toString()) && !(secPasswordInput.getText().toString().equals(""))) {
                     User user = new User(usernameInput.getText().toString(), passwordInput.getText().toString());
                     GetUserApi().createUser(user).enqueue(new SlimCallback<>(user1 ->{}));
-                    Boolean[] b = {true, false};
-                    //GetUserApi().createUser(new Availability(usernameInput.getText().toString(),b));
                     Intent myIntent = new Intent(view.getContext(), AvailabilityPage.class);
                     myIntent.putExtra("username", usernameInput.getText().toString());
                     startActivity(myIntent);
                     finish();
+
                }else{
+                    //possible error messages
                     if(secPasswordInput.getText().toString().equals(""))
                     {
-                        secPasswordInput.setError("Cannot be empty");
-                        secPasswordInput.requestFocus();
+                        errMsg.setText("Cannot be empty");
                     }else {
-                        secPasswordInput.setError("Passwords do not match. Try again");
-                        secPasswordInput.requestFocus();
+                        errMsg.setText("Passwords do not match. Try again");
                     }
                 }
             }

@@ -48,6 +48,9 @@ public class DashboardPage extends BaseActivity {
         username = getIntent().getStringExtra("username");
         TextView welcomeText = findViewById(R.id.activity_dashboard_text);
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
+
+        Button chatButton = findViewById(R.id.chat_btn);
+
         // load meetings as interactive cards
         GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings->
         {
@@ -60,7 +63,17 @@ public class DashboardPage extends BaseActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         }));
+
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), ChatPage.class);
+                myIntent.putExtra("username", username);
+                startActivity(myIntent);
+            }
+        });
     }
+
 
 
     @Override

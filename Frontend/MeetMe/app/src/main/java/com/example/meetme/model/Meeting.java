@@ -45,6 +45,11 @@ public class Meeting {
     @SerializedName("message")
     @Expose
     private String responseMessage;
+
+    @SerializedName("presentation")
+    @Expose
+    private boolean isPresentation;
+
     //String name, String adminName, String desc, String dateTime, String street,
     // String city, String state, int zipcode, String country)
 
@@ -72,6 +77,7 @@ public class Meeting {
         this.state = state;
         this.zipcode = zipcode;
         this.country = country;
+
     }
 
     public String getName() {
@@ -153,6 +159,16 @@ public class Meeting {
     public void setResponseMessage(String responseMessage) {
         this.responseMessage = responseMessage;
     }
+
+//    public boolean getIsPresentation()
+//    {
+//        return this.isPresentation;
+//    }
+//
+//    public void setIsPresentation(boolean isPresentation)
+//    {
+//        this.isPresentation = isPresentation;
+//    }
 
     public ArrayList<User> getParticipants() {
         return new ArrayList<User>();
