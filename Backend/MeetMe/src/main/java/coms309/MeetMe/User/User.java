@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import coms309.MeetMe.Availability.availability;
+import coms309.MeetMe.Availability.ava;
 import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Stringy.Stringy;
 
@@ -34,9 +34,8 @@ public class User {
 
 
 
-    @OneToOne(cascade={CascadeType.ALL},targetEntity = availability.class)
-    @JoinColumn(name = "id")
-    private availability availability;
+    @OneToOne(targetEntity = ava.class)
+    private ava ava;
 
 
 
@@ -149,12 +148,12 @@ public class User {
         return joiningDate;
     }
 
-    public availability getAvailability() {
-        return availability;
+    public ava getAvailability() {
+        return ava;
     }
 
-    public void setAvailability(availability availability) {
-        this.availability = availability;
+    public void setAvailability(ava ava) {
+        this.ava = ava;
     }
 
     public Role getRole() {

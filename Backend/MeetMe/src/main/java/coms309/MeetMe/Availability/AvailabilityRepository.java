@@ -1,13 +1,11 @@
 package coms309.MeetMe.Availability;
 
-import coms309.MeetMe.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 /**
  *
@@ -16,15 +14,17 @@ import java.util.List;
  */
 
 @Repository
-public interface AvailabilityRepository extends JpaRepository<availability, Long> {
-    availability findById(int id);
+public interface AvailabilityRepository extends JpaRepository<ava, Long> {
+    ava findById(int id);
 
 
     @Query(value = "SELECT * from availability where availability.user_id=?1", nativeQuery = true)
-    availability findUserbyId(int id);
+    ava findUserbyId(int id);
 
     @Query(value = "SELECT availability from availability where availability.user_id=?1", nativeQuery = true)
     boolean[] getUserAvalibilityById(int id);
+
+
 
 
     @Modifying

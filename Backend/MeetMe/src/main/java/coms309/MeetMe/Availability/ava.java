@@ -15,18 +15,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-public class availability {
+@Entity(name = "availability")
+public class ava {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
     private int id;
 
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false, targetEntity =  User.class)
     @JoinColumn( unique = true, nullable = false)
     @JsonIgnore
     private User user;
+
 
 
 
@@ -37,10 +39,10 @@ public class availability {
      // =============================== Constructors ================================== //
 
 
-    public availability() {
+    public ava() {
     }
 
-    public availability(boolean[] availability, User user) {
+    public ava(boolean[] availability, User user) {
         this.availability = availability;
         this.user = user;
     }

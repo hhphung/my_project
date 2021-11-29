@@ -2,14 +2,9 @@
 package coms309.MeetMe.Availability;
 
 import coms309.MeetMe.User.User;
-import coms309.MeetMe.User.UserNamePair;
 import coms309.MeetMe.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import coms309.MeetMe.PushNotifications.model.Topic;
-import coms309.MeetMe.PushNotifications.service.PushNotificationService;
-import coms309.MeetMe.Stringy.Stringy;
 
 import java.util.*;
 
@@ -29,7 +24,7 @@ public class AvailabilityController {
 
 
     @GetMapping(value = "/", produces = "application/json")
-    public List<availability> getAllAvalibility (){
+    public List<ava> getAllAvalibility (){
         return availabilityRepository.findAll();
     }
 
@@ -37,13 +32,13 @@ public class AvailabilityController {
 
 
     @GetMapping(value = "/{id}/", produces = "application/json")
-    public availability getAllAvalibility (@PathVariable int id){
+    public ava getAllAvalibility (@PathVariable int id){
         return availabilityRepository.findById(id);
     }
 
     @GetMapping(value = "/UserbyId/{id}/", produces = "application/json")
     public boolean[] getUserAvailibilitybyID(@PathVariable int id){
-        availability temp =availabilityRepository.findUserbyId(id);
+        ava temp =availabilityRepository.findUserbyId(id);
         if (temp == null){
             return null;
         }
@@ -56,7 +51,7 @@ public class AvailabilityController {
        if(user == null){
            return null;
        }
-        availability temp =availabilityRepository.findUserbyId(user.getId());
+        ava temp =availabilityRepository.findUserbyId(user.getId());
         if (temp == null){
             return null;
         }
@@ -70,23 +65,24 @@ public class AvailabilityController {
 
 
 
-    @PostMapping(value = "/{name}/setAvailability/", produces = "application/json")
-    public String setAvailability(@RequestBody boolean[] availability, @PathVariable String name) {
-        if (availability == null){
+    @PostMapping(value = "/setAvailability/", produces = "application/json")
+    public String setAvailability(@RequestBody Availability input) {
+        if (input == null){
             return "{\"message\":\"Availability is invalid\"}";
         }
 
-        User user = userRepository.findByName(name);
+
+        User user = userRepository.findByName(input.getName());
 
         if(user == null){
             return failure;
         }
         if(availabilityRepository.findUserbyId(user.getId()) != null){
-            availabilityRepository.updateAvailability(availability, user.getId());
+            availabilityRepository.updateAvailability(input.getHours(), user.getId());
             return success;
         }
 
-        availability ava = new availability(availability, user);
+        ava ava = new ava(input.getHours(), user);
 
       availabilityRepository.save(ava);
      return success;
