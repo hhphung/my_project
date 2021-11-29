@@ -5,12 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import coms309.MeetMe.PushNotifications.model.Topic;
-// import coms309.MeetMe.PushNotifications.model.Topic;
 import coms309.MeetMe.PushNotifications.service.PushNotificationService;
 import coms309.MeetMe.Stringy.Stringy;
 
-// import org.springframework.http.HttpStatus;
-// import org.springframework.http.ResponseEntity;
 
 import java.util.*;
 
@@ -89,60 +86,34 @@ public class UserController {
         return Stringy.error("Invalid credentials");
     }
 
+    // ---- Friends ----
 
     @GetMapping(path = "/{name}/getFriends", produces = "application/json")
     public Set<User> getFriends(@PathVariable String name) {
         return userRepository.findByName(name).getFriends();
     }
 
+    @GetMapping(path = "/{name}/getFriendRequestsSent", produces = "application/json")
+    public Set<User> getFriendRequestsSend(@PathVariable String name) {
+        User me = userRepository.findByName(name);
+        List<FriendRequest> friendRequests = friendRequestRepository.findFriendRequestsSent(me.getId());
+        Set<User> users = new HashSet<User>();
+        for(int i = 0; i < friendRequests.size(); i++) {
+            users.add(friendRequests.get(i).getUserB());
+        }
+        return users;
+    }
 
-    // @PostMapping(path = "/addFriend", produces = "application/json")
-    // public String addFriend(@RequestBody Friend friend) {
-    //     int senderId = friend.getSenderId();
-    //     int receiverId = friend.getRecieverId();
-    //     User self = userRepository.findById(senderId);
-    //     User friend = userRepository.findById(receiverId);
-    //     if (self != null && friend != null & senderId != receiverId) {
-    //         self.addFriend(friend);
-    //         friend.addFriend(self);
-    //         userRepository.save(self);
-    //         userRepository.save(friend);
-    //         return Stringy.success();
-    //     }
-    //     return Stringy.error("Invalid request body");
-    // }
-
-    // @PostMapping(path = "/deleteFriendRequest", produces = "application/json")
-    // public String deleteFriendRequestbyNames(@RequestBody FriendShip s) {
-    //     int senderId = s.getSenderId();
-    //     int receiverId = s.getRecieverId();
-    //     User self = userRepository.findById(senderId);
-    //     User friend = userRepository.findById(receiverId);
-    //     if (senderId != receiverId && self != null && friend != null) {
-    //         userRepository.deleteFriendRequest(self.getId(), friend.getId());
-
-    //         return Stringy.success();
-    //     }
-    //     return Stringy.error("Invalid request body");
-    // }
-
-
-
-    // @PostMapping(path = "/addFriendRequest", produces = "application/json")
-    // public String addFriendRequest(@RequestBody FriendShip s) {
-    //     int senderId = s.getSenderId();
-    //     int receiverId = s.getRecieverId();
-    //     User self = userRepository.findById(senderId);
-    //     User friend = userRepository.findById(receiverId);
-    //     if (self != null && friend != null && senderId != receiverId) {
-    //         self.addFriendRequest(friend);
-    //         userRepository.save(friend);
-    //         return Stringy.success();
-    //     }
-    //     return Stringy.error("Invalid request body");
-
-    // }
-
+    @GetMapping(path = "/{name}/getFriendRequestsReceived", produces = "application/json")
+    public Set<User> getFriendRequestsReceived(@PathVariable String name) {
+        User me = userRepository.findByName(name);
+        List<FriendRequest> friendRequests = friendRequestRepository.findFriendRequestsReceived(me.getId());
+        Set<User> users = new HashSet<User>();
+        for(int i = 0; i < friendRequests.size(); i++) {
+            users.add(friendRequests.get(i).getUserA());
+        }
+        return users;
+    }
 
     @PostMapping(path ="/addFriendRequest", produces = "application/json")
     public String addFriendRequest(@RequestBody UserNamePair userNamePair) {
@@ -160,7 +131,7 @@ public class UserController {
     
             User userA = friendRequest.getUserA(), userB = friendRequest.getUserB();
     
-            // Save friend request in database (Not currently working)
+            // Save friend request in database (Not currently working) (but should work now)
             userA.sendFriendRequest(friendRequest);
             userB.receiveFriendRequest(friendRequest);
             userRepository.save(userA);
@@ -194,6 +165,9 @@ public class UserController {
         userRepository.save(friendRequest.getUserB());
         friendRequestRepository.save(friendRequest);
 
+        // Notify other user
+        pushNotificationService.sendPushNotification(friendRequest.getUserA().getName(), friendRequest.getUserB().getName() + "accepted your friend request!", Topic.COMMON);
+
         return Stringy.success();
     }
 
@@ -211,57 +185,6 @@ public class UserController {
 
         return Stringy.success();
     }
-
-
-
-    // TODO: only 1 variable is allowed in @RequestBody 
-    // @PostMapping(path ="/deleteFriendRequest", produces = "application/json")
-    // public String deleteFriendRequestbyIds(@RequestBody int self, int f){
-    //     userRepository.deleteFriendRequest(self, f);
-    //     userRepository.deleteFriendRequest(f, self);
-    //     return Stringy.success();
-    // }
-
-    // @PostMapping(path ="/addFriendRequest", produces = "application/json")
-    // public String addFriendRequest(@RequestBody User name, @RequestBody User fName) {
-    //     if(name != null && fName != null && !name.equals(fName)) {
-    //         name.addFriendRequest(fName);
-    //         fName.addFriendRequest(name);
-    //         userRepository.save(name);
-    //         userRepository.save(fName);
-    //         return Stringy.success();
-    //     }
-    //     return Stringy.error("Invalid request body");
-    // }
-
-
-//    @PutMapping("/users/{id}")
-//    User updateUser(@PathVariable int id, @RequestBody User request){
-//        User user = userRepository.findById(id);
-//        if(user == null)
-//            return null;
-//        userRepository.save(request);
-//        return userRepository.findById(id);
-//    }
-
-//    @PutMapping("/users/{userId}/laptops/{laptopId}")
-//    String assignLaptopToUser(@PathVariable int userId,@PathVariable int laptopId){
-//        User user = userRepository.findById(userId);
-//        Laptop laptop = laptopRepository.findById(laptopId);
-//        if(user == null || laptop == null)
-//            return Stringy.error("Invalid request body");
-//        laptop.setUser(user);
-//        user.setLaptop(laptop);
-//        userRepository.save(user);
-//        return Stringy.success();
-//    }
-
-//    @DeleteMapping(path = "/users/{id}")
-//    String deleteLaptop(@PathVariable int id){
-//        userRepository.deleteById(id);
-//        return Stringy.success();
-//    }
-
 
     private FriendRequest getUsers(UserNamePair userNamePair) {
         if (userNamePair.isInvalid()) return null;

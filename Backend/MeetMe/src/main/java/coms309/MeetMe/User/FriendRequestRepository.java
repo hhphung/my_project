@@ -23,6 +23,9 @@ public interface FriendRequestRepository extends JpaRepository<FriendRequest, In
     @Query(value = "delete from friend_request where id = ?1", nativeQuery = true)
     void deleteFriendRequest(int id);
 
-    @Query(value = "select * from user inner join friend_re_quest on friend_re_quest.self_request_id = user.id where friend_re_quest.friend_request_id = ?1", nativeQuery = true)
-    List<FriendRequest> getFriendRequestFrom(int f);
+    @Query(value = "SELECT * FROM freind_request WHERE userA.name = ?1", nativeQuery = true)
+    List<FriendRequest> findFriendRequestsSent(int id);
+
+    @Query(value = "SELECT * FROM freind_request WHERE userB.name = ?1", nativeQuery = true)
+    List<FriendRequest> findFriendRequestsReceived(int id);
 }
