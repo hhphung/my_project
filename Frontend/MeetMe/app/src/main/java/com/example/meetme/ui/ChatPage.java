@@ -38,7 +38,6 @@ public class ChatPage extends AppCompatActivity {
         setContentView(R.layout.activity_chat_page);
 
         // Get the buttons
-        bConnect = findViewById(R.id.b_connect);
         bSendButton = findViewById(R.id.b_sendMessage);
         bDisconnect = findViewById(R.id.b_Disconnect);
 
@@ -54,13 +53,7 @@ public class ChatPage extends AppCompatActivity {
         //get username of current client
         username = getIntent().getStringExtra("username");
 
-        // Add handlers to the buttons
-        bConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                connectWebSocket();
-            }
-        });
+        connectWebSocket();
 
         bDisconnect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +111,7 @@ public class ChatPage extends AppCompatActivity {
             public void onMessage(String msg) {
                 Log.i("Websocket", "Message Received");
                 // Appends the message received to the previous messages
-                mOutput.append("\n" + username + ": " + msg);
+                mOutput.append(msg + "\n" + username + ": ");
             }
 
             @Override

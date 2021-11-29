@@ -4,6 +4,7 @@ import static com.example.meetme.api.apiClientFactory.GetMeetingApi;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +17,12 @@ import com.example.meetme.R;
 import com.example.meetme.UserAdapter;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
+
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * For viewing an individual meeting an its attributes
@@ -108,4 +115,5 @@ public class ViewMeetingPage extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }));
     }
+
 }
