@@ -3,9 +3,12 @@ package coms309.MeetMe.User;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Stringy.Stringy;
+import coms309.MeetMe.FriendRequest.*;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -50,20 +53,26 @@ public class User {
     @JsonIgnore
     private Set<Meeting> meetingInvites;
 
-    // Freind mappings
-    // @ManyToMany(mappedBy = "friends")
-    // @JsonIgnore
-    // private Set<User> friends;
+
+    // Friends are a many-to-many user-to-user relationship
+    // It's about to get complicated
+    @JsonManagedReference
+    @ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY)
+    @JoinTable(name="friendsA",
+            joinColumns={@JoinColumn(name="friendsB_id")},
+            inverseJoinColumns={@JoinColumn(name="friendsA_id")})
+    @JsonIgnore
+    private Set<User> friendsA = new HashSet<User>();
+
+    @JsonBackReference
+    @ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY)
+    @JoinTable(name="friendsB",
+            joinColumns={@JoinColumn(name="friendsA_id")},
+            inverseJoinColumns={@JoinColumn(name="friendsB_id")})
+    @JsonIgnore
+    private Set<User> friendsB = new HashSet<User>();
 
     
-    @ManyToMany(cascade={CascadeType.ALL})
-    @JoinTable(name="friends",
-            joinColumns={@JoinColumn(name="id")},
-            inverseJoinColumns={@JoinColumn(name="friend_id")})
-    @JsonIgnore
-    private Set<User> friends = new HashSet<User>();
-
-
     @OneToMany(mappedBy = "userA")
     @JsonIgnore
     private Set<FriendRequest> friendRequestsSent;
@@ -102,7 +111,6 @@ public class User {
         this.joiningDate = new Date(System.currentTimeMillis());
         this.lastSeen = this.joiningDate;
         this.role = Role.VIEWER;
-
     }
 
 
@@ -145,6 +153,18 @@ public class User {
         this.availability = availability;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public Date getLastSeen() {
+        return lastSeen;
+    }
+
+    public void setLastSeen(Date lastSeen) {
+        this.lastSeen = lastSeen;
+    }
+
     public Role getRole() {
         return role;
     }
@@ -153,28 +173,26 @@ public class User {
         this.role = role;
     }
 
-
+    // Combine friend relationship
     public Set<User> getFriends() {
+        Set<User> friends = new HashSet<User>();
+        friends.addAll(friendsA);
+        friends.addAll(friendsB);
         return friends;
     }
 
-    public void setFriends(Set<User> friends) {
-        this.friends = friends;
-    }
-
     public void addFriend(FriendRequest friendRequest) {
-        if (name.equals(friendRequest.getUserA().getName())) {
-            // friendRequestsSent.remove(friendRequest);
-            friends.add(friendRequest.getUserB());
+        if (name.equals(friendRequest.getUserA().getName())) {  // User is sending
+            friendsA.add(friendRequest.getUserB());
         }
-        else {
-            // friendRequestsReceived.remove(friendRequest);
-            friends.add(friendRequest.getUserA());
+        else {  // User is receiving
+            friendsB.add(friendRequest.getUserA());
         }
     }
 
     public void removeFriend(User friend) {
-        friends.remove(friend);
+        friendsA.remove(friend);
+        friendsB.remove(friend);
     }
 
     // Sent

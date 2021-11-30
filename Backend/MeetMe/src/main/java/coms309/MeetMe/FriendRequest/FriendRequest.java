@@ -1,22 +1,30 @@
 
-package coms309.MeetMe.User;
+package coms309.MeetMe.FriendRequest;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import coms309.MeetMe.User.*;
 
 import java.util.Date;
 
 
 @Entity
-class FriendRequest {
+public class FriendRequest {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, unique = true)
     private Integer id;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "userA")
     private User userA;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "userB")
     private User userB;
 

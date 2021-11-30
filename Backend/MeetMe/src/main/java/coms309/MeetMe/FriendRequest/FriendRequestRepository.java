@@ -1,4 +1,4 @@
-package coms309.MeetMe.User;
+package coms309.MeetMe.FriendRequest;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -13,7 +13,7 @@ import java.util.List;
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, Integer> {
 
     @Query(value = "SELECT * from friend_request WHERE usera = ?1 AND userb = ?2", nativeQuery = true)
-    FriendRequest findByNames(int idA, int idB);
+    FriendRequest findByUsers(int idA, int idB);
 
     @Query(value = "SELECT * from friend_request WHERE id=?1", nativeQuery = true)
     FriendRequest findById(int id);
