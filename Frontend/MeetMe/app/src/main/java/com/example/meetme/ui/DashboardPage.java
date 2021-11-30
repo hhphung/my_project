@@ -24,18 +24,32 @@ import com.example.meetme.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DashboardPage includes logic for recyclerView
+ */
 public class DashboardPage extends BaseActivity {
 
+    /**
+     * user's name
+     */
     String username;
+    /**
+     * used to display a list of meetings.
+     */
     RecyclerView recyclerView;
 
+    /**
+     * Set up the page and initialize the recyclerview
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         TextView welcomeText = findViewById(R.id.activity_dashboard_text);
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
-        Button goToCreateMeeting = findViewById(R.id.activity_dashboard_goToCreateMeeting);
+
+        Button chatButton = findViewById(R.id.chat_btn);
 
         // load meetings as interactive cards
         GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings->
@@ -49,13 +63,24 @@ public class DashboardPage extends BaseActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         }));
+
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), ChatPage.class);
+                myIntent.putExtra("username", username);
+                startActivity(myIntent);
+            }
+        });
     }
+
 
 
     @Override
     protected int getContentViewId() {
         return R.layout.activity_dashboard_page;
     }
+
 
     @Override
     int getLayoutId() {

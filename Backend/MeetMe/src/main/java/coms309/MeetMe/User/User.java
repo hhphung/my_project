@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Stringy.Stringy;
+import coms309.MeetMe.chat.Message;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -53,6 +54,8 @@ public class User {
 
      // =============================== Constructors ================================== //
 
+
+
     @ManyToMany(cascade={CascadeType.ALL})
     @JoinTable(name="friends",
             joinColumns={@JoinColumn(name="id")},
@@ -61,9 +64,16 @@ public class User {
     private Set<User> friends = new HashSet<User>();
 
 
-    @ManyToMany(mappedBy="friends")
+
+    @ManyToMany(cascade={CascadeType.ALL})
+    @JoinTable(name="friendRequest",
+            joinColumns={@JoinColumn(name="id")},
+            inverseJoinColumns={@JoinColumn(name="friend_id")})
     @JsonIgnore
-    private Set<User> friendsOf = new HashSet<User>();
+    private Set<User> friendRequest = new HashSet<User>();
+
+
+
 
     public User(String name, String password, Role role) {
         this.name = name;
@@ -144,7 +154,6 @@ public class User {
     }
 
 
-
     public Set<User> getFriends() {
         return friends;
     }
@@ -154,4 +163,19 @@ public class User {
     public void addFriend(User friend){
         friends.add(friend);
     }
+
+
+
+    public Set<User> getFriendRequests() {
+        return friendRequest;
+    }
+
+    public boolean removeFriendRequest(User friend) {
+        return friendRequest.remove(friend);
+    }
+
+//    public Set<User> getRequestFrom(){
+//        return requestFrom;
+//    }
+
 }

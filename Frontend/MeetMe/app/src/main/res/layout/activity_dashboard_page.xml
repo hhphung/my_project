@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.DashboardPage">
 
+
     <TextView
         android:id="@+id/activity_dashboard_text"
         android:layout_width="match_parent"
@@ -16,44 +17,52 @@
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.169" />
-
-    <Button
-        android:id="@+id/activity_dashboard_goToCreateMeeting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintVertical_bias="0.131" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMeeting"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_dashboard_MeetingsTitle"
+        app:layout_constraintVertical_bias="0.166" />
 
     <TextView
         android:id="@+id/activity_dashboard_MeetingsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:gravity="center_horizontal"
         android:text="Upcoming Meetings"
         android:textColor="#000000"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_dashboard_text" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_dashboard_text"
+        app:layout_constraintVertical_bias="0.122" />
 
-    <include
-        layout="@layout/bottom_menu_layout"
-        android:layout_width="match_parent"
+        <include
+            layout="@layout/bottom_menu_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    <Button
+        android:id="@+id/chat_btn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewMeeting"
+        android:text="Chat" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

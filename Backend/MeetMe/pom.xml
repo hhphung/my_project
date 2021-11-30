@@ -27,6 +27,12 @@
 
   <dependencies>
 
+  <dependency>
+    <groupId>com.google.firebase</groupId>
+    <artifactId>firebase-admin</artifactId>
+    <version>6.8.1</version>
+  </dependency>
+
     <!-- Spring Boot Web dependencies -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -54,6 +60,20 @@
       <artifactId>mockito-core</artifactId>
       <version>3.9.0</version>
       <scope>test</scope>
+    </dependency>
+      <dependency>
+          <groupId>javax.validation</groupId>
+          <artifactId>validation-api</artifactId>
+      </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.12</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-websocket</artifactId>
+      <version>5.3.3</version>
     </dependency>
 
   </dependencies>

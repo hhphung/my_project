@@ -2,6 +2,7 @@ package com.example.meetme.ui;
 
 import static com.example.meetme.api.apiClientFactory.GetMeetingApi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,13 +17,30 @@ import com.example.meetme.UserAdapter;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
 
+/**
+ * For viewing an individual meeting an its attributes
+ */
 public class ViewMeetingPage extends AppCompatActivity {
 
+    /**
+     * name of given meeting
+     */
     String meetingNameStr = "";
 
+    /**
+     * for list of Users in a Meeting
+     */
     RecyclerView recyclerView;
 
+    /**
+     * TextView for errors
+     */
     private TextView errorMsg;
+
+    /**
+     * Sets up page
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,12 +48,15 @@ public class ViewMeetingPage extends AppCompatActivity {
 
         // link ids
         Button backButton = findViewById(R.id.backButton);
+        Button chatButton = findViewById(R.id.chatBtn);
 
         TextView meetingName = findViewById(R.id.name);
         TextView meetingDesc = findViewById(R.id.description);
         TextView meetingDateTime = findViewById(R.id.dateTime);
         TextView meetingLocation = findViewById(R.id.location);
         TextView meetingAdminName = findViewById(R.id.adminName);
+
+        String username = getIntent().getStringExtra("username");
 
 
         // Get information sent from last activity page
@@ -56,8 +77,17 @@ public class ViewMeetingPage extends AppCompatActivity {
             }
         });
 
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), ChatPage.class);
+                myIntent.putExtra("username", username);
+                startActivity(myIntent);
+            }
+        });
+
         // Get meeting info and display it
-        GetMeetingApi().getMeetingById(meetingNameStr).enqueue(new SlimCallback<Meeting>(meeting -> {
+        GetMeetingApi().getMeetingByName(meetingNameStr).enqueue(new SlimCallback<Meeting>(meeting -> {
             meetingAdminName.setText(meeting.getAdminName());
             meetingDesc.setText(meeting.getDesc());
             meetingDateTime.setText(meeting.getDateTime());
