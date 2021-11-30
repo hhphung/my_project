@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import coms309.MeetMe.Availability.Availability;
 import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Stringy.Stringy;
 import coms309.MeetMe.FriendRequest.*;
@@ -32,8 +33,10 @@ public class User {
     private Date joiningDate;
     @Column(nullable = false)
     private Date lastSeen;
-    @Column(nullable = false)
-    private boolean[] availability = new boolean[168]; // TODO: Create Availability/Schedule object to pass in
+
+    @OneToOne(targetEntity = Availability.class)
+    private Availability availability;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -52,7 +55,6 @@ public class User {
     @ManyToMany(mappedBy = "userInvites")
     @JsonIgnore
     private Set<Meeting> meetingInvites;
-
 
     // Friends are a many-to-many user-to-user relationship
     // It's about to get complicated
@@ -145,11 +147,11 @@ public class User {
         return joiningDate;
     }
 
-    public boolean[] getAvailability() {
+    public Availability getAvailability() {
         return availability;
     }
 
-    public void setAvailability(boolean[] availability) {
+    public void setAvailability(Availability availability) {
         this.availability = availability;
     }
 
@@ -173,7 +175,6 @@ public class User {
         this.role = role;
     }
 
-    // Combine friend relationship
     public Set<User> getFriends() {
         Set<User> friends = new HashSet<User>();
         friends.addAll(friendsA);

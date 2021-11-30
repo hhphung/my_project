@@ -1,6 +1,5 @@
 package coms309.MeetMe.User;
 
-// import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,30 +60,6 @@ public class UserController {
     UserShadow getUserByName(@PathVariable String name) {
         return new UserShadow(userRepository.findByName(name));
     }
-
-
-    @GetMapping(value = "/{name}/availability", produces = "application/json")
-    boolean[] getUserAvailability(@PathVariable String name) {
-        User user = userRepository.findByName(name);
-        return user.getAvailability();
-    }
-
-    @PostMapping(value = "/{name}/availability", produces = "application/json")
-    String setAvailability(@PathVariable String name, @RequestBody boolean[] availability) {
-        User temp = userRepository.findByName(name);
-        if (temp == null) {
-            return Stringy.error("Invalid request body");
-        }
-        temp.setAvailability(availability);
-        userRepository.save(temp);
-        return Stringy.success();
-    }
-
-    // @GetMapping(value = "/{name}/meetings", produces = "application/json")
-    // boolean[] getUserAvailability(@PathVariable String name) {
-    //     User user = userRepository.findByName(name);
-    //     return user.get();
-    // }
 
     @PostMapping(path = "/login", produces = "application/json")
     String loginUser(@RequestBody User user) {
@@ -177,6 +152,7 @@ public class UserController {
         
         return Stringy.success();
     }
+
 
     @PostMapping(path ="/acceptFriendRequest", produces = "application/json")
     public String acceptFriendRequest(@RequestBody UserNamePair userNamePair) {

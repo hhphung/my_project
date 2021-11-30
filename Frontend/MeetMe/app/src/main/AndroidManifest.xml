@@ -13,6 +13,10 @@
         android:theme="@style/Theme.MeetMe"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.ChatPage"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
             android:name=".ui.friendProfilepage"
             android:exported="true" />
         <activity
