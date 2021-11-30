@@ -16,10 +16,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.meetme.R;
+import com.example.meetme.api.MeetingApi;
 import com.example.meetme.model.Meeting;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
 
+import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -37,6 +39,9 @@ public class CreateMeetingPage extends AppCompatActivity {
      * The error message displayed to the user
      */
     private TextView errorMsg;
+
+    private MeetingApi m;
+
 
     /**
      * Set up the page.
@@ -72,6 +77,7 @@ public class CreateMeetingPage extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
+
                 String mTitle = meetingTitle_textbox.getText().toString();
                 String mDesc = meetingDescription_textbox.getText().toString();
                 String mTime = meetingTime_textbox.getText().toString();
@@ -80,12 +86,36 @@ public class CreateMeetingPage extends AppCompatActivity {
                 Boolean presentationVal = presentation.isChecked();
 
                 PostMeeting(mTitle, mDesc, mTime, mDate, mLocation, presentationVal);
+
 //                if (errorMsg.getText().toString().equals("Error Message Goes Here") ||
 //                        errorMsg.getText().toString().equals("")) {
 //                    finish();
 //                }
             }
         });
+    }
+
+
+//    @Override
+//    protected int getContentViewId() {
+//        return R.layout.activity_create_meeting;
+//    }
+//
+//    @Override
+//    int getLayoutId() {
+//        return R.layout.activity_create_meeting;
+//    }
+//
+//    @Override
+//    int getNavigationMenuItemId() {
+//        return R.id.action_createMeeting;
+//    }
+
+    public MeetingApi getMeetingApi(){
+        return m;
+    }
+    public void setMeetingApi(MeetingApi newM){
+        m = newM;
     }
 
 
@@ -101,6 +131,7 @@ public class CreateMeetingPage extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation, boolean mPresentation){
+
 
         try {
             int zipcode = Integer.parseInt(mLocation[3].replaceAll(" ", ""));
@@ -145,6 +176,9 @@ public class CreateMeetingPage extends AppCompatActivity {
                 errorMsg.setVisibility(View.VISIBLE);
             }
         }
+        catch (IndexOutOfBoundsException e){
+            errorMsg.setText("Please enter a valid location format");
+        }
         catch (Exception e){
             errorMsg.setText(e.toString());
             if (errorMsg.getVisibility() == View.INVISIBLE) {
@@ -152,5 +186,4 @@ public class CreateMeetingPage extends AppCompatActivity {
             }
         }
     }
-
 }
