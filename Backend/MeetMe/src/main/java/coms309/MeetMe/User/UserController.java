@@ -123,6 +123,7 @@ public class UserController {
         return Stringy.success();
     }
 
+
     @PostMapping(path ="/acceptFriendRequest", produces = "application/json")
     public String acceptFriendRequest(@RequestBody UserNamePair userNamePair) {
 
