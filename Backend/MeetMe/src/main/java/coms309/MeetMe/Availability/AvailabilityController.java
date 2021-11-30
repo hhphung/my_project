@@ -1,79 +1,126 @@
 
-package coms309.MeetMe.User;
+package coms309.MeetMe.Availability;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import coms309.MeetMe.User.User;
+import coms309.MeetMe.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import coms309.MeetMe.PushNotifications.model.Topic;
-import coms309.MeetMe.PushNotifications.service.PushNotificationService;
-import coms309.MeetMe.Stringy.Stringy;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import javax.persistence.CascadeType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import java.util.*;
 
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/availability")
+public class AvailabilityController {
+
+    @Autowired
+    AvailabilityRepository availabilityRepository;
 
     @Autowired
     UserRepository userRepository;
-
-    private PushNotificationService pushNotificationService;
-
-    public UserController(PushNotificationService pushNotificationService) {
-        this.pushNotificationService = pushNotificationService;
-    }
 
     private String success = "{\"message\":\"Success\"}";
     private String failure = "{\"message\":\"User not found\"}";
 
 
     @GetMapping(value = "/", produces = "application/json")
-    List<User> getAllUsers(){
-        return userRepository.findAll();
-    }
-
-
-    @GetMapping(value = "/id/{id}", produces = "application/json")
-    User getUserById( @PathVariable int id) {
-        return userRepository.findById(id);
-    }
-
-
-    @GetMapping(value = "/name/{name}", produces = "application/json")
-    User getUserByName( @PathVariable String name) {
-        return userRepository.findByName(name);
+    public List<ava> getAllAvalibility (){
+        return availabilityRepository.findAll();
     }
 
 
 
 
+    @GetMapping(value = "/{id}/", produces = "application/json")
+    public ava getAllAvalibility (@PathVariable int id){
+        return availabilityRepository.findById(id);
+    }
 
-    @PostMapping(value = "/", produces = "application/json")
-    String createUser(@RequestBody User user) {
-        if (user == null)
+    @GetMapping(value = "/UserbyId/{id}/", produces = "application/json")
+    public boolean[] getUserAvailibilitybyID(@PathVariable int id){
+        ava temp =availabilityRepository.findUserbyId(id);
+        if (temp == null){
+            return null;
+        }
+        return temp.getAvailability();
+    }
+
+        @GetMapping(value = "/UserbyName/{name}/", produces = "application/json")
+    public boolean[] getUserAvailibilityName(@PathVariable String name){
+       User user = userRepository.findByName(name);
+       if(user == null){
+           return null;
+       }
+        ava temp =availabilityRepository.findUserbyId(user.getId());
+        if (temp == null){
+            return null;
+        }
+        return temp.getAvailability();
+    }
+
+
+
+
+
+
+
+
+    @PostMapping(value = "/setAvailability/", produces = "application/json")
+    public String setAvailability(@RequestBody Availability input) {
+        if (input == null){
+            return "{\"message\":\"Availability is invalid\"}";
+        }
+
+
+        User user = userRepository.findByName(input.getName());
+
+        if(user == null){
             return failure;
+        }
+        if(availabilityRepository.findUserbyId(user.getId()) != null){
+            availabilityRepository.updateAvailability(input.getHours(), user.getId());
+            return success;
+        }
 
-        User checkIfExists = userRepository.findByName(user.getName());
+        ava ava = new ava(input.getHours(), user);
 
-        if (checkIfExists != null) 
-            return "{\"message\":\"Username taken\"}";
-
-        userRepository.save(user);
-        return success;
+      availabilityRepository.save(ava);
+     return success;
     }
 
-  /*  @GetMapping(path = "/login", produces = "application/json")
+
+
+
+
+
+
+
+    /*
+    private PushNotificationService pushNotificationService;
+
+    public AvailabilityController(PushNotificationService pushNotificationService) {
+        this.pushNotificationService = pushNotificationService;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @GetMapping(path = "/login", produces = "application/json")
     String loginUser(@RequestParam String name,@RequestParam  String password ) {
-        User temp = userRepository.findByName(name);
+        User temp = availabilityRepository.findByName(name);
         if(temp != null) {
             if (temp.getPassword().equals(password)) {
                 return success;
@@ -81,24 +128,10 @@ public class UserController {
         }
         return failure;
     }
-*/
-
-    @PostMapping(path = "/login", produces = "application/json")
-    String loginUser(@RequestBody User user ) {
-        if(user != null){
-           User temp = userRepository.findByName(user.getName());
-           if (temp != null && temp.getPassword().equals(user.getPassword())) {
-                   return success;
-           }
-        }
-        return failure;
-    }
 
 
-    @GetMapping(path = "/{name}/getFriends", produces = "application/json")
-    public Set<User> getFriends (@PathVariable String name) {
-        return userRepository.findByName(name).getFriends();
-    }
+
+
 
 
     @PostMapping(path ="/addFriendRequest", produces = "application/json")
@@ -111,8 +144,8 @@ public class UserController {
         // Save friend request in database (Not currently working)
         // userA.addFriendRequest(userB);
         // userB.addFriendRequest(userA);
-        // userRepository.save(userA);
-        // userRepository.save(userB);
+        // availabilityRepository.save(userA);
+        // availabilityRepository.save(userB);
         
         // If user found, send out friend request notification to user's token
         // pushNotificationService.sendPushNotificationToToken("title", "message", Topic.COMMON, "putTokenHere");
@@ -122,7 +155,6 @@ public class UserController {
         
         return Stringy.success();
     }
-
 
     @PostMapping(path ="/acceptFriendRequest", produces = "application/json")
     public String acceptFriendRequest(@RequestBody UserNamePair userNamePair) {
@@ -139,8 +171,8 @@ public class UserController {
         users[1].addFriend(users[0]);
         users[0].removeFriendRequest(users[1]);
         users[1].removeFriendRequest(users[0]);
-        userRepository.save(users[0]);
-        userRepository.save(users[1]);
+        availabilityRepository.save(users[0]);
+        availabilityRepository.save(users[1]);
 
         return Stringy.success();
     }
@@ -168,8 +200,8 @@ public class UserController {
     // TODO: only 1 variable is allowed in @RequestBody 
     // @PostMapping(path ="/deleteFriendRequest", produces = "application/json")
     // public String deleteFriendRequestbyIds(@RequestBody int self, int f){
-    //     userRepository.deleteFriendRequest(self, f);
-    //     userRepository.deleteFriendRequest(f, self);
+    //     availabilityRepository.deleteFriendRequest(self, f);
+    //     availabilityRepository.deleteFriendRequest(f, self);
     //     return success;
     // }
 
@@ -178,8 +210,8 @@ public class UserController {
     //     if(name != null && fName != null && !name.equals(fName)) {
     //         name.addFriendRequest(fName);
     //         fName.addFriendRequest(name);
-    //         userRepository.save(name);
-    //         userRepository.save(fName);
+    //         availabilityRepository.save(name);
+    //         availabilityRepository.save(fName);
     //         return success;
     //     }
     //     return failure;
@@ -188,28 +220,28 @@ public class UserController {
 
 //    @PutMapping("/users/{id}")
 //    User updateUser(@PathVariable int id, @RequestBody User request){
-//        User user = userRepository.findById(id);
+//        User user = availabilityRepository.findById(id);
 //        if(user == null)
 //            return null;
-//        userRepository.save(request);
-//        return userRepository.findById(id);
+//        availabilityRepository.save(request);
+//        return availabilityRepository.findById(id);
 //    }
     
 //    @PutMapping("/users/{userId}/laptops/{laptopId}")
 //    String assignLaptopToUser(@PathVariable int userId,@PathVariable int laptopId){
-//        User user = userRepository.findById(userId);
+//        User user = availabilityRepository.findById(userId);
 //        Laptop laptop = laptopRepository.findById(laptopId);
 //        if(user == null || laptop == null)
 //            return failure;
 //        laptop.setUser(user);
 //        user.setLaptop(laptop);
-//        userRepository.save(user);
+//        availabilityRepository.save(user);
 //        return success;
 //    }
 
 //    @DeleteMapping(path = "/users/{id}")
 //    String deleteLaptop(@PathVariable int id){
-//        userRepository.deleteById(id);
+//        availabilityRepository.deleteById(id);
 //        return success;
 //    }
 
@@ -218,15 +250,18 @@ public class UserController {
         if (userNamePair.isInvalid()) return null;
 
         // Lookup sending user
-        User userA = userRepository.findByName(userNamePair.getUserNameA());
+        User userA = availabilityRepository.findByName(userNamePair.getUserNameA());
 
         // Lookup receiving user
-        User userB = userRepository.findByName(userNamePair.getUserNameB());
+        User userB = availabilityRepository.findByName(userNamePair.getUserNameB());
 
         if (userA == null || userA == null) return null;
 
         return new User[] { userA, userB };
     }
+
+     */
+
 
 
 }
