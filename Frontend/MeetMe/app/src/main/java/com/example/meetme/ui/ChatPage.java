@@ -111,7 +111,7 @@ public class ChatPage extends AppCompatActivity {
             public void onMessage(String msg) {
                 Log.i("Websocket", "Message Received");
                 // Appends the message received to the previous messages
-                mOutput.append(msg + "\n" + username + ": ");
+                mOutput.append(msg + "\n");
             }
 
             @Override

@@ -50,6 +50,7 @@ public class DashboardPage extends BaseActivity {
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
 
         Button chatButton = findViewById(R.id.chat_btn);
+        username = getIntent().getStringExtra("username");
 
         // load meetings as interactive cards
         GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings->
