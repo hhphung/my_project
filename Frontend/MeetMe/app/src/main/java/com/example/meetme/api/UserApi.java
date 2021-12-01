@@ -53,7 +53,7 @@ public interface UserApi {
      * @param user
      * @return "success" or "failure"
      */
-    @GET("/login/")
+    @POST("/user/login/")
     Call<User> canLogin(@Body User user);
 
     /**
