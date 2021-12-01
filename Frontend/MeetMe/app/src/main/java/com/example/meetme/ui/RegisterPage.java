@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
+import com.example.meetme.model.Availability;
 import com.example.meetme.model.User;
 
 /**
@@ -47,11 +48,9 @@ public class RegisterPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(secPasswordInput.getText().toString().equals(passwordInput.getText().toString()) && !(secPasswordInput.getText().toString().equals(""))) {
-
-                    User newUser = new User(usernameInput.getText().toString(), passwordInput.getText().toString());
-                    GetUserApi().createUser(newUser).enqueue(new SlimCallback<>(user1 ->{}));
-
-                    Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
+                    User user = new User(usernameInput.getText().toString(), passwordInput.getText().toString());
+                    GetUserApi().createUser(user).enqueue(new SlimCallback<>(user1 ->{}));
+                    Intent myIntent = new Intent(view.getContext(), AvailabilityPage.class);
                     myIntent.putExtra("username", usernameInput.getText().toString());
                     startActivity(myIntent);
                     finish();
