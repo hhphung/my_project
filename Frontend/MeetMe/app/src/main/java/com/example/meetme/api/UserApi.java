@@ -66,5 +66,8 @@ public interface UserApi {
     @GET("/user/{name}/friends")
     Call<Set<User>> getFriends(@Path(value = "name") String name);
 
+    @POST("user/changePassword")
+    Call<User> changePassword(@Body User oldUser_newPass);
+
 
 }

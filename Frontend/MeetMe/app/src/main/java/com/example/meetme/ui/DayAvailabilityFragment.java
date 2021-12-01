@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.meetme.R;
@@ -103,7 +103,7 @@ public class DayAvailabilityFragment extends Fragment {
         for (Integer i = 0; i < 24; i++){
             String buttonId = "fragment_availability_" + i.toString();
             int id = res.getIdentifier(buttonId, "id", getContext().getPackageName());
-            RadioButton b = view.findViewById(id);
+            CheckBox b = view.findViewById(id);
             if (b.isChecked()){
                 weeklyAvailability[i+day*24] = true;
             }
