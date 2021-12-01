@@ -36,8 +36,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "SELECT * from user WHERE name LIKE %?1%", nativeQuery = true)
     List<User> findBySearch (String name);
-
-
-
 }
 

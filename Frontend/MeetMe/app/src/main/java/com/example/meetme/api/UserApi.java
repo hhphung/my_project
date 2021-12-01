@@ -1,7 +1,9 @@
 package com.example.meetme.api;
 
+import com.example.meetme.model.Availability;
 import com.example.meetme.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -39,7 +41,7 @@ public interface UserApi {
      */
     @Headers("Content-type: application/json")
     @POST("/user/")
-    Call<User> createUser(@Body User user);
+    Call<POST> createUser(@Body User user);
 
     /**
      *
@@ -61,7 +63,7 @@ public interface UserApi {
      * @param name name of user to get friends of
      * @return a list of friends of the user given by name
      */
-    @GET("/user/{name}/getFriends")
+    @GET("/user/{name}/friends")
     Call<Set<User>> getFriends(@Path(value = "name") String name);
 
 

@@ -58,10 +58,12 @@ public class User {
     @JsonIgnore
     Set<MeetingRequest> meetingRequests;
 
+
     // Users who were invited to the meeting but have not accepted yet
     @OneToMany
     @JsonIgnore
     Set<MeetingInvite> meetingInvites;
+
 
     // Friends are a many-to-many user-to-user relationship
     // It's about to get complicated

@@ -105,6 +105,7 @@ public class UserController {
         return UserShadow.build(userRepository.findByName(name).getFriends());
     }
 
+
     @GetMapping(path = "/{name}/friendRequestsSent", produces = "application/json")
     public List<UserShadow> getFriendRequestsSend(@PathVariable String name) {
         User me = userRepository.findByName(name);
@@ -112,12 +113,14 @@ public class UserController {
         if (me == null) return null;
 
         List<FriendRequest> friendRequests = friendRequestRepository.findSent(me.getId());
+
         List<User> users = new ArrayList<User>();
         for (int i = 0; i < friendRequests.size(); i++) {
             users.add(friendRequests.get(i).getUserB());
         }
         return UserShadow.build(users);
     }
+
 
     @GetMapping(path = "/{name}/friendRequestsReceived", produces = "application/json")
     public List<UserShadow> getFriendRequestsReceived(@PathVariable String name) {
@@ -126,12 +129,14 @@ public class UserController {
         if (me == null) return null;
 
         List<FriendRequest> friendRequests = friendRequestRepository.findReceived(me.getId());
+
         List<User> users = new ArrayList<User>();
         for (int i = 0; i < friendRequests.size(); i++) {
             users.add(friendRequests.get(i).getUserA());
         }
         return UserShadow.build(users);
     }
+
 
     @PostMapping(path ="/sendFriendRequest", produces = "application/json")
     public String sendFriendRequest(@RequestBody UserNamePair userNamePair) {
