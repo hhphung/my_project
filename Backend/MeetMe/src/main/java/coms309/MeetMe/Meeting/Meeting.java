@@ -1,13 +1,18 @@
 package coms309.MeetMe.Meeting;
 
 import coms309.MeetMe.Location.Location;
+import coms309.MeetMe.MeetingRequest.MeetingRequest;
+import coms309.MeetMe.MeetingInvite.MeetingInvite;
 import coms309.MeetMe.Stringy.Stringy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 import javax.persistence.*;
-import java.util.List;
+import java.util.*;
 
 import coms309.MeetMe.User.User;
+import coms309.MeetMe.User.UserShadow;
 
 
 @Entity
@@ -43,19 +48,29 @@ public class Meeting {
     @ManyToMany
     // @JoinColumn(nullable = true)
     @JsonIgnore
-    List<User> userParticipants;
+    Set<User> userParticipants;
 
     // Users who requested to join the meeting but have not been accepted yet
-    @ManyToMany
-    // @JoinColumn(nullable = true)
+    @OneToMany
     @JsonIgnore
-    List<User> userRequests;
+    Set<MeetingRequest> meetingRequests;
 
     // Users who were invited to the meeting but have not accepted yet
-    @ManyToMany
-    // @JoinColumn(nullable = true)
+    @OneToMany
     @JsonIgnore
-    List<User> userInvites;
+    Set<MeetingInvite> meetingInvites;
+
+    // // Users who requested to join the meeting but have not been accepted yet
+    // @ManyToMany
+    // // @JoinColumn(nullable = true)
+    // @JsonIgnore
+    // List<User> userRequests;
+
+    // Users who were invited to the meeting but have not accepted yet
+    // @ManyToMany
+    // // @JoinColumn(nullable = true)
+    // @JsonIgnore
+    // List<User> userInvites;
 
 
     // =============================== Constructors ================================== //
@@ -129,6 +144,24 @@ public class Meeting {
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
+
+    public Privacy getPrivacy() {
+        return privacy;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<Integer> getUserParticipants() {
+        List<Integer> ids = new ArrayList<Integer>();
+        userParticipants.forEach(user -> {
+            ids.add(user.getId());
+        });
+        return ids;
+    }
+
+    public void addUser(User user) {
+        this.userParticipants.add(user);
+    }
 }
-
-

@@ -6,13 +6,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import coms309.MeetMe.MeetingRequest.MeetingRequest;
+import coms309.MeetMe.MeetingInvite.MeetingInvite;
 import coms309.MeetMe.Availability.Availability;
 import coms309.MeetMe.Meeting.Meeting;
+import coms309.MeetMe.Meeting.MeetingShadow;
 import coms309.MeetMe.Stringy.Stringy;
 import coms309.MeetMe.FriendRequest.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -48,13 +53,17 @@ public class User {
     @JsonIgnore
     private Set<Meeting> meetingParticipation;
 
-    @ManyToMany(mappedBy = "userRequests")
+    // Users who requested to join the meeting but have not been accepted yet
+    @OneToMany
     @JsonIgnore
-    private Set<Meeting> meetingRequests;
+    Set<MeetingRequest> meetingRequests;
 
-    @ManyToMany(mappedBy = "userInvites")
+
+    // Users who were invited to the meeting but have not accepted yet
+    @OneToMany
     @JsonIgnore
-    private Set<Meeting> meetingInvites;
+    Set<MeetingInvite> meetingInvites;
+
 
     // Friends are a many-to-many user-to-user relationship
     // It's about to get complicated
@@ -220,5 +229,17 @@ public class User {
 
     public boolean removeFriendRequestReceived(FriendRequest friendRequestReceived) {
         return friendRequestsReceived.remove(friendRequestReceived);
+    }
+
+    public List<Integer> getMeetingParticipation() {
+        List<Integer> ids = new ArrayList<Integer>();
+        meetingParticipation.forEach(meeting -> {
+            ids.add(meeting.getId());
+        });
+        return ids;
+    }
+
+    public void addMeeting(Meeting meeting) {
+        this.meetingParticipation.add(meeting);
     }
 }

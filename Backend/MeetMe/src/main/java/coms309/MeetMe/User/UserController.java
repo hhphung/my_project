@@ -63,13 +63,37 @@ public class UserController {
 
     @PostMapping(path = "/login", produces = "application/json")
     String loginUser(@RequestBody User user) {
-        if (user != null) {
-            User temp = userRepository.findByName(user.getName());
-            if (temp != null && temp.getPassword().equals(user.getPassword())) {
-                return Stringy.success();
-            }
-        }
+
+        if (user == null) return Stringy.error("Null user");
+
+        User temp = userRepository.findByName(user.getName());
+
+        if (temp == null) return Stringy.error("User not found");
+
+        if (temp.getPassword().equals(user.getPassword())) return Stringy.success();
+        
         return Stringy.error("Invalid credentials");
+    }
+
+
+    @PostMapping(path = "/changePassword", produces = "application/json")
+    String changePassword(@RequestBody User user) {
+        if (user == null) return Stringy.error("Null user");
+
+        User temp = userRepository.findByName(user.getName());
+
+        if (temp == null) return Stringy.error("User not found");
+
+        temp.setPassword(user.getPassword());
+        userRepository.save(temp);
+
+        return Stringy.success();
+    }
+
+
+    @GetMapping(value = "/search/{name}", produces = "application/json")
+    List<UserShadow> getSearch(@PathVariable String name) {
+        return UserShadow.build(userRepository.findBySearch(name));
     }
 
 
@@ -81,13 +105,15 @@ public class UserController {
         return UserShadow.build(userRepository.findByName(name).getFriends());
     }
 
+
     @GetMapping(path = "/{name}/friendRequestsSent", produces = "application/json")
     public List<UserShadow> getFriendRequestsSend(@PathVariable String name) {
         User me = userRepository.findByName(name);
 
         if (me == null) return null;
 
-        List<FriendRequest> friendRequests = friendRequestRepository.findFriendRequestsSent(me.getId());
+        List<FriendRequest> friendRequests = friendRequestRepository.findSent(me.getId());
+
         List<User> users = new ArrayList<User>();
         for (int i = 0; i < friendRequests.size(); i++) {
             users.add(friendRequests.get(i).getUserB());
@@ -95,19 +121,22 @@ public class UserController {
         return UserShadow.build(users);
     }
 
+
     @GetMapping(path = "/{name}/friendRequestsReceived", produces = "application/json")
     public List<UserShadow> getFriendRequestsReceived(@PathVariable String name) {
         User me = userRepository.findByName(name);
 
         if (me == null) return null;
 
-        List<FriendRequest> friendRequests = friendRequestRepository.findFriendRequestsReceived(me.getId());
+        List<FriendRequest> friendRequests = friendRequestRepository.findReceived(me.getId());
+
         List<User> users = new ArrayList<User>();
         for (int i = 0; i < friendRequests.size(); i++) {
             users.add(friendRequests.get(i).getUserA());
         }
         return UserShadow.build(users);
     }
+
 
     @PostMapping(path ="/sendFriendRequest", produces = "application/json")
     public String sendFriendRequest(@RequestBody UserNamePair userNamePair) {
@@ -154,8 +183,8 @@ public class UserController {
     }
 
 
-    @PostMapping(path ="/acceptFriendRequest", produces = "application/json")
-    public String acceptFriendRequest(@RequestBody UserNamePair userNamePair) {
+    @PostMapping(path ="/acceptFriendRequestNames", produces = "application/json")
+    public String acceptFriendRequestNames(@RequestBody UserNamePair userNamePair) {
 
         if (userNamePair.isInvalid()) return Stringy.error("User was not found");
 
@@ -163,31 +192,40 @@ public class UserController {
         User userB = userRepository.findByName(userNamePair.getUserNameB());
 
         if (userA == null || userB == null) return Stringy.error("User was not found");
-        
+
         FriendRequest friendRequest = friendRequestRepository.findByUsers(userA.getId(), userB.getId());
         if (friendRequest == null) friendRequest = friendRequestRepository.findByUsers(userB.getId(), userA.getId());
         
+        return acceptFriendRequestCommon(friendRequest);
+    }
+
+    @PostMapping(path ="/acceptFriendRequestId", produces = "application/json")
+    public String acceptFriendRequestId(@RequestBody int id) {
+        return acceptFriendRequestCommon(friendRequestRepository.findById(id));
+    }
+
+    private String acceptFriendRequestCommon(FriendRequest friendRequest) {
         if (friendRequest == null) return Stringy.error("Friend Request was not found");
 
         if (friendRequest.getState() != FriendRequestState.PENDING) return Stringy.error("Friend request already finalized");
 
         // Save friend in database
-        userA.addFriend(friendRequest);
-        userB.addFriend(friendRequest);
+        friendRequest.getUserA().addFriend(friendRequest);
+        friendRequest.getUserB().addFriend(friendRequest);
         friendRequest.accept();
 
-        userRepository.save(userA);
-        userRepository.save(userB);
+        userRepository.save(friendRequest.getUserA());
+        userRepository.save(friendRequest.getUserB());
         friendRequestRepository.save(friendRequest);
 
         // Notify other user
-        pushNotificationService.sendPushNotification(userA.getName(), userB.getName() + "accepted your friend request!", Topic.COMMON);
+        pushNotificationService.sendPushNotification(friendRequest.getUserA().getName(), friendRequest.getUserB().getName() + "accepted your friend request!", Topic.COMMON);
 
         return Stringy.success();
     }
 
-    @PostMapping(path ="/rejectFriendRequest", produces = "application/json")
-    public String rejectFriendRequest(@RequestBody UserNamePair userNamePair) {
+    @PostMapping(path ="/rejectFriendRequestNames", produces = "application/json")
+    public String rejectFriendRequestNames(@RequestBody UserNamePair userNamePair) {
         
         if (userNamePair.isInvalid()) return Stringy.error("User was not found");
 
@@ -199,6 +237,15 @@ public class UserController {
         FriendRequest friendRequest = friendRequestRepository.findByUsers(userA.getId(), userB.getId());
         if (friendRequest == null) friendRequest = friendRequestRepository.findByUsers(userB.getId(), userA.getId());
         
+        return rejectFriendRequestCommon(friendRequest);
+    }
+
+    @PostMapping(path ="/rejectFriendRequestId", produces = "application/json")
+    public String rejectFriendRequestId(@RequestBody int id) {
+        return rejectFriendRequestCommon(friendRequestRepository.findById(id));
+    }
+
+    private String rejectFriendRequestCommon(FriendRequest friendRequest) {
         if (friendRequest == null) return Stringy.error("Friend Request was not found");
 
         if (friendRequest.getState() != FriendRequestState.PENDING) return Stringy.error("Friend request already finalized");
@@ -209,5 +256,4 @@ public class UserController {
 
         return Stringy.success();
     }
-
 }
