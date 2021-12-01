@@ -33,6 +33,12 @@ public interface UserApi {
     Call<User> getUserByName(@Path(value = "username") String username);
 
     /**
+     * Returns a list of users with similar input on the search
+     */
+    @GET("/user/search/{name}")
+    Call<List<User>> getSearchResults(@Path(value = "name") String name);
+
+    /**
      * Send a new user to the server.
      * @param user User object to send to the server
      * @return response indicating success or failure.

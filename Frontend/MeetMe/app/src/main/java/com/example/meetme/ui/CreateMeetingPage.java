@@ -59,11 +59,20 @@ public class CreateMeetingPage extends AppCompatActivity {
 
         Button backButton = findViewById(R.id.activity_createMeeting_backButton);
         Button createButton = findViewById(R.id.activity_createMeeting_createMeetingButton);
+        Button addparticipants = findViewById(R.id.activity_createMeeting_add_participants);
 
         errorMsg = findViewById(R.id.activity_createMeeting_errorMsg);
+        String username = getIntent().getStringExtra("username");
 
-        CheckBox presentation = findViewById(R.id.activity_createMeeting_checkbox_presentation);
 
+        addparticipants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), AddParticipantsPage.class);
+                myIntent.putExtra("username", username);
+                startActivity(myIntent);
+            }
+        });
 
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -83,9 +92,8 @@ public class CreateMeetingPage extends AppCompatActivity {
                 String mTime = meetingTime_textbox.getText().toString();
                 String mDate = meetingDate_textbox.getText().toString();
                 String mLocation[] = meetingLocation_textbox.getText().toString().split(",");
-                Boolean presentationVal = presentation.isChecked();
 
-                PostMeeting(mTitle, mDesc, mTime, mDate, mLocation, presentationVal);
+                PostMeeting(mTitle, mDesc, mTime, mDate, mLocation);
 
 //                if (errorMsg.getText().toString().equals("Error Message Goes Here") ||
 //                        errorMsg.getText().toString().equals("")) {
@@ -127,10 +135,9 @@ public class CreateMeetingPage extends AppCompatActivity {
      * @param mTime meeting time
      * @param mDate meeting Date
      * @param mLocation An array of strings representing the meeting location in format {St Address, City, State, Zip, Country}
-     * @param mPresentation a boolean val for whether or not it is a presentation
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation, boolean mPresentation){
+    protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation){
 
 
         try {

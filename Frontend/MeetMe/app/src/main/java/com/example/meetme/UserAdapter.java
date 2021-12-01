@@ -1,13 +1,17 @@
 package com.example.meetme;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meetme.model.User;
+import com.example.meetme.ui.AddParticipantsPage;
+import com.example.meetme.ui.DashboardPage;
 
 import java.util.ArrayList;
 
@@ -31,6 +35,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
          */
         private final TextView textView;
 
+
         /**
          * constructor for new viewHolder
          * @param view
@@ -42,11 +47,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    finish();
+
                 }
             });
 
             textView = (TextView) view.findViewById(R.id.name);
+
         }
 
         /**
@@ -56,6 +62,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         public TextView getTextView() {
             return textView;
         }
+
     }
 
     /**
