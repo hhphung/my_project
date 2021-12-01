@@ -24,23 +24,23 @@ public class MeetingController {
 
 
     @GetMapping(value = "/", produces = "application/json")
-    List<Meeting> getAllMeeting() {
-        return meetingRepository.findAll();
+    List<MeetingShadow> getAllMeeting() {
+        return MeetingShadow.build(meetingRepository.findAll());
     }
 
     @GetMapping(value = "/id/{id}", produces = "application/json")
-    Meeting getMeetingById( @PathVariable int id) {
-        return meetingRepository.findById(id);
+    MeetingShadow getMeetingById( @PathVariable int id) {
+        return new MeetingShadow(meetingRepository.findById(id));
     }
 
     @GetMapping(value = "/name/{name}", produces = "application/json")
-    Meeting getUserByName(@PathVariable String name) {
-        return meetingRepository.findByName(name);
+    MeetingShadow getUserByName(@PathVariable String name) {
+        return new MeetingShadow(meetingRepository.findByName(name));
     }
 
     @GetMapping(value = "/search/{name}", produces = "application/json")
-    List<Meeting> getSearch(@PathVariable String name) {
-        return meetingRepository.findBySearch(name);
+    List<MeetingShadow> getSearch(@PathVariable String name) {
+        return MeetingShadow.build(meetingRepository.findBySearch(name));
     }
 
     @PostMapping(value = "/", produces = "application/json")
