@@ -9,6 +9,10 @@ public class AvailabilityInput {
         this.username = username;
     }
 
+    public boolean isInvalid() {
+        return (username == null || hours == null);
+    }
+
     public boolean[] getHours() {
         return hours;
     }

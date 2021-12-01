@@ -21,7 +21,7 @@ public class Availability {
     private User user;
 
     @Column(nullable = false)
-    private boolean [] availability = new boolean[168];
+    private boolean[] hours = new boolean[168];
 
 
     // =============================== Constructors ================================== //
@@ -30,8 +30,8 @@ public class Availability {
     public Availability() {
     }
 
-    public Availability(boolean[] availability, User user) {
-        this.availability = availability;
+    public Availability(boolean[] hours, User user) {
+        this.hours = hours;
         this.user = user;
     }
 
@@ -55,11 +55,11 @@ public class Availability {
         this.user = user;
     }
 
-    public boolean[] getAvailability() {
-        return availability;
+    public boolean[] getHours() {
+        return hours;
     }
 
-    public void setAvailability(boolean[] availability) {
-        this.availability = availability;
+    public void setHours(boolean[] hours) {
+        this.hours = hours;
     }
 }

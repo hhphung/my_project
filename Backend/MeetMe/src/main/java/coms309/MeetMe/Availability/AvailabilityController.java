@@ -25,9 +25,10 @@ public class AvailabilityController {
     public List<boolean[]> getAllAvalibility() {
         List<Availability> avail = availabilityRepository.findAll();
         List<boolean[]> reducedAva = new ArrayList<boolean[]>();
-        
+        System.out.println(avail.size());
         avail.forEach(ava -> {
-            reducedAva.add(ava.getAvailability());
+            System.out.println(ava.getHours() + " - " + ava.getUser().getName());
+            reducedAva.add(ava.getHours());
         });
 
         return reducedAva;
@@ -36,39 +37,49 @@ public class AvailabilityController {
 
     @GetMapping(value = "/id/{id}", produces = "application/json")
     public boolean[] getAvailabilityByID (@PathVariable int id) {
-        return availabilityRepository.findById(id);
+        Availability avail = availabilityRepository.findById(id);
+        if (avail == null) return null;
+        return avail.getHours();
     }
 
 
     @GetMapping(value = "/userid/{id}", produces = "application/json")
     public boolean[] getAvalibilityByUserID(@PathVariable int id) {
-        return availabilityRepository.findByUserID(id);
+        Availability avail = availabilityRepository.findByUserID(id);
+        if (avail == null) return null;
+        return avail.getHours();
     }
 
 
     @GetMapping(value = "/username/{name}", produces = "application/json")
-    public boolean[] getUserAvailibilityName(@PathVariable String name){
-        return availabilityRepository.findByUsername(name);
+    public boolean[] getUserAvailibilityName(@PathVariable String name) {
+        User user = userRepository.findByName(name);
+        if (user == null) return null;
+        Availability avail = availabilityRepository.findByUserID(user.getId());
+        if (avail == null) return null;
+        return avail.getHours();
     }
 
 
-    @PostMapping(value = "/setAvailability", produces = "application/json")
+    @PostMapping(value = "/", produces = "application/json")
     public String setAvailability(@RequestBody AvailabilityInput input) {
         
-        if (input == null) return Stringy.error("Availability is invalid");
+        if (input == null || input.isInvalid()) return Stringy.error("Availability is invalid");
     
         User user = userRepository.findByName(input.getName());
 
         if (user == null) return Stringy.error("User not found");
-        
-        if (availabilityRepository.findByUserID(user.getId()) != null) {
+
+        Availability avail = availabilityRepository.checkByUserID(user.getId());
+
+        if (avail != null) {
             availabilityRepository.updateAvailability(input.getHours(), user.getId());
             return Stringy.success();
         }
 
-        Availability ava = new Availability(input.getHours(), user);
+        avail = new Availability(input.getHours(), user);
 
-        availabilityRepository.save(ava);
+        availabilityRepository.save(avail);
 
         return Stringy.success();
     }
