@@ -13,12 +13,9 @@
         android:theme="@style/Theme.MeetMe"
         android:usesCleartextTraffic="true">
         <activity
-<<<<<<< HEAD
-=======
             android:name=".ui.AvailabilityPage"
             android:exported="false" />
         <activity
->>>>>>> main
             android:name=".ui.ChatPage"
             android:exported="true"
             android:windowSoftInputMode="adjustPan"/>
