@@ -63,14 +63,33 @@ public class UserController {
 
     @PostMapping(path = "/login", produces = "application/json")
     String loginUser(@RequestBody User user) {
-        if (user != null) {
-            User temp = userRepository.findByName(user.getName());
-            if (temp != null && temp.getPassword().equals(user.getPassword())) {
-                return Stringy.success();
-            }
-        }
+
+        if (user == null) return Stringy.error("Null user");
+
+        User temp = userRepository.findByName(user.getName());
+
+        if (temp == null) return Stringy.error("User not found");
+
+        if (temp.getPassword().equals(user.getPassword())) return Stringy.success();
+        
         return Stringy.error("Invalid credentials");
     }
+
+
+    @PostMapping(path = "/changePassword", produces = "application/json")
+    String changePassword(@RequestBody User user) {
+        if (user == null) return Stringy.error("Null user");
+
+        User temp = userRepository.findByName(user.getName());
+
+        if (temp == null) return Stringy.error("User not found");
+
+        temp.setPassword(user.getPassword());
+        userRepository.save(temp);
+
+        return Stringy.success();
+    }
+
 
     @GetMapping(value = "/search/{name}", produces = "application/json")
     List<UserShadow> getSearch(@PathVariable String name) {

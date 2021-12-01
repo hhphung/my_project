@@ -35,7 +35,7 @@ public class Stringy {
     }
 
     public static String error(String reason) {
-        return "{\"message\":\"Error\", \"reason\": " + reason + "}";
+        return "{\"message\":\"Error\", \"reason\": \"" + reason + "\"}";
     }
 
 }

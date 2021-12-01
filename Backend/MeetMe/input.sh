@@ -41,5 +41,5 @@ curl -d '{"name": "Meeting3", "adminName": "Admin3", "desc": "empty",
 curl -d '{"userName": "Max", "meetingName": "Meeting1"}' -H 'Content-Type: application/json' "$url/meetingRequest/sendMeetingRequest"
 curl -d '{"userName": "Max", "meetingName": "Meeting1"}' -H 'Content-Type: application/json' "$url/meetingRequest/acceptMeetingRequestNames"
 
-curl -d '{"userNameA": "Max", "userNameB": "Alex"}' -H 'Content-Type: application/json' "$url/meetingRequest/sendMeetingRequest"
-curl -d '{"userName": "Max", "meetingName": "Alex"}' -H 'Content-Type: application/json' "$url/meetingRequest/acceptFriendRequestNames"
+curl -d '{"userNameA": "Max", "userNameB": "Alex"}' -H 'Content-Type: application/json' "$url/user/sendFriendRequest"
+curl -d '{"userName": "Max", "meetingName": "Alex"}' -H 'Content-Type: application/json' "$url/user/acceptFriendRequestNames"
