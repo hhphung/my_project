@@ -25,13 +25,9 @@ import java.util.Set;
 /**
  * ProfilePage includes logic for inputs and buttons
  */
-public class ProfilePage extends AppCompatActivity {
+public class ProfilePage extends BaseActivity {
 
 
-    /**
-     * Current user's username
-     */
-    String username;
 
     /**
      * Sets up the page
@@ -40,21 +36,20 @@ public class ProfilePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_page);
 
         Button back = findViewById(R.id.profileBack);
         Button changePassword = findViewById(R.id.profileChangePassword);
         Button changeAval = findViewById(R.id.profileChangeA);
         Button viewFriends = findViewById(R.id.profileViewFriends);
-        TextView userName = findViewById(R.id.profileName);
+        TextView userNameDisplay = findViewById(R.id.profileName);
         LinearLayout friends = findViewById(R.id.friends);
         LinearLayout passWordChange = findViewById(R.id.linearLayoutChangePassword);
 
         username = getIntent().getStringExtra("username");
 
 
-        GetUserApi().getUserByName("hoi").enqueue(new SlimCallback<User>(user ->{
-            userName.setText( user.getName() + " Profile");
+        GetUserApi().getUserByName(username).enqueue(new SlimCallback<User>(user ->{
+            userNameDisplay.setText( user.getName() + " Profile");
         }));
 
 
@@ -124,7 +119,7 @@ public class ProfilePage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(friends.getChildCount() == 0) {
-                    GetUserApi().getFriends("hoi").enqueue(new SlimCallback<Set<User>>(list -> {
+                    GetUserApi().getFriends(username).enqueue(new SlimCallback<Set<User>>(list -> {
                         for (User m : list) {
                             Button friend = new Button(temp);
                             friend.setOnClickListener(new View.OnClickListener() {
@@ -153,5 +148,20 @@ public class ProfilePage extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.activity_profile_page;
+    }
+
+    @Override
+    int getLayoutId() {
+        return R.layout.activity_profile_page;
+    }
+
+    @Override
+    int getNavigationMenuItemId() {
+        return R.id.action_profile;
     }
 }
