@@ -1,12 +1,58 @@
 package coms309.MeetMe.Availability;
 
-public class Availability {
-    private boolean[] hours;
-    private String username;
+import javax.persistence.*;
 
-    public Availability(boolean[] hours, String username) {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import coms309.MeetMe.User.User;
+
+
+@Entity(name = "availability")
+public class Availability {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, unique = true)
+    private int id;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false, targetEntity =  User.class)
+    @JoinColumn( unique = true, nullable = false)
+    @JsonIgnore
+    private User user;
+
+    @Column(nullable = false)
+    private boolean[] hours = new boolean[168];
+
+
+    // =============================== Constructors ================================== //
+
+
+    public Availability() {
+    }
+
+    public Availability(boolean[] hours, User user) {
         this.hours = hours;
-        this.username = username;
+        this.user = user;
+    }
+
+
+    // ============================= Getters/Setters ================================ //
+
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public boolean[] getHours() {
@@ -16,13 +62,4 @@ public class Availability {
     public void setHours(boolean[] hours) {
         this.hours = hours;
     }
-
-    public String getName() {
-        return username;
-    }
-
-    public void setName(String username) {
-        this.username = username;
-    }
 }
-

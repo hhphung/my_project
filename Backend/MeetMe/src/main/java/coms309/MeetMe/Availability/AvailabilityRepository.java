@@ -14,26 +14,24 @@ import javax.transaction.Transactional;
  */
 
 @Repository
-public interface AvailabilityRepository extends JpaRepository<ava, Long> {
-    ava findById(int id);
+public interface AvailabilityRepository extends JpaRepository<Availability, Long> {
+    
+    
+    @Query(value = "SELECT * from availability WHERE id=?1", nativeQuery = true)
+    Availability findById(int id);
 
+    @Query(value = "SELECT * FROM availability WHERE availability.user_id=?1", nativeQuery = true)
+    Availability findByUserID(int id);
 
-    @Query(value = "SELECT * from availability where availability.user_id=?1", nativeQuery = true)
-    ava findUserbyId(int id);
+    @Query(value = "SELECT * FROM availability WHERE availability.user_id=?1", nativeQuery = true)
+    Availability checkByUserID(int id);
 
-    @Query(value = "SELECT availability from availability where availability.user_id=?1", nativeQuery = true)
-    boolean[] getUserAvalibilityById(int id);
-
-
-
+    // @Query(value = "SELECT availability from availability where availability.user_id=?1", nativeQuery = true)
+    // boolean[] getUserAvalibilityById(int id);
 
     @Modifying
     @Transactional
-    @Query(value = "update availability set availability.availability = ?1 where availability.user_id= ?2", nativeQuery = true)
+    @Query(value = "update availability set availability.hours = ?1 where availability.user_id= ?2", nativeQuery = true)
     void updateAvailability(boolean[] f ,int id);
-
-
-
-
 
 }
