@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
@@ -50,11 +51,14 @@ public class ProfilePage extends AppCompatActivity {
         LinearLayout friends = findViewById(R.id.friends);
         LinearLayout passWordChange = findViewById(R.id.linearLayoutChangePassword);
 
-        username = getIntent().getStringExtra("username");
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+
+        //get username of current client
+        final String username = globalVariable.getName();
 
 
-        GetUserApi().getUserByName("hoi").enqueue(new SlimCallback<User>(user ->{
-            userName.setText( user.getName() + " Profile");
+        GetUserApi().getUserByName(username).enqueue(new SlimCallback<User>(user ->{
+            userName.setText(user.getName() + " Profile");
         }));
 
 

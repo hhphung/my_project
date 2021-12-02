@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 
 import com.example.meetme.SearchMeetingAdapter;
+import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
@@ -42,7 +43,10 @@ public class SearchPage extends BaseActivity {
         Button searchButton = findViewById(R.id.activity_search_btn_to_search);
         Button backButton = findViewById(R.id.activity_search_btn_to_dash);
 
-        String username = getIntent().getStringExtra("username");
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+
+        //get username of current client
+        final String username = globalVariable.getName();
 
         GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings->
         {
@@ -62,7 +66,6 @@ public class SearchPage extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
-                myIntent.putExtra("username", username);
                 startActivity(myIntent);
             }
         });

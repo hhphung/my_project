@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 import com.example.meetme.api.MeetingApi;
 import com.example.meetme.model.Meeting;
@@ -158,7 +159,10 @@ public class CreateMeetingPage extends AppCompatActivity {
 
 
             LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, min);
-            String username = getIntent().getStringExtra("username");
+
+            final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+            //get username of current client
+            final String username = globalVariable.getName();
 
             Meeting meeting = new Meeting(mTitle, username, mDesc, dateTime.toString(), mLocation[0],
                     mLocation[1], mLocation[2], zipcode, mLocation[4], mDuration);

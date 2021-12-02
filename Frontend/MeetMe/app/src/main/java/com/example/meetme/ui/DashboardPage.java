@@ -1,11 +1,18 @@
 package com.example.meetme.ui;
 
+<<<<<<< HEAD
+=======
+import static android.app.PendingIntent.getActivity;
+import static com.example.meetme.api.apiClientFactory.GetUserApi;
+>>>>>>> origin/working-whitney-branch
 import static com.example.meetme.api.apiClientFactory.GetMeetingApi;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.meetme.DashboardMeetingAdapter;
+import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
@@ -45,7 +53,10 @@ public class DashboardPage extends BaseActivity {
         TextView welcomeText = findViewById(R.id.activity_dashboard_text);
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
 
-        Button chatButton = findViewById(R.id.chat_btn);
+        username = getIntent().getStringExtra("username");
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+
+        globalVariable.setName(username);
 
         // load meetings as interactive cards
         GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings->
@@ -60,14 +71,7 @@ public class DashboardPage extends BaseActivity {
 
         }));
 
-        chatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), ChatPage.class);
-                myIntent.putExtra("username", username);
-                startActivity(myIntent);
-            }
-        });
+
     }
 
 

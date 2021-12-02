@@ -2,6 +2,7 @@ package com.example.meetme;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,11 @@ public class DashboardMeetingAdapter extends RecyclerView.Adapter<DashboardMeeti
          * textview object
          */
         private final TextView textView;
+
+        /**
+         * string
+         */
+        private String username;
 
         /**
          * constructor for viewholder with given context and view
