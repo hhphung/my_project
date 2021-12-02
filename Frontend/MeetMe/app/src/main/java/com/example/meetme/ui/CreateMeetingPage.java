@@ -64,7 +64,10 @@ public class CreateMeetingPage extends AppCompatActivity {
 
         errorMsg = findViewById(R.id.activity_createMeeting_errorMsg);
         String username = getIntent().getStringExtra("username");
+        String participants = getIntent().getStringExtra("username list");
 
+        TextView participantList = findViewById(R.id.activity_createMeeting_added_participants);
+        participantList.setText(participants);
 
         addparticipants.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +97,10 @@ public class CreateMeetingPage extends AppCompatActivity {
                 String mDate = meetingDate_textbox.getText().toString();
                 String mLocation[] = meetingLocation_textbox.getText().toString().split(",");
 
-                PostMeeting(mTitle, mDesc, mTime, mDate, mLocation);
+                String participants = participantList.getText().toString();
+
+
+                PostMeeting(mTitle, mDesc, mTime, mDate, mLocation, participants);
 
 //                if (errorMsg.getText().toString().equals("Error Message Goes Here") ||
 //                        errorMsg.getText().toString().equals("")) {
@@ -138,13 +144,13 @@ public class CreateMeetingPage extends AppCompatActivity {
      * @param mLocation An array of strings representing the meeting location in format {St Address, City, State, Zip, Country}
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation){
+    protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation, String participants){
 
 
         try {
             int zipcode = Integer.parseInt(mLocation[3].replaceAll(" ", ""));
 
-            if (mTitle == null || mDesc == null || mTime == null || mDate == null || mLocation.length < 5) {
+            if (mTitle == null || mDesc == null || mTime == null || mDate == null  || participants == null || mLocation.length < 5) {
                 throw new IllegalArgumentException("missing or incorrectly formatted arguments");
             }
 
@@ -162,16 +168,11 @@ public class CreateMeetingPage extends AppCompatActivity {
             final String username = globalVariable.getName();
 
             Meeting meeting = new Meeting(mTitle, username, mDesc, dateTime.toString(), mLocation[0],
-                    mLocation[1], mLocation[2], zipcode, mLocation[4]);
+                    mLocation[1], mLocation[2], zipcode, mLocation[4], participants);
 
             GetMeetingApi().createMeeting(meeting).enqueue(new SlimCallback<>(response ->
             {
-//                if (!response.getError().equals("")){
-//
-//                    //errorMsg.setText("error: " + /*response.getError() +*/ ", msg: "); //+ response.getResponseMessage());
-//                }
                 errorMsg.getText();
-//                errorMsg.setText(response.toString());
             }));
             finish();
         }
