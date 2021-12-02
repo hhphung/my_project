@@ -42,12 +42,10 @@ public class ProfilePage extends BaseActivity {
         Button changePassword = findViewById(R.id.profileChangePassword);
         Button changeAval = findViewById(R.id.profileChangeA);
         Button viewFriends = findViewById(R.id.profileViewFriends);
-        Button viewAvailability = findViewById(R.id.profileViewAvailability);
         TextView userNameDisplay = findViewById(R.id.profileName);
         LinearLayout friends = findViewById(R.id.friends);
         ScrollView friendsContainer = findViewById(R.id.friendsScrollView);
         LinearLayout passWordChange = findViewById(R.id.linearLayoutChangePassword);
-        LinearLayout viewAvailabilityContainer = findViewById(R.id.linearLayoutViewAvailability);
 
         username = getIntent().getStringExtra("username");
 
@@ -77,14 +75,7 @@ public class ProfilePage extends BaseActivity {
             }
         });
 
-        viewAvailability.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (viewAvailabilityContainer.getLayoutParams().height == 0){
-                    viewAvailabilityContainer.getLayoutParams().height = 450;
-                }
-            }
-        });
+
 
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
