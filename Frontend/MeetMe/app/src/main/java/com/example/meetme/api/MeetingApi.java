@@ -18,14 +18,14 @@ public interface MeetingApi {
 
     /**
      * **THIS MIGHT BE DEPRECATED**
-     * @param name meeting name to get
+     * @param id meeting name to get
      * @return On success: A meeting object sent by the server. On failure:
      * A generic JSON response indicating a failure.
      */
     @GET("/meeting/{id}")
     Call<Meeting> getMeetingById(@Path(value = "id") int id);
 
-    @GET("/meeting/{name}")
+    @GET("/meeting/name/{name}")
     Call<Meeting> getMeetingByName(@Path(value = "name") String name);
 
     /**

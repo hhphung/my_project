@@ -93,6 +93,8 @@ public class SearchPage extends BaseActivity {
 
     }
 
+
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_search_page;

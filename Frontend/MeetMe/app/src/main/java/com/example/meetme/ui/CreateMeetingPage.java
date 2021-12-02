@@ -158,7 +158,7 @@ public class CreateMeetingPage extends AppCompatActivity {
             int min = Integer.parseInt(mTime.substring(mTime.length()-2));
 
 
-            LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, min);
+            LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, 0);
 
             final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
             //get username of current client

@@ -55,6 +55,7 @@ public class SlimCallback<T> implements Callback<T> {
         }
         else{
             Log.d(logTag, "This is in SlimCallBack --> Code: " + response.code() + "    Body: " + response.body());
+            Log.d(logTag, "Call: " + call.request());
         }
     }
 

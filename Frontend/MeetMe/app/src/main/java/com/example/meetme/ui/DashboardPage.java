@@ -1,10 +1,7 @@
 package com.example.meetme.ui;
 
-<<<<<<< HEAD
-=======
 import static android.app.PendingIntent.getActivity;
 import static com.example.meetme.api.apiClientFactory.GetUserApi;
->>>>>>> origin/working-whitney-branch
 import static com.example.meetme.api.apiClientFactory.GetMeetingApi;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -53,7 +50,6 @@ public class DashboardPage extends BaseActivity {
         TextView welcomeText = findViewById(R.id.activity_dashboard_text);
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
 
-        username = getIntent().getStringExtra("username");
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
 
         globalVariable.setName(username);

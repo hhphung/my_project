@@ -77,7 +77,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
             } else if (itemId == R.id.action_search){
                 startActivity(new Intent(this, SearchPage.class));
             }
-            //finish();
+            finish();
         }, 300);
         return true;
     }

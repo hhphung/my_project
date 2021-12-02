@@ -1,10 +1,15 @@
 package com.example.meetme.model;
 
+import android.os.Build;
+
 import androidx.annotation.ArrayRes;
+import androidx.annotation.RequiresApi;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -83,6 +88,28 @@ public class Meeting {
         this.country = country;
         this.durationHours = durationHours;
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public int[] getStartEndOfMeeting(){
+        //2007-12-03T10:15:30
+        try {
+            LocalDateTime d = LocalDateTime.of(Integer.parseInt(dateTime.substring(0, 4)),
+                    Integer.parseInt(dateTime.substring(5, 7)),
+                    Integer.parseInt(dateTime.substring(8, 11)),
+                    Integer.parseInt(dateTime.substring(12, 14)),
+                    0);
+
+            DayOfWeek mDay = d.getDayOfWeek();
+
+            int day = mDay.getValue() - 1;
+
+            int startTime = day * 24 + d.getHour();
+            int endTime = startTime + durationHours;
+            return new int[]{startTime, endTime};
+        } catch (Exception e){
+            return new int[]{-1,-1};
+        }
     }
 
     public String getName() {
