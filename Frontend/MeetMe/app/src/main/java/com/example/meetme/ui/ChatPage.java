@@ -19,17 +19,16 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import android.os.Bundle;
 
+import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 
 public class ChatPage extends AppCompatActivity {
 
     private WebSocketClient mWebSocketClient;
 
-    private Button bConnect, bDisconnect, bSendButton;
+    private Button bDisconnect, bSendButton;
     private TextView mOutput;
     private EditText mInput;
-
-    String username = "";
 
 
     @Override
@@ -38,7 +37,6 @@ public class ChatPage extends AppCompatActivity {
         setContentView(R.layout.activity_chat_page);
 
         // Get the buttons
-        bConnect = findViewById(R.id.b_connect);
         bSendButton = findViewById(R.id.b_sendMessage);
         bDisconnect = findViewById(R.id.b_Disconnect);
 
@@ -51,16 +49,15 @@ public class ChatPage extends AppCompatActivity {
         //Get the editText
         mInput = findViewById(R.id.m_input);
 
-        //get username of current client
-        username = getIntent().getStringExtra("username");
 
-        // Add handlers to the buttons
-        bConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                connectWebSocket();
-            }
-        });
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+
+        final String meetingName = globalVariable.getMeetingName();
+
+        TextView meetingChatTitle = findViewById(R.id.activity_chat_MeetingName);
+        meetingChatTitle.setText(meetingName);
+
+        connectWebSocket();
 
         bDisconnect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +91,11 @@ public class ChatPage extends AppCompatActivity {
 
     private void connectWebSocket() {
         URI uri;
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+
+        //get username of current client
+        final String username = globalVariable.getName();
+
         try {
             /*
              * To test the clientside without the backend, simply connect to an echo server such as:
@@ -118,7 +120,7 @@ public class ChatPage extends AppCompatActivity {
             public void onMessage(String msg) {
                 Log.i("Websocket", "Message Received");
                 // Appends the message received to the previous messages
-                mOutput.append("\n" + username + ": " + msg);
+                mOutput.append(msg + "\n");
             }
 
             @Override
