@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import coms309.MeetMe.User.UserShadow;
-
 
 public class MeetingShadow {
 
