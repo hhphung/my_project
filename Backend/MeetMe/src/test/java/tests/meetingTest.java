@@ -20,9 +20,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.web.bind.annotation.PostMapping;
-
 public class meetingTest {
 
     @Mock
@@ -42,9 +39,9 @@ public class meetingTest {
 
         Location loc  = new Location("street", "city", "state", 52641, "country");
 
-        Meeting one = new Meeting(acctOne, "first", "ahahaha", "0000", loc);
-        Meeting two = new Meeting(acctTwo, "second", "ahahaha", "0000", loc);
-        Meeting three = new Meeting(acctThree, "last", "ahahaha", "0000", loc);
+        Meeting one = new Meeting(acctOne, "first", "ahahaha", "0000", 1, loc);
+        Meeting two = new Meeting(acctTwo, "second", "ahahaha", "0000", 1, loc);
+        Meeting three = new Meeting(acctThree, "last", "ahahaha", "0000", 1, loc);
 
         list.add(one);
         list.add(two);
@@ -59,7 +56,7 @@ public class meetingTest {
     public void getMeetingbyName(){
         User acctOne = new User("hoiproa0", "hoiproa0", Role.ADMIN);
         Location loc  = new Location("street", "city", "state", 52641, "country");
-        when(meet.findByName("first")).thenReturn(new Meeting(acctOne, "first", "ahahaha", "0000", loc));
+        when(meet.findByName("first")).thenReturn(new Meeting(acctOne, "first", "ahahaha", "0000", 1, loc));
 
         Meeting meeting = meet.findByName("first");
         User user = meeting.getAdmin();
@@ -72,9 +69,9 @@ public class meetingTest {
         User dummyAdmin = new User("dummyUser", "dummyPassword", Role.ADMIN);
         Location loc  = new Location("street", "city", "state", 12345, "country");
 
-        Meeting one = new Meeting(dummyAdmin, "first1", "ahahaha", "0000", loc);
-        Meeting two = new Meeting(dummyAdmin, "second1", "ahahaha", "0000", loc);
-        Meeting three = new Meeting(dummyAdmin, "third1", "ahahaha", "0000", loc);
+        Meeting one = new Meeting(dummyAdmin, "first1", "ahahaha", "0000", 1,loc);
+        Meeting two = new Meeting(dummyAdmin, "second1", "ahahaha", "0000", 1, loc);
+        Meeting three = new Meeting(dummyAdmin, "third1", "ahahaha", "0000", 1, loc);
 
         List<Meeting> search1 = new ArrayList<Meeting>(Arrays.asList(one));
         List<Meeting> search2 = new ArrayList<Meeting>(Arrays.asList(two, three));

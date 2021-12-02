@@ -21,6 +21,8 @@ public class MeetingShadow {
 
     private String dateTime;
 
+    private int duration;
+
     private Privacy privacy;
 
     private List<Integer> userParticipants;
@@ -38,6 +40,7 @@ public class MeetingShadow {
         this.description = meeting.getDescription();
         this.location = meeting.getLocation();
         this.dateTime = meeting.getDateTime();
+        this.duration = meeting.getDuration();
         this.privacy = meeting.getPrivacy();
         this.userParticipants = meeting.getUserParticipants();
     }
@@ -79,6 +82,10 @@ public class MeetingShadow {
 
     public String getDateTime() {
         return dateTime;
+    }
+
+    public int getDuration() {
+        return duration;
     }
 
     public Privacy getPrivacy() {
