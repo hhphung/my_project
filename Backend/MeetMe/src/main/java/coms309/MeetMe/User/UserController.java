@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import coms309.MeetMe.FriendRequest.*;
-import coms309.MeetMe.PushNotifications.model.Topic;
 import coms309.MeetMe.PushNotifications.service.PushNotificationService;
 import coms309.MeetMe.Stringy.Stringy;
 
@@ -116,6 +115,7 @@ public class UserController {
 
         List<User> users = new ArrayList<User>();
         for (int i = 0; i < friendRequests.size(); i++) {
+            if (friendRequests.get(i).getState() == FriendRequestState.PENDING) continue;
             users.add(friendRequests.get(i).getUserB());
         }
         return UserShadow.build(users);
@@ -132,6 +132,7 @@ public class UserController {
 
         List<User> users = new ArrayList<User>();
         for (int i = 0; i < friendRequests.size(); i++) {
+            if (friendRequests.get(i).getState() == FriendRequestState.PENDING) continue;
             users.add(friendRequests.get(i).getUserA());
         }
         return UserShadow.build(users);
@@ -177,7 +178,9 @@ public class UserController {
         // pushNotificationService.sendPushNotificationToToken("title", "message", Topic.COMMON, "putTokenHere");
         
         // Currently this sends to every user, we need to save user tokens during registration.
-        pushNotificationService.sendPushNotification(userB.getName(), "You have a friend request from " + userA.getName()+ "!", Topic.COMMON);
+        pushNotificationService.sendPushNotification("Friend request", 
+            "You have a friend request from " + userA.getName()+ "!", 
+            userB.getName());
         
         return Stringy.success();
     }
@@ -219,7 +222,7 @@ public class UserController {
         friendRequestRepository.save(friendRequest);
 
         // Notify other user
-        pushNotificationService.sendPushNotification(friendRequest.getUserA().getName(), friendRequest.getUserB().getName() + "accepted your friend request!", Topic.COMMON);
+        pushNotificationService.sendPushNotification("New Friend", friendRequest.getUserB().getName() + "accepted your friend request!", friendRequest.getUserA().getName());
 
         return Stringy.success();
     }
@@ -253,6 +256,10 @@ public class UserController {
         friendRequest.reject();
 
         friendRequestRepository.save(friendRequest);
+
+        int friendCount = friendRequest.getUserB().getFriends().size();
+
+        pushNotificationService.sendPushNotification("Rejected", friendRequest.getUserB().getName() + "rejected your friend request! you now have " + friendCount + "friend(s).", friendRequest.getUserA().getName());
 
         return Stringy.success();
     }

@@ -71,7 +71,7 @@ public class MeetingController {
             return Stringy.error("User is not an Admin");
 
         // Assemble location and meeting and save to database
-        Meeting meeting = new Meeting(findAdmin, meetingParams.name, meetingParams.desc, meetingParams.dateTime, meetingParams.loc);
+        Meeting meeting = new Meeting(findAdmin, meetingParams.name, meetingParams.desc, meetingParams.dateTime, meetingParams.duration, meetingParams.loc);
         meetingRepository.save(meeting);
         return Stringy.success();
     }
@@ -196,26 +196,21 @@ class MeetingParams {
 
     public String name, adminName, desc, dateTime;
     public Location loc;
-
-    // MeetingParams(String name, String adminName) {
-    //     this.name = name;
-    //     this.adminName = adminName;
-    //     this.desc = "";
-    //     this.dateTime = "";
-    //     this.loc = new Location();
-    // }
+    public int duration;
     
-    public MeetingParams(String name, String adminName, String desc, String dateTime, String street, String city, String state, int zipcode, String country) {
+    public MeetingParams(String name, String adminName, String desc, String dateTime, int duration, String street, String city, String state, int zipcode, String country) {
         System.out.println("Meeting created: \n name:" + name + 
                             "\n adminName: " + adminName + 
                             "\n desc:" + desc + 
                             "\n desc: " + dateTime + 
+                            "\n desc: " + duration + 
                             "\n loc: " + street + ", " + city + ", " + state + ", " + zipcode+ ", " + country);
 
         this.name = name;
         this.adminName = adminName;
         this.desc = desc;
         this.dateTime = dateTime;
+        this.duration = duration;
         this.loc = new Location(street, city, state, zipcode, country);
     }
 

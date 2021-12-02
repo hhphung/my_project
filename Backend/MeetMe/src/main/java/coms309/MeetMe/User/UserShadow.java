@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import coms309.MeetMe.Meeting.MeetingShadow;
 
 public class UserShadow {
 
@@ -18,10 +17,9 @@ public class UserShadow {
     private Role role;
 
     private List<Integer> meetingParticipation;
+    private List<String> friends;
 
     public UserShadow() {
-
-
     }
 
     public UserShadow(User user) {
@@ -32,6 +30,11 @@ public class UserShadow {
         this.lastSeen = user.getLastSeen();
         this.role = user.getRole();
         this.meetingParticipation = user.getMeetingParticipation();
+        this.friends = new ArrayList<String>();
+        Set<User> userFriends = user.getFriends();
+        userFriends.forEach(friend -> {
+            friends.add(friend.getName());
+        });
     }
 
     public static List<UserShadow> build(List<User> users) {
@@ -76,5 +79,9 @@ public class UserShadow {
 
     public List<Integer> getMeetingParticipation() {
         return meetingParticipation;
+    }
+
+    public List<String> getFriends() {
+        return friends;
     }
 }

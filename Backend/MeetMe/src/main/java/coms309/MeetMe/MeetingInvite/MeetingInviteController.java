@@ -4,7 +4,6 @@ package coms309.MeetMe.MeetingInvite;
 import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Meeting.MeetingRepository;
 import coms309.MeetMe.MeetingRequest.UserMeetingNamePair;
-import coms309.MeetMe.PushNotifications.model.Topic;
 import coms309.MeetMe.PushNotifications.service.PushNotificationService;
 import coms309.MeetMe.Stringy.Stringy;
 import coms309.MeetMe.User.User;
@@ -103,11 +102,9 @@ public class MeetingInviteController {
         
         meetingInviteRepository.save(meetingRequest);
         
-        // If user found, send out meeting request to meeting admin
-        // pushNotificationService.sendPushNotificationToToken("title", "message", Topic.COMMON, "putTokenHere");
-        
-        // Currently this sends to every user, we need to save user tokens during registration.
-        pushNotificationService.sendPushNotification("Meeting invite", "You have been invited to join" + meeting.getName() + "!", Topic.COMMON);
+        pushNotificationService.sendPushNotification("Meeting invite", 
+            "You have been invited to join" + meeting.getName() + "!", 
+            user.getName());
         
         return Stringy.success();
     }
@@ -152,7 +149,9 @@ public class MeetingInviteController {
         meetingInviteRepository.save(meetingRequest);
 
         // Notify admin
-        pushNotificationService.sendPushNotification("User accepted", meetingRequest.getUser().getName() + " has accepted your invitation to join" + meetingRequest.getMeeting().getName(), Topic.COMMON);
+        pushNotificationService.sendPushNotification("User accepted", 
+            meetingRequest.getUser().getName() + " has accepted your invitation to join" + meetingRequest.getMeeting().getName(), 
+            meetingRequest.getMeeting().getAdmin().getName());
 
         return Stringy.success();
     }
@@ -191,8 +190,12 @@ public class MeetingInviteController {
         meetingInviteRepository.save(meetingRequest);
 
         // Notify admin
-        pushNotificationService.sendPushNotification("User rejected", meetingRequest.getUser().getName() + " has rejected your invitation to join" + meetingRequest.getMeeting().getName(), Topic.COMMON);
+        pushNotificationService.sendPushNotification("User rejected", 
+            meetingRequest.getUser().getName() + " has rejected your invitation to join" + meetingRequest.getMeeting().getName(), 
+            meetingRequest.getMeeting().getAdmin().getName());
 
         return Stringy.success();
     }
 }
+
+

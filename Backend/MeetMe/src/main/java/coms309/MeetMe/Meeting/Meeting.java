@@ -35,6 +35,9 @@ public class Meeting {
     @Column(nullable = true)   // null == undecided
     private String dateTime;
 
+    @Column(nullable = true)   // null == undecided
+    private int duration;
+
     @Enumerated(EnumType.STRING)
     private Privacy privacy;
 
@@ -89,21 +92,23 @@ public class Meeting {
         this.privacy = Privacy.HIDDEN;
     }
 
-    public Meeting(User admin, String name, String desc, String dateTime, Location location) {
+    public Meeting(User admin, String name, String desc, String dateTime, int duration, Location location) {
         this.admin = admin;
         this.name = name;
         this.description = desc;
         this.location = location;
         this.dateTime = dateTime;
+        this.duration = duration;
         this.privacy = Privacy.HIDDEN;
     }
 
-    public Meeting(User admin, String name, String desc, Location location, String dateTime, Privacy privacy) {
+    public Meeting(User admin, String name, String desc, Location location, String dateTime, int duration, Privacy privacy) {
         this.admin = admin;
         this.name = name;
         this.description = desc;
         this.location = location;
         this.dateTime = dateTime;
+        this.duration = duration;
         this.privacy = privacy;
     }
 
@@ -145,6 +150,14 @@ public class Meeting {
         this.dateTime = dateTime;
     }
 
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
     public Privacy getPrivacy() {
         return privacy;
     }
@@ -153,10 +166,10 @@ public class Meeting {
         return description;
     }
 
-    public List<Integer> getUserParticipants() {
-        List<Integer> ids = new ArrayList<Integer>();
+    public List<String> getUserParticipants() {
+        List<String> ids = new ArrayList<String>();
         userParticipants.forEach(user -> {
-            ids.add(user.getId());
+            ids.add(user.getName());
         });
         return ids;
     }

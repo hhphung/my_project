@@ -45,4 +45,4 @@ curl -d '{"userName": "Rick", "meetingName": "Meeting2"}' -H 'Content-Type: appl
 curl -d '{"userName": "Rick", "meetingName": "Meeting2"}' -H 'Content-Type: application/json' "$url/meetingInvite/acceptMeetingInviteNames"
 
 curl -d '{"userNameA": "Max", "userNameB": "Alex"}' -H 'Content-Type: application/json' "$url/user/sendFriendRequest"
-curl -d '{"userName": "Max", "meetingName": "Alex"}' -H 'Content-Type: application/json' "$url/user/acceptFriendRequestNames"
+curl -d '{"userNameA": "Max", "userNameB": "Alex"}' -H 'Content-Type: application/json' "$url/user/acceptFriendRequestNames"

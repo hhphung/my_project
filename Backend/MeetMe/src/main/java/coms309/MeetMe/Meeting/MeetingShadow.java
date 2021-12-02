@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import coms309.MeetMe.User.UserShadow;
-
 
 public class MeetingShadow {
 
@@ -23,9 +21,11 @@ public class MeetingShadow {
 
     private String dateTime;
 
+    private int duration;
+
     private Privacy privacy;
 
-    private List<Integer> userParticipants;
+    private List<String> userParticipants;
 
 
     // =============================== Constructors ================================== //
@@ -40,6 +40,7 @@ public class MeetingShadow {
         this.description = meeting.getDescription();
         this.location = meeting.getLocation();
         this.dateTime = meeting.getDateTime();
+        this.duration = meeting.getDuration();
         this.privacy = meeting.getPrivacy();
         this.userParticipants = meeting.getUserParticipants();
     }
@@ -83,6 +84,10 @@ public class MeetingShadow {
         return dateTime;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
     public Privacy getPrivacy() {
         return privacy;
     }
@@ -91,7 +96,7 @@ public class MeetingShadow {
         return description;
     }
 
-    public List<Integer> getUserParticipants() {
+    public List<String> getUserParticipants() {
         return userParticipants;
     }
 }
