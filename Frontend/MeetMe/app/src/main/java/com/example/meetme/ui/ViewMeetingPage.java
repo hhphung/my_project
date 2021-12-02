@@ -57,13 +57,12 @@ public class ViewMeetingPage extends AppCompatActivity {
         Button backButton = findViewById(R.id.backButton);
         Button chatButton = findViewById(R.id.chatBtn);
 
-        TextView meetingName = findViewById(R.id.name);
+        TextView meetingName = findViewById(R.id.meeting_name_title_view);
         TextView meetingDesc = findViewById(R.id.description);
         TextView meetingDateTime = findViewById(R.id.dateTime);
         TextView meetingLocation = findViewById(R.id.location);
         TextView meetingAdminName = findViewById(R.id.adminName);
 
-        String username = getIntent().getStringExtra("username");
 
 
         // Get information sent from last activity page
@@ -88,7 +87,7 @@ public class ViewMeetingPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), ChatPage.class);
-                myIntent.putExtra("username", username);
+                myIntent.putExtra("meeting name", meetingNameStr);
                 startActivity(myIntent);
             }
         });
@@ -103,11 +102,6 @@ public class ViewMeetingPage extends AppCompatActivity {
 
             recyclerView = findViewById(R.id.participantsRecycler);
 
-//            User testUser = new User("Person", "arst");
-//            ArrayList<User> list = new ArrayList<User>();
-//            list.add(testUser);
-//
-//            UserAdapter userAdapter = new UserAdapter(list);
             UserAdapter userAdapter = new UserAdapter(meeting.getParticipants());
 
             recyclerView.setAdapter(userAdapter);

@@ -19,17 +19,18 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import android.os.Bundle;
 
+import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 
 public class ChatPage extends AppCompatActivity {
 
     private WebSocketClient mWebSocketClient;
 
-    private Button bConnect, bDisconnect, bSendButton;
+    private Button bDisconnect, bSendButton;
     private TextView mOutput;
     private EditText mInput;
 
-    String username = "";
+    String meetingName = "";
 
 
     @Override
@@ -50,8 +51,11 @@ public class ChatPage extends AppCompatActivity {
         //Get the editText
         mInput = findViewById(R.id.m_input);
 
-        //get username of current client
-        username = getIntent().getStringExtra("username");
+
+        meetingName = getIntent().getStringExtra("meeting name");
+
+        TextView meetingChatTitle = findViewById(R.id.activity_chat_MeetingName);
+        meetingChatTitle.setText(meetingName);
 
         connectWebSocket();
 
@@ -87,6 +91,11 @@ public class ChatPage extends AppCompatActivity {
 
     private void connectWebSocket() {
         URI uri;
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+
+        //get username of current client
+        final String username = globalVariable.getName();
+
         try {
             /*
              * To test the clientside without the backend, simply connect to an echo server such as:
