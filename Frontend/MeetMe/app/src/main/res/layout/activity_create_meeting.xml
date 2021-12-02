@@ -127,6 +127,29 @@
                 android:paddingTop="10dp" />
 
             <TextView
+                android:id="@+id/activity_createMeeting_duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="#0000916E"
+                android:gravity="center_horizontal"
+                android:outlineProvider="none"
+                android:text="Duration"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textColor="@color/black" />
+
+            <Spinner
+                android:id="@+id/activity_createMeeting_durationInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:gravity="center_horizontal"
+                android:minHeight="48dp"
+                android:paddingTop="10dp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
                 android:id="@+id/activity_createMeeting_LocationTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

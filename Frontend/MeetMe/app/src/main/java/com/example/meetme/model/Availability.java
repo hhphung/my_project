@@ -33,6 +33,12 @@ public class Availability {
         }
     }
 
+    public boolean isAvailableDuringRange(int start, int end){
+        return false;
+    }
+
+
+
     public void setUsername(String username) {
         this.username = username;
     }

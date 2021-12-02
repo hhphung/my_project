@@ -50,6 +50,10 @@ public class Meeting {
     @Expose
     private boolean isPresentation;
 
+    @SerializedName("duration")
+    @Expose
+    private int durationHours;
+
     //String name, String adminName, String desc, String dateTime, String street,
     // String city, String state, int zipcode, String country)
 
@@ -66,7 +70,7 @@ public class Meeting {
      * @param country country of meeting location
      */
     public Meeting(String name, String adminName, String desc, String dateTime, String street,
-                   String city, String state, int zipcode, String country)
+                   String city, String state, int zipcode, String country, int durationHours)
     {
         this.name = name;
         this.adminName = adminName;
@@ -77,6 +81,7 @@ public class Meeting {
         this.state = state;
         this.zipcode = zipcode;
         this.country = country;
+        this.durationHours = durationHours;
 
     }
 
@@ -160,15 +165,13 @@ public class Meeting {
         this.responseMessage = responseMessage;
     }
 
-//    public boolean getIsPresentation()
-//    {
-//        return this.isPresentation;
-//    }
-//
-//    public void setIsPresentation(boolean isPresentation)
-//    {
-//        this.isPresentation = isPresentation;
-//    }
+    public int getDurationHours() {
+        return durationHours;
+    }
+
+    public void setDurationHours(int durationHours) {
+        this.durationHours = durationHours;
+    }
 
     public ArrayList<User> getParticipants() {
         return new ArrayList<User>();

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * MeetingAdapter class allows us to manipulate Array lists of meeting objects to display in RecyclerViews
  */
-public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHolder> {
+public class DashboardMeetingAdapter extends RecyclerView.Adapter<DashboardMeetingAdapter.ViewHolder> {
 
     /**
      * context to provide for view
@@ -77,7 +77,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
     /**
      * Initialize the dataset of the Adapter.
      */
-    public MeetingAdapter(Context context, ArrayList<Meeting> meetings) {
+    public DashboardMeetingAdapter(Context context, ArrayList<Meeting> meetings) {
         this.context = context;
         this.meetings = meetings;
     }
@@ -93,7 +93,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
 
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_meeting, viewGroup, false);
+                .inflate(R.layout.dashboard_card_meeting, viewGroup, false);
 
         return new ViewHolder(context, view);
     }

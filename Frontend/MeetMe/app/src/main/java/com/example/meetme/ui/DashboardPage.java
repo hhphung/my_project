@@ -1,10 +1,7 @@
 package com.example.meetme.ui;
 
-import static com.example.meetme.api.apiClientFactory.GetUserApi;
 import static com.example.meetme.api.apiClientFactory.GetMeetingApi;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,11 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.meetme.MeetingAdapter;
+import com.example.meetme.DashboardMeetingAdapter;
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
-import com.example.meetme.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +52,9 @@ public class DashboardPage extends BaseActivity {
         {
             recyclerView = findViewById(R.id.recyclerViewMeeting);
 
-            MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
+            DashboardMeetingAdapter dashboardMeetingAdapter = new DashboardMeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
 
-            recyclerView.setAdapter(meetingAdapter);
+            recyclerView.setAdapter(dashboardMeetingAdapter);
 
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

@@ -10,9 +10,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.meetme.R;
@@ -56,6 +58,13 @@ public class CreateMeetingPage extends AppCompatActivity {
         EditText meetingTime_textbox = findViewById(R.id.activity_createMeeting_timeInput);
         EditText meetingLocation_textbox = findViewById(R.id.activity_createMeeting_LocationInput);
         EditText meetingDate_textbox = findViewById(R.id.activity_createMeeting_dateInput);
+        Spinner meetingDurationInput = findViewById(R.id.activity_createMeeting_durationInput);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.duration_options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        meetingDurationInput.setAdapter(adapter);
 
         Button backButton = findViewById(R.id.activity_createMeeting_backButton);
         Button createButton = findViewById(R.id.activity_createMeeting_createMeetingButton);
@@ -84,8 +93,8 @@ public class CreateMeetingPage extends AppCompatActivity {
                 String mDate = meetingDate_textbox.getText().toString();
                 String mLocation[] = meetingLocation_textbox.getText().toString().split(",");
                 Boolean presentationVal = presentation.isChecked();
-
-                PostMeeting(mTitle, mDesc, mTime, mDate, mLocation, presentationVal);
+                int mDuration = 1;
+                PostMeeting(mTitle, mDesc, mTime, mDate, mLocation, presentationVal, mDuration);
 
 //                if (errorMsg.getText().toString().equals("Error Message Goes Here") ||
 //                        errorMsg.getText().toString().equals("")) {
@@ -130,7 +139,7 @@ public class CreateMeetingPage extends AppCompatActivity {
      * @param mPresentation a boolean val for whether or not it is a presentation
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation, boolean mPresentation){
+    protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation, boolean mPresentation, int mDuration){
 
 
         try {
@@ -147,11 +156,12 @@ public class CreateMeetingPage extends AppCompatActivity {
             int hour = Integer.parseInt(mTime.substring(0,2));
             int min = Integer.parseInt(mTime.substring(mTime.length()-2));
 
+
             LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, min);
             String username = getIntent().getStringExtra("username");
 
             Meeting meeting = new Meeting(mTitle, username, mDesc, dateTime.toString(), mLocation[0],
-                    mLocation[1], mLocation[2], zipcode, mLocation[4]);
+                    mLocation[1], mLocation[2], zipcode, mLocation[4], mDuration);
 
             GetMeetingApi().createMeeting(meeting).enqueue(new SlimCallback<>(response ->
             {
