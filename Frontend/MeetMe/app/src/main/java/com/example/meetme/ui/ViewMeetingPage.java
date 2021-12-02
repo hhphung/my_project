@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 import com.example.meetme.UserAdapter;
 import com.example.meetme.api.SlimCallback;
@@ -28,11 +29,6 @@ import java.net.URISyntaxException;
  * For viewing an individual meeting an its attributes
  */
 public class ViewMeetingPage extends AppCompatActivity {
-
-    /**
-     * name of given meeting
-     */
-    String meetingNameStr = "";
 
     /**
      * for list of Users in a Meeting
@@ -73,7 +69,11 @@ public class ViewMeetingPage extends AppCompatActivity {
             return;
         }
 
-        meetingNameStr = extras.getString("meetingName");
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+
+        globalVariable.setMeetingName(extras.getString("meetingName"));
+
+        final String meetingNameStr = globalVariable.getMeetingName();
         meetingName.setText(meetingNameStr);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +87,6 @@ public class ViewMeetingPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), ChatPage.class);
-                myIntent.putExtra("meeting name", meetingNameStr);
                 startActivity(myIntent);
             }
         });

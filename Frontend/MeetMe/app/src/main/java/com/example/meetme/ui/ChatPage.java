@@ -30,8 +30,6 @@ public class ChatPage extends AppCompatActivity {
     private TextView mOutput;
     private EditText mInput;
 
-    String meetingName = "";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +50,9 @@ public class ChatPage extends AppCompatActivity {
         mInput = findViewById(R.id.m_input);
 
 
-        meetingName = getIntent().getStringExtra("meeting name");
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+
+        final String meetingName = globalVariable.getMeetingName();
 
         TextView meetingChatTitle = findViewById(R.id.activity_chat_MeetingName);
         meetingChatTitle.setText(meetingName);
