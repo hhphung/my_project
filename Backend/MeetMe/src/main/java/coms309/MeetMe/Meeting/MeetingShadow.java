@@ -25,7 +25,7 @@ public class MeetingShadow {
 
     private Privacy privacy;
 
-    private List<Integer> userParticipants;
+    private List<String> userParticipants;
 
 
     // =============================== Constructors ================================== //
@@ -96,7 +96,7 @@ public class MeetingShadow {
         return description;
     }
 
-    public List<Integer> getUserParticipants() {
+    public List<String> getUserParticipants() {
         return userParticipants;
     }
 }

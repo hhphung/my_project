@@ -115,6 +115,7 @@ public class UserController {
 
         List<User> users = new ArrayList<User>();
         for (int i = 0; i < friendRequests.size(); i++) {
+            if (friendRequests.get(i).getState() == FriendRequestState.PENDING) continue;
             users.add(friendRequests.get(i).getUserB());
         }
         return UserShadow.build(users);
@@ -131,6 +132,7 @@ public class UserController {
 
         List<User> users = new ArrayList<User>();
         for (int i = 0; i < friendRequests.size(); i++) {
+            if (friendRequests.get(i).getState() == FriendRequestState.PENDING) continue;
             users.add(friendRequests.get(i).getUserA());
         }
         return UserShadow.build(users);
@@ -177,10 +179,8 @@ public class UserController {
         
         // Currently this sends to every user, we need to save user tokens during registration.
         pushNotificationService.sendPushNotification("Friend request", 
-        "You have a friend request from " + userA.getName()+ "!", 
-        userB.getName());
-
-        System.out.println("-------------\n\n" + userB.getName() + "\n\n---------------");
+            "You have a friend request from " + userA.getName()+ "!", 
+            userB.getName());
         
         return Stringy.success();
     }

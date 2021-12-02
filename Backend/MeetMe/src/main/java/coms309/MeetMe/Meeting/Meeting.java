@@ -166,10 +166,10 @@ public class Meeting {
         return description;
     }
 
-    public List<Integer> getUserParticipants() {
-        List<Integer> ids = new ArrayList<Integer>();
+    public List<String> getUserParticipants() {
+        List<String> ids = new ArrayList<String>();
         userParticipants.forEach(user -> {
-            ids.add(user.getId());
+            ids.add(user.getName());
         });
         return ids;
     }

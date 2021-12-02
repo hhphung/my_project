@@ -17,7 +17,7 @@ public class UserShadow {
     private Role role;
 
     private List<Integer> meetingParticipation;
-    private List<Integer> friends;
+    private List<String> friends;
 
     public UserShadow() {
     }
@@ -30,10 +30,10 @@ public class UserShadow {
         this.lastSeen = user.getLastSeen();
         this.role = user.getRole();
         this.meetingParticipation = user.getMeetingParticipation();
-        this.friends = new ArrayList<Integer>();
+        this.friends = new ArrayList<String>();
         Set<User> userFriends = user.getFriends();
         userFriends.forEach(friend -> {
-            friends.add(friend.getId());
+            friends.add(friend.getName());
         });
     }
 
@@ -81,7 +81,7 @@ public class UserShadow {
         return meetingParticipation;
     }
 
-    public List<Integer> getFriends() {
+    public List<String> getFriends() {
         return friends;
     }
 }
