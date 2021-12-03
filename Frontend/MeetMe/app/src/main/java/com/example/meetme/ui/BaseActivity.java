@@ -21,6 +21,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
      */
     protected NavigationBarView navigationView;
 
+    public String username;
+
     /**
      * Creates and initializes the navigation bar.
      * @param savedInstanceState
@@ -32,6 +34,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
         navigationView = (NavigationBarView) findViewById(R.id.navigation);
         navigationView.setOnItemSelectedListener(this);
+
+        username = getIntent().getStringExtra("username");
 
     }
 
@@ -69,13 +73,21 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         navigationView.postDelayed(() -> {
             int itemId = item.getItemId();
             if (itemId == R.id.action_dashboard) {
-                startActivity(new Intent(this, DashboardPage.class));
-            } else if (itemId == R.id.action_register) {
-                startActivity(new Intent(this, RegisterPage.class));
+                Intent i = new Intent(this, DashboardPage.class);
+                i.putExtra("username", username);
+                startActivity(i);
+            } else if (itemId == R.id.action_profile) {
+                Intent i = new Intent(this, ProfilePage.class);
+                i.putExtra("username", username);
+                startActivity(i);
             } else if (itemId == R.id.action_createMeeting) {
-                startActivity(new Intent(this, CreateMeetingPage.class));
+                Intent i = new Intent(this, CreateMeetingPage.class);
+                i.putExtra("username", username);
+                startActivity(i);
             } else if (itemId == R.id.action_search){
-                startActivity(new Intent(this, SearchPage.class));
+                Intent i = new Intent(this, SearchPage.class);
+                i.putExtra("username", username);
+                startActivity(i);
             }
             //finish();
         }, 300);

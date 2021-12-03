@@ -54,7 +54,7 @@ public class SlimCallback<T> implements Callback<T> {
             lambdaInterface.doSomething(response.body());
         }
         else{
-            Log.d(logTag, "This is in SlimCallBack --> Code: " + response.code() + "    Msg: " + response.message());
+            Log.d(logTag, "This is in SlimCallBack --> Code: " + response.code() + "    Body: " + response.body());
         }
     }
 

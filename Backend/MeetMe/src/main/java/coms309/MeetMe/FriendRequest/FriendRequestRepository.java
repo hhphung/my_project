@@ -21,11 +21,11 @@ public interface FriendRequestRepository extends JpaRepository<FriendRequest, In
     @Modifying
     @Transactional
     @Query(value = "delete from friend_request where id = ?1", nativeQuery = true)
-    void deleteFriendRequest(int id);
+    void deleteById(int id);
 
     @Query(value = "SELECT * FROM friend_request WHERE usera = ?1", nativeQuery = true)
-    List<FriendRequest> findFriendRequestsSent(int id);
+    List<FriendRequest> findSent(int id);
 
     @Query(value = "SELECT * FROM friend_request WHERE userb = ?1", nativeQuery = true)
-    List<FriendRequest> findFriendRequestsReceived(int id);
+    List<FriendRequest> findReceived(int id);
 }

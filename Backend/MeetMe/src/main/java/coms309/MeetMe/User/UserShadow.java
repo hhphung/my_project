@@ -5,32 +5,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+
 public class UserShadow {
 
     private Integer id;
 
     private String name;
-    // private String password;
     private String email;
     private Date joiningDate;
     private Date lastSeen;
     private Role role;
 
-    // private Set<Meeting> meetingAdmin;
-
-    // private Set<Meeting> meetingParticipation;
-
-    // private Set<Meeting> meetingRequests;
-
-    // private Set<Meeting> meetingInvites;
-
-    // private Set<User> friendsA = new HashSet<User>();
-
-    // private Set<User> friendsB = new HashSet<User>();
-
-    // private Set<FriendRequest> friendRequestsSent;
-
-    // private Set<FriendRequest> friendRequestsReceived;
+    private List<Integer> meetingParticipation;
+    private List<String> friends;
 
     public UserShadow() {
     }
@@ -42,6 +29,12 @@ public class UserShadow {
         this.joiningDate = user.getJoiningDate();
         this.lastSeen = user.getLastSeen();
         this.role = user.getRole();
+        this.meetingParticipation = user.getMeetingParticipation();
+        this.friends = new ArrayList<String>();
+        Set<User> userFriends = user.getFriends();
+        userFriends.forEach(friend -> {
+            friends.add(friend.getName());
+        });
     }
 
     public static List<UserShadow> build(List<User> users) {
@@ -82,5 +75,13 @@ public class UserShadow {
 
     public Role getRole() {
         return role;
+    }
+
+    public List<Integer> getMeetingParticipation() {
+        return meetingParticipation;
+    }
+
+    public List<String> getFriends() {
+        return friends;
     }
 }

@@ -5,22 +5,14 @@ public class PushNotificationRequest {
     private String title;
     private String message;
     private String topic;
-    private String token;
 
     public PushNotificationRequest() {
     }
 
-    public PushNotificationRequest(String title, String messageBody, Topic topic) {
+    public PushNotificationRequest(String title, String messageBody, String topic) {
         this.title = title;
         this.message = messageBody;
-        this.topic = topic.name().toLowerCase();
-    }
-
-    public PushNotificationRequest(String title, String messageBody, Topic topic, String token) {
-        this.title = title;
-        this.message = messageBody;
-        this.topic = topic.name().toLowerCase();
-        this.token = token;
+        this.topic = topic;
     }
 
     public String getTitle() {
@@ -45,13 +37,5 @@ public class PushNotificationRequest {
 
     public void setTopic(String topic) {
         this.topic = topic;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 }

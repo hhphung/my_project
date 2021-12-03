@@ -17,6 +17,9 @@
             android:name=".ui.AddParticipantsPage"
             android:exported="true" />
         <activity
+            android:name=".ui.AvailabilityPage"
+            android:exported="false" />
+        <activity
             android:name=".ui.ChatPage"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,13 +27,9 @@ import java.util.Set;
 /**
  * ProfilePage includes logic for inputs and buttons
  */
-public class ProfilePage extends AppCompatActivity {
+public class ProfilePage extends BaseActivity {
 
 
-    /**
-     * Current user's username
-     */
-    String username;
 
     /**
      * Sets up the page
@@ -41,14 +38,14 @@ public class ProfilePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_page);
 
         Button back = findViewById(R.id.profileBack);
         Button changePassword = findViewById(R.id.profileChangePassword);
         Button changeAval = findViewById(R.id.profileChangeA);
         Button viewFriends = findViewById(R.id.profileViewFriends);
-        TextView userName = findViewById(R.id.profileName);
+        TextView userNameDisplay = findViewById(R.id.profileName);
         LinearLayout friends = findViewById(R.id.friends);
+        ScrollView friendsContainer = findViewById(R.id.friendsScrollView);
         LinearLayout passWordChange = findViewById(R.id.linearLayoutChangePassword);
 
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
@@ -58,11 +55,8 @@ public class ProfilePage extends AppCompatActivity {
 
 
         GetUserApi().getUserByName(username).enqueue(new SlimCallback<User>(user ->{
-            userName.setText(user.getName() + " Profile");
+            userNameDisplay.setText(user.getName());
         }));
-
-
-
 
 
         Context temp = this;
@@ -70,7 +64,7 @@ public class ProfilePage extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(view.getContext(),DashboardPage.class));
+                finish();
             }
         });
 
@@ -79,9 +73,13 @@ public class ProfilePage extends AppCompatActivity {
         changeAval.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(view.getContext(),DashboardPage.class));
+                Intent myIntent = new Intent(view.getContext(), AvailabilityPage.class);
+                myIntent.putExtra("username", username);
+                startActivity(myIntent);
             }
         });
+
+
 
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +96,6 @@ public class ProfilePage extends AppCompatActivity {
                     newPass.setHint("New Password");
                     confirmnewPass.setHint("Confirm Password");
                     done.setText("Done");
-                    confirm.setText("I have not done anything with this yet");
                     confirm.setVisibility(View.INVISIBLE);
 
                     passWordChange.addView(newPass);
@@ -108,7 +105,28 @@ public class ProfilePage extends AppCompatActivity {
                     done.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            confirm.setVisibility(View.VISIBLE);
+                            if(confirmnewPass.getText().toString().equals(newPass.getText().toString()) && !(confirmnewPass.getText().toString().equals(""))) {
+                                User user = new User(username, newPass.getText().toString());
+                                GetUserApi().changePassword(user).enqueue(new SlimCallback<>(user1 ->{
+                                    if(user1.getResponse().equals("Success")){
+                                        confirm.setText("Successfully changed password!");
+                                    }
+                                    else{
+                                        confirm.setText("Server Failure: " + user1.getResponse());
+                                    }
+                                }));
+                                confirm.setVisibility(View.VISIBLE);
+
+                            }else{
+                                //possible error messages
+                                if(confirmnewPass.getText().toString().equals(""))
+                                {
+                                    confirm.setText("Cannot be empty");
+                                }else {
+                                    confirm.setText("Passwords do not match. Try again");
+                                }
+                                confirm.setVisibility(View.VISIBLE);
+                            }
                         }
                     });
 
@@ -121,14 +139,13 @@ public class ProfilePage extends AppCompatActivity {
             }
         });
 
-        ;
-
         List<Button> buttons = new ArrayList<Button>();
         viewFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(friends.getChildCount() == 0) {
-                    GetUserApi().getFriends("hoi").enqueue(new SlimCallback<Set<User>>(list -> {
+                    friendsContainer.getLayoutParams().height = 150;
+                    GetUserApi().getFriends(username).enqueue(new SlimCallback<Set<User>>(list -> {
                         for (User m : list) {
                             Button friend = new Button(temp);
                             friend.setOnClickListener(new View.OnClickListener() {
@@ -147,15 +164,29 @@ public class ProfilePage extends AppCompatActivity {
                 }
                 else{
                     friends.removeAllViews();
+                    friendsContainer.getLayoutParams().height = 0;
                 }
-
             }
-
         });
 
 
 
 
 
+    }
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.activity_profile_page;
+    }
+
+    @Override
+    int getLayoutId() {
+        return R.layout.activity_profile_page;
+    }
+
+    @Override
+    int getNavigationMenuItemId() {
+        return R.id.action_profile;
     }
 }
