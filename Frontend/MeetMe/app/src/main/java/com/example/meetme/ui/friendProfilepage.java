@@ -34,10 +34,11 @@ public class friendProfilepage extends AppCompatActivity {
         GetUserApi().getUserByName(username).enqueue(new SlimCallback<User>(user ->{
             friend.setText("Name: " + user.getName());
         }));
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(view.getContext(), ProfilePage.class));
+                finish();
             }
         });
 

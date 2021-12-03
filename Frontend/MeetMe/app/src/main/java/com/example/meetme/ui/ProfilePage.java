@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,17 +44,15 @@ public class ProfilePage extends BaseActivity {
         Button viewFriends = findViewById(R.id.profileViewFriends);
         TextView userNameDisplay = findViewById(R.id.profileName);
         LinearLayout friends = findViewById(R.id.friends);
+        ScrollView friendsContainer = findViewById(R.id.friendsScrollView);
         LinearLayout passWordChange = findViewById(R.id.linearLayoutChangePassword);
 
         username = getIntent().getStringExtra("username");
 
 
         GetUserApi().getUserByName(username).enqueue(new SlimCallback<User>(user ->{
-            userNameDisplay.setText( user.getName() + " Profile");
+            userNameDisplay.setText(user.getName());
         }));
-
-
-
 
 
         Context temp = this;
@@ -61,7 +60,7 @@ public class ProfilePage extends BaseActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(view.getContext(),DashboardPage.class));
+                finish();
             }
         });
 
@@ -70,9 +69,13 @@ public class ProfilePage extends BaseActivity {
         changeAval.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(view.getContext(),DashboardPage.class));
+                Intent myIntent = new Intent(view.getContext(), AvailabilityPage.class);
+                myIntent.putExtra("username", username);
+                startActivity(myIntent);
             }
         });
+
+
 
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +92,6 @@ public class ProfilePage extends BaseActivity {
                     newPass.setHint("New Password");
                     confirmnewPass.setHint("Confirm Password");
                     done.setText("Done");
-                    confirm.setText("I have not done anything with this yet");
                     confirm.setVisibility(View.INVISIBLE);
 
                     passWordChange.addView(newPass);
@@ -99,7 +101,28 @@ public class ProfilePage extends BaseActivity {
                     done.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            confirm.setVisibility(View.VISIBLE);
+                            if(confirmnewPass.getText().toString().equals(newPass.getText().toString()) && !(confirmnewPass.getText().toString().equals(""))) {
+                                User user = new User(username, newPass.getText().toString());
+                                GetUserApi().changePassword(user).enqueue(new SlimCallback<>(user1 ->{
+                                    if(user1.getResponse().equals("Success")){
+                                        confirm.setText("Successfully changed password!");
+                                    }
+                                    else{
+                                        confirm.setText("Server Failure: " + user1.getResponse());
+                                    }
+                                }));
+                                confirm.setVisibility(View.VISIBLE);
+
+                            }else{
+                                //possible error messages
+                                if(confirmnewPass.getText().toString().equals(""))
+                                {
+                                    confirm.setText("Cannot be empty");
+                                }else {
+                                    confirm.setText("Passwords do not match. Try again");
+                                }
+                                confirm.setVisibility(View.VISIBLE);
+                            }
                         }
                     });
 
@@ -112,13 +135,12 @@ public class ProfilePage extends BaseActivity {
             }
         });
 
-        ;
-
         List<Button> buttons = new ArrayList<Button>();
         viewFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(friends.getChildCount() == 0) {
+                    friendsContainer.getLayoutParams().height = 150;
                     GetUserApi().getFriends(username).enqueue(new SlimCallback<Set<User>>(list -> {
                         for (User m : list) {
                             Button friend = new Button(temp);
@@ -138,10 +160,9 @@ public class ProfilePage extends BaseActivity {
                 }
                 else{
                     friends.removeAllViews();
+                    friendsContainer.getLayoutParams().height = 0;
                 }
-
             }
-
         });
 
 
