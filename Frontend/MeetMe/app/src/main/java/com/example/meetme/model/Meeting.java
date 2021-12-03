@@ -46,9 +46,6 @@ public class Meeting {
     @Expose
     private String responseMessage;
 
-    @SerializedName("participants")
-    @Expose
-    private String participants;
 
     //String name, String adminName, String desc, String dateTime, String street,
     // String city, String state, int zipcode, String country)
@@ -66,7 +63,7 @@ public class Meeting {
      * @param country country of meeting location
      */
     public Meeting(String name, String adminName, String desc, String dateTime, String street,
-                   String city, String state, int zipcode, String country, String participants)
+                   String city, String state, int zipcode, String country)
     {
         this.name = name;
         this.adminName = adminName;
@@ -77,7 +74,6 @@ public class Meeting {
         this.state = state;
         this.zipcode = zipcode;
         this.country = country;
-        this.participants = participants;
 
     }
 
@@ -161,13 +157,11 @@ public class Meeting {
         this.responseMessage = responseMessage;
     }
 
-    public String getParticipants() {
-        return participants;
+    public ArrayList<User> getParticipants() {
+        return new ArrayList<User>();
     }
 
-    public void setParticipants(String participants){
-        this.participants = participants;
-    }
+
 
     public String getError() {
         return error;

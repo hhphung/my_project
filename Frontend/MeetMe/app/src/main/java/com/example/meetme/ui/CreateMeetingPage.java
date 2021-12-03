@@ -21,6 +21,7 @@ import com.example.meetme.api.MeetingApi;
 import com.example.meetme.model.Meeting;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
+import com.example.meetme.model.UserMeetingNamePair;
 
 import java.util.List;
 import java.time.LocalDate;
@@ -97,7 +98,7 @@ public class CreateMeetingPage extends AppCompatActivity {
                 String mDate = meetingDate_textbox.getText().toString();
                 String mLocation[] = meetingLocation_textbox.getText().toString().split(",");
 
-                String participants = participantList.getText().toString();
+                String participants[] = participantList.getText().toString().split(",");
 
 
                 PostMeeting(mTitle, mDesc, mTime, mDate, mLocation, participants);
@@ -144,15 +145,17 @@ public class CreateMeetingPage extends AppCompatActivity {
      * @param mLocation An array of strings representing the meeting location in format {St Address, City, State, Zip, Country}
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation, String participants){
+    protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation, String[] participants){
 
 
         try {
             int zipcode = Integer.parseInt(mLocation[3].replaceAll(" ", ""));
 
-            if (mTitle == null || mDesc == null || mTime == null || mDate == null  || participants == null || mLocation.length < 5) {
+            if (mTitle == null || mDesc == null || mTime == null || mDate == null || participants == null || mLocation.length < 5) {
                 throw new IllegalArgumentException("missing or incorrectly formatted arguments");
             }
+
+            sendInvites(participants, mTitle);
 
             int year = Integer.parseInt(mDate.substring(mDate.length() - 4));
             int month = Integer.parseInt(mDate.substring(0,2));
@@ -168,7 +171,7 @@ public class CreateMeetingPage extends AppCompatActivity {
             final String username = globalVariable.getName();
 
             Meeting meeting = new Meeting(mTitle, username, mDesc, dateTime.toString(), mLocation[0],
-                    mLocation[1], mLocation[2], zipcode, mLocation[4], participants);
+                    mLocation[1], mLocation[2], zipcode, mLocation[4]);
 
             GetMeetingApi().createMeeting(meeting).enqueue(new SlimCallback<>(response ->
             {
@@ -196,6 +199,15 @@ public class CreateMeetingPage extends AppCompatActivity {
             if (errorMsg.getVisibility() == View.INVISIBLE) {
                 errorMsg.setVisibility(View.VISIBLE);
             }
+        }
+    }
+
+    public void sendInvites(String[] participants, String mTitle)
+    {
+        for(int i = 0; i < participants.length; i++){
+            String user = participants[i];
+            UserMeetingNamePair newPair = new UserMeetingNamePair(user, mTitle);
+            GetMeetingApi().sendInvite(newPair).enqueue(new SlimCallback<>(pair -> {}));
         }
     }
 }

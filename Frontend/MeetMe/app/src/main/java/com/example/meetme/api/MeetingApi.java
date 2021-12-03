@@ -1,6 +1,7 @@
 package com.example.meetme.api;
 
 import com.example.meetme.model.Meeting;
+import com.example.meetme.model.UserMeetingNamePair;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface MeetingApi {
 
     /**
      * **THIS MIGHT BE DEPRECATED**
-     * @param name meeting name to get
+     * @param id user id
      * @return On success: A meeting object sent by the server. On failure:
      * A generic JSON response indicating a failure.
      */
@@ -27,6 +28,9 @@ public interface MeetingApi {
 
     @GET("/meeting/{name}")
     Call<Meeting> getMeetingByName(@Path(value = "name") String name);
+
+    @POST("/meetingInvite/sendMeetingInvite")
+    Call<String>  sendInvite(@Body UserMeetingNamePair pair);
 
     /**
      *
