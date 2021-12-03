@@ -96,12 +96,11 @@ public class ChatPage extends AppCompatActivity {
         //get username of current client
         final String username = globalVariable.getName();
 
+        final String mTitle = globalVariable.getMeetingName();
+
         try {
-            /*
-             * To test the clientside without the backend, simply connect to an echo server such as:
-             *  "ws://echo.websocket.org"
-             */
-            uri = new URI("ws://coms-309-017.cs.iastate.edu:8080/chat/" + username);
+           
+            uri = new URI("ws://coms-309-017.cs.iastate.edu:8080/chat/" + mTitle +"/"+ username);
 
         } catch (URISyntaxException e) {
             e.printStackTrace();
