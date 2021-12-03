@@ -19,4 +19,6 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long> {
 
     void deleteById(int id);
     void deleteAll();
+
+
 }
