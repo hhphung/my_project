@@ -157,8 +157,8 @@ public class Meeting {
         this.responseMessage = responseMessage;
     }
 
-    public ArrayList<User> getParticipants() {
-        return new ArrayList<User>();
+    public ArrayList<String> getParticipants() {
+        return new ArrayList<String>();
     }
 
 

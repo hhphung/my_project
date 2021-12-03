@@ -23,7 +23,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     /**
      * ArrayList of User objects
      */
-    private ArrayList<User> users;
+    private ArrayList<String> users;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -68,7 +68,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     /**
      * Initialize the dataset of the Adapter.
      */
-    public UserAdapter(ArrayList<User> users) {
+    public UserAdapter(ArrayList<String> users) {
         this.users = users;
     }
 
@@ -98,7 +98,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.getTextView().setText(users.get(position).getName());
+        viewHolder.getTextView().setText(users.get(position));
     }
 
     /**
