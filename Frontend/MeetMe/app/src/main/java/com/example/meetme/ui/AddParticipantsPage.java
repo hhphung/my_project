@@ -63,8 +63,18 @@ public class AddParticipantsPage extends AppCompatActivity {
                                 public void onClick(View view) {
                                     if(!list.getText().toString().equals(""))
                                     {
-                                        String orig = list.getText().toString();
-                                        list.setText(orig + ", " + m.getName());
+                                        String[] users = list.getText().toString().split(", ");
+                                        boolean isInString = false;
+                                        for(int i = 0; i < users.length; i++)
+                                        {
+                                            if(users[i].equals(m.getName())){
+                                                isInString = true;
+                                            }
+                                        }
+                                        if(!isInString) {
+                                            String orig = list.getText().toString();
+                                            list.setText(orig + ", " + m.getName());
+                                        }
                                     }
                                     else{
                                         list.setText(m.getName());

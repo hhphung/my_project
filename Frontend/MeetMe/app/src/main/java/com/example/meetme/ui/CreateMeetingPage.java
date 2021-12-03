@@ -64,17 +64,18 @@ public class CreateMeetingPage extends AppCompatActivity {
         Button addparticipants = findViewById(R.id.activity_createMeeting_add_participants);
 
         errorMsg = findViewById(R.id.activity_createMeeting_errorMsg);
-        String username = getIntent().getStringExtra("username");
-        String participants = getIntent().getStringExtra("username list");
+
 
         TextView participantList = findViewById(R.id.activity_createMeeting_added_participants);
+
+        String participants = getIntent().getStringExtra("username list");
+
         participantList.setText(participants);
 
         addparticipants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), AddParticipantsPage.class);
-                myIntent.putExtra("username", username);
                 startActivity(myIntent);
             }
         });
@@ -83,7 +84,8 @@ public class CreateMeetingPage extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
+                startActivity(myIntent);
             }
         });
 
@@ -98,7 +100,7 @@ public class CreateMeetingPage extends AppCompatActivity {
                 String mDate = meetingDate_textbox.getText().toString();
                 String mLocation[] = meetingLocation_textbox.getText().toString().split(",");
 
-                String participants[] = participantList.getText().toString().split(",");
+                String participants[] = participantList.getText().toString().split(", ");
 
 
                 PostMeeting(mTitle, mDesc, mTime, mDate, mLocation, participants);
@@ -155,7 +157,7 @@ public class CreateMeetingPage extends AppCompatActivity {
                 throw new IllegalArgumentException("missing or incorrectly formatted arguments");
             }
 
-            sendInvites(participants, mTitle);
+
 
             int year = Integer.parseInt(mDate.substring(mDate.length() - 4));
             int month = Integer.parseInt(mDate.substring(0,2));
@@ -175,6 +177,9 @@ public class CreateMeetingPage extends AppCompatActivity {
 
             GetMeetingApi().createMeeting(meeting).enqueue(new SlimCallback<>(response ->
             {
+                if(response.getResponseMessage().toString().equals("Success")){
+                    sendInvites(participants,mTitle);
+                }
                 errorMsg.getText();
             }));
             finish();

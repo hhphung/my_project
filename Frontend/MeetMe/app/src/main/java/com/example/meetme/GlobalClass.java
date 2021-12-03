@@ -8,6 +8,8 @@ public class GlobalClass extends Application {
 
     private String meetingName;
 
+    private String userParticipantsInMeeting;
+
     public String getName() {
         return username;
     }
@@ -22,5 +24,13 @@ public class GlobalClass extends Application {
 
     public void setMeetingName(String newName){
         meetingName = newName;
+    }
+
+    public String getUserParticipantsInMeeting(){
+        return userParticipantsInMeeting;
+    }
+
+    public void setUserParticipantsInMeeting(String userParticipantsInMeeting){
+        this.userParticipantsInMeeting = userParticipantsInMeeting;
     }
 }
