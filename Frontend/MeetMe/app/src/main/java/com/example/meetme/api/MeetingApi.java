@@ -1,6 +1,7 @@
 package com.example.meetme.api;
 
 import com.example.meetme.model.Meeting;
+import com.example.meetme.model.MeetingShadow;
 import com.example.meetme.model.UserMeetingNamePair;
 
 import java.util.List;
@@ -24,10 +25,10 @@ public interface MeetingApi {
      * A generic JSON response indicating a failure.
      */
     @GET("/meeting/{id}")
-    Call<Meeting> getMeetingById(@Path(value = "id") int id);
+    Call<MeetingShadow> getMeetingById(@Path(value = "id") int id);
 
-    @GET("/meeting/{name}")
-    Call<Meeting> getMeetingByName(@Path(value = "name") String name);
+    @GET("/meeting/name/{name}")
+    Call<MeetingShadow> getMeetingByName(@Path(value = "name") String name);
 
     @POST("/meetingInvite/sendMeetingInvite")
     Call<String>  sendInvite(@Body UserMeetingNamePair pair);
@@ -45,8 +46,8 @@ public interface MeetingApi {
      * @return A list of all meetings in the server.
      */
     @GET("/meeting/")
-    Call<List<Meeting>> getAllMeetings();
+    Call<List<MeetingShadow>> getAllMeetings();
 
     @GET("/meeting/search/{name}")
-    Call<List<Meeting>> getResults(@Path(value = "name") String name);
+    Call<List<MeetingShadow>> getResults(@Path(value = "name") String name);
 }

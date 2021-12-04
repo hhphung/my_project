@@ -7,16 +7,45 @@
     android:background="#ccc"
     tools:context=".ui.ViewMeetingPage">
 
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="112dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="1dp"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <TextView
+        android:id="@+id/meeting_name_title_view"
+        android:layout_width="297dp"
+        android:layout_height="61dp"
+        android:layout_marginBottom="2dp"
+        android:gravity="center"
+        android:text="Meeting Name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
     <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="410dp"
-        android:layout_height="608dp"
+        android:id="@+id/view_meeting_items_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:background="#fff"
-        android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meeting_name_title_view"
+        app:layout_constraintVertical_bias="0.339">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,79 +53,72 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/descriptionTitle"
+                android:id="@+id/viewMeeting_descriptionTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Description" />
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/viewMeeting_description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine" />
+                android:gravity="start|top" />
 
             <TextView
-                android:id="@+id/dateTimeTitle"
+                android:id="@+id/viewMeeting_dateTimeTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Date/Time" />
 
             <TextView
-                android:id="@+id/dateTime"
+                android:id="@+id/viewMeeting_dateTime"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine" />
+                android:gravity="start|top" />
 
             <TextView
-                android:id="@+id/locationTitle"
+                android:id="@+id/viewMeeting_locationTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Location" />
 
             <TextView
-                android:id="@+id/location"
+                android:id="@+id/viewMeeting_location"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine" />
+                android:gravity="start|top" />
 
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="10dp"
                 android:background="?android:attr/listDivider" />
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="91dp">
-
                 <TextView
-                    android:id="@+id/adminTitle"
+                    android:id="@+id/viewMeeting_adminTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Admin" />
 
                 <TextView
-                    android:id="@+id/adminName"
+                    android:id="@+id/viewMeeting_adminName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Admin" />
+                    android:text="" />
 
-            </androidx.cardview.widget.CardView>
+
 
             <View
                 android:id="@+id/divider2"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="10dp"
                 android:background="?android:attr/listDivider" />
 
             <TextView
-                android:id="@+id/participantsTitle"
+                android:id="@+id/viewMeeting_participantsTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Participants" />
@@ -114,30 +136,5 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="112dp"
-        android:layout_height="62dp"
-        android:layout_marginBottom="1dp"
-
-        android:text="Back"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/meeting_name_title_view"
-        android:layout_width="297dp"
-        android:layout_height="61dp"
-        android:layout_marginBottom="2dp"
-        android:gravity="center"
-        android:text="Meeting Name"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/backButton"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

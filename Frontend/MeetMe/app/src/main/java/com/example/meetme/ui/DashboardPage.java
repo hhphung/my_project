@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.meetme.model.MeetingShadow;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -64,11 +65,11 @@ public class DashboardPage extends BaseActivity {
         globalVariable.setName(username);
 
         // load meetings as interactive cards
-        GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings->
+        GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<MeetingShadow>>(meetings->
         {
             recyclerView = findViewById(R.id.recyclerViewMeeting);
 
-            MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
+            MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<MeetingShadow>(meetings));
 
             recyclerView.setAdapter(meetingAdapter);
 

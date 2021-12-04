@@ -63,7 +63,8 @@ public class ChatPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mWebSocketClient.close();
-                finish();
+                Intent myIntent = new Intent(v.getContext(),DashboardPage.class);
+                startActivity(myIntent);
             }
         });
 
