@@ -9,18 +9,6 @@
     tools:context=".ui.SearchPage">
 
 
-    <Button
-        android:id="@+id/activity_search_btn_to_dash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activity_search_results"
         android:layout_width="match_parent"
@@ -30,9 +18,22 @@
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.684" />
+        app:layout_constraintVertical_bias="0.154" />
+
+    <Button
+        android:id="@+id/activity_search_btn_to_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="15dp"
+        android:text="Search"
+        app:layout_constraintBottom_toTopOf="@+id/activity_search_results"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
 
     <EditText
         android:id="@+id/activity_search_input"
@@ -41,27 +42,15 @@
         android:ems="10"
         android:hint="Search Meetings here"
         android:inputType="textPersonName"
-        android:paddingRight="30dp"
+        android:minHeight="48dp"
         android:paddingLeft="10dp"
+        android:paddingRight="30dp"
         app:layout_constraintBottom_toTopOf="@+id/activity_search_results"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.154"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.882" />
-
-    <Button
-        android:id="@+id/activity_search_btn_to_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="19dp"
-        android:text="Search"
-        app:layout_constraintBottom_toTopOf="@+id/activity_search_results"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.949"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.92" />
+        app:layout_constraintVertical_bias="0.457" />
 
     <include
         layout="@layout/bottom_menu_layout"

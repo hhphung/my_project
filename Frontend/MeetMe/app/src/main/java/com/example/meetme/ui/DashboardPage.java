@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,14 +47,11 @@ public class DashboardPage extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        username = getIntent().getStringExtra("username");
+
         TextView welcomeText = findViewById(R.id.activity_dashboard_text);
         EditText usernameInput = findViewById(R.id.activity_main_username_input);
-
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
-
-        globalVariable.setName(username);
-
+        username = globalVariable.getName();
         // load meetings as interactive cards
         GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings->
         {

@@ -67,6 +67,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     @Override
     public boolean onNavigationItemSelected (@NonNull MenuItem item) {
         navigationView.postDelayed(() -> {
+            //finish();
             int itemId = item.getItemId();
             if (itemId == R.id.action_dashboard) {
                 startActivity(new Intent(this, DashboardPage.class));
@@ -77,7 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
             } else if (itemId == R.id.action_search){
                 startActivity(new Intent(this, SearchPage.class));
             }
-            finish();
+
         }, 300);
         return true;
     }

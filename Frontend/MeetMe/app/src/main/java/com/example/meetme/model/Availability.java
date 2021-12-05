@@ -32,16 +32,25 @@ public class Availability {
         return username;
     }
 
-    public Availability(String username, Boolean[] hours){
+    public Availability(String username, Boolean[] hours) {
         this.username = username;
         this.hours = new ArrayList<Boolean>();
-        for (int i = 0; i < 168; i++){
+        for (int i = 0; i < 168; i++) {
             this.hours.add(hours[i]);
         }
     }
 
     public boolean isAvailableDuringRange(int start, int end){
-        return false;
+        if (start == -1 || end == -1){
+            return false;
+        }
+        for (int i = start; i <= end; i++){
+            if (!hours.get(i)){
+                return false;
+            }
+        }
+
+        return true;
     }
 
 

@@ -4,6 +4,7 @@ import static com.example.meetme.api.apiClientFactory.GetUserApi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.meetme.GlobalClass;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -45,16 +46,17 @@ public class LoginPage extends AppCompatActivity {
                 startActivity(new Intent(view.getContext(),RegisterPage.class));
             }
         });
-
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         toDashboardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 User user = new User(usernameInput.getText().toString(), passwordInput.getText().toString());
                 GetUserApi().canLogin(user).enqueue(new SlimCallback<User>(response -> {
                     if (response.getResponse().equals("Success")) {
+                        globalVariable.setName(usernameInput.getText().toString());
                         Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
-                        myIntent.putExtra("username", usernameInput.getText().toString());
                         startActivity(myIntent);
+
                     } else {
                         passwordInput.setError("Check Password again");
                         passwordInput.requestFocus();

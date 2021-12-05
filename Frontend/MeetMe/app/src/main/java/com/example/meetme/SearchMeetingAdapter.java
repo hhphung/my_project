@@ -66,7 +66,7 @@ public class SearchMeetingAdapter extends RecyclerView.Adapter<SearchMeetingAdap
             this.view = view;
             textView = (TextView) view.findViewById(R.id.name);
             imageView = (ImageView) view.findViewById(R.id.search_badge);
-            imageView.setVisibility(View.INVISIBLE);
+            imageView.setVisibility(View.VISIBLE);
 
             //imageView.setImageDrawable(wrong);
 
