@@ -20,6 +20,7 @@ public class UserShadow {
     private List<String> friends;
 
     public UserShadow() {
+
     }
 
     public UserShadow(User user) {
