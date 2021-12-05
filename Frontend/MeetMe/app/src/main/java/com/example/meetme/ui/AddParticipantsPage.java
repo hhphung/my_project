@@ -24,6 +24,7 @@ import java.util.List;
 
 public class AddParticipantsPage extends AppCompatActivity {
 
+   private ArrayList<Button> searchResults = new ArrayList<Button>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,8 @@ public class AddParticipantsPage extends AppCompatActivity {
 
         LinearLayout participants = findViewById(R.id.participants);
         Context temporaryContext = this;
+
+
 
 
         toCreatePage.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +84,7 @@ public class AddParticipantsPage extends AppCompatActivity {
                                     }
                                 }
                             });
+                            searchResults.add(user);
                             user.setText(m.getName());
                             participants.addView(user);
                         }
@@ -93,5 +97,9 @@ public class AddParticipantsPage extends AppCompatActivity {
             }
         });
 
+    }
+
+    public ArrayList<Button> getSearchResults(){
+        return searchResults;
     }
 }
