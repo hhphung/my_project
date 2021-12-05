@@ -12,21 +12,23 @@ import java.util.List;
 import coms309.MeetMe.Location.Location;
 import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Meeting.MeetingRepository;
+import coms309.MeetMe.MeetingInvite.MeetingInvite;
+import coms309.MeetMe.MeetingInvite.MeetingInviteRepository;
 import coms309.MeetMe.User.Role;
 import coms309.MeetMe.User.User;
+import coms309.MeetMe.chat.Message;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.web.bind.annotation.PostMapping;
-
 public class meetingTest {
 
     @Mock
     MeetingRepository meet;
+    @Mock
+    MeetingInviteRepository invite;
 
     @Before
     public void init() {
@@ -40,11 +42,11 @@ public class meetingTest {
         User acctTwo = new User("hoiprao1", "hoiprao1", Role.ADMIN);
         User acctThree = new User("hoiproa2", "hoiprao2", Role.ADMIN);
 
-        Location loc  = new Location("street", "city", "state", 52641, "country");
+        Location loc = new Location("street", "city", "state", 52641, "country");
 
-        Meeting one = new Meeting(acctOne, "first", "ahahaha", "0000", loc);
-        Meeting two = new Meeting(acctTwo, "second", "ahahaha", "0000", loc);
-        Meeting three = new Meeting(acctThree, "last", "ahahaha", "0000", loc);
+        Meeting one = new Meeting(acctOne, "first", "ahahaha", "0000", 1, loc);
+        Meeting two = new Meeting(acctTwo, "second", "ahahaha", "0000", 1, loc);
+        Meeting three = new Meeting(acctThree, "last", "ahahaha", "0000", 1, loc);
 
         list.add(one);
         list.add(two);
@@ -56,10 +58,10 @@ public class meetingTest {
     }
 
     @Test
-    public void getMeetingbyName(){
+    public void getMeetingbyName() {
         User acctOne = new User("hoiproa0", "hoiproa0", Role.ADMIN);
-        Location loc  = new Location("street", "city", "state", 52641, "country");
-        when(meet.findByName("first")).thenReturn(new Meeting(acctOne, "first", "ahahaha", "0000", loc));
+        Location loc = new Location("street", "city", "state", 52641, "country");
+        when(meet.findByName("first")).thenReturn(new Meeting(acctOne, "first", "ahahaha", "0000", 1, loc));
 
         Meeting meeting = meet.findByName("first");
         User user = meeting.getAdmin();
@@ -68,13 +70,13 @@ public class meetingTest {
 
     @Test
     public void getMeetingBySearch() {
-        
-        User dummyAdmin = new User("dummyUser", "dummyPassword", Role.ADMIN);
-        Location loc  = new Location("street", "city", "state", 12345, "country");
 
-        Meeting one = new Meeting(dummyAdmin, "first1", "ahahaha", "0000", loc);
-        Meeting two = new Meeting(dummyAdmin, "second1", "ahahaha", "0000", loc);
-        Meeting three = new Meeting(dummyAdmin, "third1", "ahahaha", "0000", loc);
+        User dummyAdmin = new User("dummyUser", "dummyPassword", Role.ADMIN);
+        Location loc = new Location("street", "city", "state", 12345, "country");
+
+        Meeting one = new Meeting(dummyAdmin, "first1", "ahahaha", "0000", 1, loc);
+        Meeting two = new Meeting(dummyAdmin, "second1", "ahahaha", "0000", 1, loc);
+        Meeting three = new Meeting(dummyAdmin, "third1", "ahahaha", "0000", 1, loc);
 
         List<Meeting> search1 = new ArrayList<Meeting>(Arrays.asList(one));
         List<Meeting> search2 = new ArrayList<Meeting>(Arrays.asList(two, three));
@@ -96,4 +98,23 @@ public class meetingTest {
         assertEquals(3, result.size());
         verify(meet, times(1)).findBySearch("1");
     }
+
+    @Test
+    public void Invites(){
+        User one = new User("hoiproa0", "hoiproa0");
+        Meeting meeting  = new Meeting();
+        MeetingInvite meetingInvite = new MeetingInvite(one, meeting);
+        User one1 = new User("hoiproa0", "hoiproa0");
+        Meeting meeting1  = new Meeting();
+        MeetingInvite meetingInvite2 = new MeetingInvite(one1, meeting1);
+        List<MeetingInvite> list = new ArrayList<MeetingInvite>();
+        list.add(meetingInvite);
+        list.add(meetingInvite2);
+        when(invite.findAll()).thenReturn(list);
+        List<MeetingInvite> acctList = invite.findAll();
+        assertEquals(2, acctList.size());
+        verify(invite, times(1)).findAll();
+    }
+
+
 }

@@ -1,7 +1,9 @@
 package com.example.meetme.api;
 
+import com.example.meetme.model.Availability;
 import com.example.meetme.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -33,13 +35,19 @@ public interface UserApi {
     Call<User> getUserByName(@Path(value = "username") String username);
 
     /**
+     * Returns a list of users with similar input on the search
+     */
+    @GET("/user/search/{name}")
+    Call<List<User>> getSearchResults(@Path(value = "name") String name);
+
+    /**
      * Send a new user to the server.
      * @param user User object to send to the server
      * @return response indicating success or failure.
      */
     @Headers("Content-type: application/json")
     @POST("/user/")
-    Call<User> createUser(@Body User user);
+    Call<POST> createUser(@Body User user);
 
     /**
      *
@@ -53,7 +61,7 @@ public interface UserApi {
      * @param user
      * @return "success" or "failure"
      */
-    @GET("/login/")
+    @POST("/user/login/")
     Call<User> canLogin(@Body User user);
 
     /**
@@ -61,8 +69,11 @@ public interface UserApi {
      * @param name name of user to get friends of
      * @return a list of friends of the user given by name
      */
-    @GET("/user/{name}/getFriends")
+    @GET("/user/{name}/friends")
     Call<Set<User>> getFriends(@Path(value = "name") String name);
+
+    @POST("user/changePassword")
+    Call<User> changePassword(@Body User oldUser_newPass);
 
 
 }

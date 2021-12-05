@@ -11,7 +11,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="0dp"
         android:clipChildren="true"
         android:scrollbarStyle="outsideInset"
         app:layout_constraintBottom_toTopOf="@+id/activity_createMeeting_errorMsg"
@@ -95,7 +95,7 @@
                 android:layout_marginBottom="0dp"
                 android:ems="10"
                 android:gravity="center_horizontal"
-                android:hint="mm/dd/yyyy"
+                android:hint="mm-dd-yyyy"
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:paddingTop="10dp" />
@@ -151,6 +151,17 @@
                 android:paddingTop="10dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Add Participants..."
+            android:id="@+id/activity_createMeeting_add_participants"/>
+
+        <TextView
+            android:id="@+id/activity_createMeeting_added_participants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""/>
         </LinearLayout>
     </ScrollView>
 

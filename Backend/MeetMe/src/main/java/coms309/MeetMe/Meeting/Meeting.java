@@ -1,13 +1,21 @@
 package coms309.MeetMe.Meeting;
 
 import coms309.MeetMe.Location.Location;
+import coms309.MeetMe.MeetingRequest.MeetingRequest;
+import coms309.MeetMe.MeetingInvite.MeetingInvite;
 import coms309.MeetMe.Stringy.Stringy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 import javax.persistence.*;
-import java.util.List;
+import javax.transaction.Transactional;
+import java.util.*;
 
 import coms309.MeetMe.User.User;
+import coms309.MeetMe.User.UserShadow;
+
+import lombok.Data;
 
 
 @Entity
@@ -30,6 +38,9 @@ public class Meeting {
     @Column(nullable = true)   // null == undecided
     private String dateTime;
 
+    @Column(nullable = true)   // null == undecided
+    private int duration;
+
     @Enumerated(EnumType.STRING)
     private Privacy privacy;
 
@@ -40,22 +51,32 @@ public class Meeting {
     private User admin;
 
     // Users currently allowed in the meeting
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     // @JoinColumn(nullable = true)
     @JsonIgnore
-    List<User> userParticipants;
+    Set<User> userParticipants;
 
     // Users who requested to join the meeting but have not been accepted yet
-    @ManyToMany
-    // @JoinColumn(nullable = true)
+    @OneToMany
     @JsonIgnore
-    List<User> userRequests;
+    Set<MeetingRequest> meetingRequests;
 
     // Users who were invited to the meeting but have not accepted yet
-    @ManyToMany
-    // @JoinColumn(nullable = true)
+    @OneToMany
     @JsonIgnore
-    List<User> userInvites;
+    Set<MeetingInvite> meetingInvites;
+
+    // // Users who requested to join the meeting but have not been accepted yet
+    // @ManyToMany
+    // // @JoinColumn(nullable = true)
+    // @JsonIgnore
+    // List<User> userRequests;
+
+    // Users who were invited to the meeting but have not accepted yet
+    // @ManyToMany
+    // // @JoinColumn(nullable = true)
+    // @JsonIgnore
+    // List<User> userInvites;
 
 
     // =============================== Constructors ================================== //
@@ -74,21 +95,23 @@ public class Meeting {
         this.privacy = Privacy.HIDDEN;
     }
 
-    public Meeting(User admin, String name, String desc, String dateTime, Location location) {
+    public Meeting(User admin, String name, String desc, String dateTime, int duration, Location location) {
         this.admin = admin;
         this.name = name;
         this.description = desc;
         this.location = location;
         this.dateTime = dateTime;
+        this.duration = duration;
         this.privacy = Privacy.HIDDEN;
     }
 
-    public Meeting(User admin, String name, String desc, Location location, String dateTime, Privacy privacy) {
+    public Meeting(User admin, String name, String desc, Location location, String dateTime, int duration, Privacy privacy) {
         this.admin = admin;
         this.name = name;
         this.description = desc;
         this.location = location;
         this.dateTime = dateTime;
+        this.duration = duration;
         this.privacy = privacy;
     }
 
@@ -129,6 +152,33 @@ public class Meeting {
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public Privacy getPrivacy() {
+        return privacy;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+
+    public List<String> getUserParticipants() {
+        List<String> ids = new ArrayList<String>();
+        userParticipants.forEach(user -> {
+            ids.add(user.getName());
+        });
+        return ids;
+    }
+
+    public void addUser(User user) {
+        this.userParticipants.add(user);
+    }
 }
-
-

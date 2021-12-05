@@ -45,6 +45,8 @@ public class Meeting {
     @SerializedName("message")
     @Expose
     private String responseMessage;
+
+
     //String name, String adminName, String desc, String dateTime, String street,
     // String city, String state, int zipcode, String country)
 
@@ -72,6 +74,7 @@ public class Meeting {
         this.state = state;
         this.zipcode = zipcode;
         this.country = country;
+
     }
 
     public String getName() {
@@ -154,9 +157,11 @@ public class Meeting {
         this.responseMessage = responseMessage;
     }
 
-    public ArrayList<User> getParticipants() {
-        return new ArrayList<User>();
+    public ArrayList<String> getParticipants() {
+        return new ArrayList<String>();
     }
+
+
 
     public String getError() {
         return error;

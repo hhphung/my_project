@@ -3,10 +3,18 @@ package coms309.MeetMe.User;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import coms309.MeetMe.MeetingRequest.MeetingRequest;
+import coms309.MeetMe.MeetingInvite.MeetingInvite;
+import coms309.MeetMe.Availability.Availability;
 import coms309.MeetMe.Meeting.Meeting;
+import coms309.MeetMe.Meeting.MeetingShadow;
 import coms309.MeetMe.Stringy.Stringy;
+import coms309.MeetMe.FriendRequest.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +26,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
-    private int id;
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -30,48 +38,62 @@ public class User {
     private Date joiningDate;
     @Column(nullable = false)
     private Date lastSeen;
-    @Column(nullable = false)
-    private boolean [] availability = new boolean[168]; // TODO: Create Availability/Schedule object to pass in
+
+    @OneToOne(targetEntity = Availability.class)
+    private Availability availability;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToMany(mappedBy = "admin")
     @JsonIgnore
-    List<Meeting> meetingAdmin;
+    private Set<Meeting> meetingAdmin;
 
     @ManyToMany(mappedBy = "userParticipants")
     @JsonIgnore
-    List<Meeting> meetingParticipation;
+    private Set<Meeting> meetingParticipation;
 
-    @ManyToMany(mappedBy = "userRequests")
+    // Users who requested to join the meeting but have not been accepted yet
+    @OneToMany
     @JsonIgnore
-    List<Meeting> meetingRequests;
+    Set<MeetingRequest> meetingRequests;
 
-    @ManyToMany(mappedBy = "userInvites")
+
+    // Users who were invited to the meeting but have not accepted yet
+    @OneToMany
     @JsonIgnore
-    List<Meeting> meetingInvites;
+    Set<MeetingInvite> meetingInvites;
 
-     // =============================== Constructors ================================== //
 
-    @ManyToMany(cascade={CascadeType.ALL})
-    @JoinTable(name="friends",
-            joinColumns={@JoinColumn(name="id")},
-            inverseJoinColumns={@JoinColumn(name="friend_id")})
+    // Friends are a many-to-many user-to-user relationship
+    // It's about to get complicated
+    @JsonManagedReference
+    @ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY)
+    @JoinTable(name="friendsA",
+            joinColumns={@JoinColumn(name="friendsB_id")},
+            inverseJoinColumns={@JoinColumn(name="friendsA_id")})
     @JsonIgnore
-    private Set<User> friends = new HashSet<User>();
+    private Set<User> friendsA = new HashSet<User>();
 
-
-    @ManyToMany(cascade={CascadeType.ALL})
-    @JoinTable(name="friendRequest",
-            joinColumns={@JoinColumn(name="id")},
-            inverseJoinColumns={@JoinColumn(name="friend_id")})
+    @JsonBackReference
+    @ManyToMany(cascade={CascadeType.ALL}, fetch=FetchType.LAZY)
+    @JoinTable(name="friendsB",
+            joinColumns={@JoinColumn(name="friendsA_id")},
+            inverseJoinColumns={@JoinColumn(name="friendsB_id")})
     @JsonIgnore
-    private Set<User> friendRequest = new HashSet<User>();
+    private Set<User> friendsB = new HashSet<User>();
 
-
-    @ManyToMany(mappedBy="friends")
+    
+    @OneToMany(mappedBy = "userA")
     @JsonIgnore
-    private Set<User>  requestFrom = new HashSet<User>();
+    private Set<FriendRequest> friendRequestsSent;
+
+    @OneToMany(mappedBy = "userB")
+    @JsonIgnore
+    private Set<FriendRequest> friendRequestsReceived;
+
+
+    // =============================== Constructors ================================== //
 
 
     public User(String name, String password, Role role) {
@@ -81,7 +103,6 @@ public class User {
         this.joiningDate = new Date(System.currentTimeMillis());
         this.lastSeen = this.joiningDate;
         this.role = role;
-
     }
 
     public User(String name, String password) {
@@ -101,23 +122,21 @@ public class User {
         this.joiningDate = new Date(System.currentTimeMillis());
         this.lastSeen = this.joiningDate;
         this.role = Role.VIEWER;
-
     }
 
 
-    
     // =============================== Getters and Setters for each field ================================== //
 
 
-    public int getId(){
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id){
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
@@ -129,52 +148,98 @@ public class User {
         this.password = password;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public Date getJoiningDate(){
+    public Date getJoiningDate() {
         return joiningDate;
     }
 
-    public boolean[] getAvailability() {
+    public Availability getAvailability() {
         return availability;
     }
 
-    public void setAvailability(boolean[] availability) {
+    public void setAvailability(Availability availability) {
         this.availability = availability;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Date getLastSeen() {
+        return lastSeen;
+    }
+
+    public void setLastSeen(Date lastSeen) {
+        this.lastSeen = lastSeen;
     }
 
     public Role getRole() {
         return role;
     }
+
     public void setRole(Role role) {
         this.role = role;
     }
 
-
-
     public Set<User> getFriends() {
+        Set<User> friends = new HashSet<User>();
+        friends.addAll(friendsA);
+        friends.addAll(friendsB);
         return friends;
     }
-    public void setFriends(Set<User> friends) {
-        this.friends = friends;
-    }
-    public void addFriend(User friend){
-        friends.add(friend);
-    }
 
-
-
-    public Set<User> getFriendRequests() {
-        return friendRequest;
+    public void addFriend(FriendRequest friendRequest) {
+        if (name.equals(friendRequest.getUserA().getName())) {  // User is sending
+            friendsA.add(friendRequest.getUserB());
+        }
+        else {  // User is receiving
+            friendsB.add(friendRequest.getUserA());
+        }
     }
 
-    public boolean removeFriendRequest(User friend) {
-        return friendRequest.remove(friend);
+    public void removeFriend(User friend) {
+        friendsA.remove(friend);
+        friendsB.remove(friend);
     }
 
-    public Set<User> getRequestFrom(){
-        return requestFrom;
+    // Sent
+    public Set<FriendRequest> getFriendRequestsSent() {
+        return friendRequestsSent;
+    }
+
+    public void sendFriendRequest(FriendRequest friendRequest) {
+        friendRequestsSent.add(friendRequest);
+    }
+
+    public boolean removeFriendRequestSent(FriendRequest friendRequestSent) {
+        return friendRequestsSent.remove(friendRequestSent);
+    }
+
+    // Received
+    public Set<FriendRequest> getFriendRequestsReceived() {
+        return friendRequestsReceived;
+    }
+
+    public void receiveFriendRequest(FriendRequest friendRequest) {
+        friendRequestsReceived.add(friendRequest);
+    }
+
+    public boolean removeFriendRequestReceived(FriendRequest friendRequestReceived) {
+        return friendRequestsReceived.remove(friendRequestReceived);
+    }
+
+    public List<Integer> getMeetingParticipation() {
+        List<Integer> ids = new ArrayList<Integer>();
+        meetingParticipation.forEach(meeting -> {
+            ids.add(meeting.getId());
+        });
+        return ids;
+    }
+
+    public void addMeeting(Meeting meeting) {
+        this.meetingParticipation.add(meeting);
     }
 }

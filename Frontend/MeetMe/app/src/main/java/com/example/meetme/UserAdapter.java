@@ -1,13 +1,17 @@
 package com.example.meetme;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meetme.model.User;
+import com.example.meetme.ui.AddParticipantsPage;
+import com.example.meetme.ui.DashboardPage;
 
 import java.util.ArrayList;
 
@@ -19,7 +23,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     /**
      * ArrayList of User objects
      */
-    private ArrayList<User> users;
+    private ArrayList<String> users;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -30,6 +34,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
          * textView object
          */
         private final TextView textView;
+
 
         /**
          * constructor for new viewHolder
@@ -42,11 +47,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
 //                    finish();
+
+
                 }
             });
 
             textView = (TextView) view.findViewById(R.id.name);
+
         }
 
         /**
@@ -56,12 +65,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         public TextView getTextView() {
             return textView;
         }
+
     }
 
     /**
      * Initialize the dataset of the Adapter.
      */
-    public UserAdapter(ArrayList<User> users) {
+    public UserAdapter(ArrayList<String> users) {
         this.users = users;
     }
 
@@ -91,7 +101,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.getTextView().setText(users.get(position).getName());
+        viewHolder.getTextView().setText(users.get(position));
     }
 
     /**

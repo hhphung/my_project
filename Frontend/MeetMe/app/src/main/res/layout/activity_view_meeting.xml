@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ccc"
-    tools:context=".ViewMeetingPage">
+    tools:context=".ui.ViewMeetingPage">
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:text="Description" />
 
-            <EditText
+            <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="Date/Time" />
 
-            <EditText
+            <TextView
                 android:id="@+id/dateTime"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:text="Location" />
 
-            <EditText
+            <TextView
                 android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -106,6 +106,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
+            <Button
+                android:id="@+id/chatBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chat" />
+
         </LinearLayout>
     </ScrollView>
 
@@ -122,7 +128,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/meeting_name_title_view"
         android:layout_width="297dp"
         android:layout_height="61dp"
         android:layout_marginBottom="2dp"
