@@ -9,26 +9,26 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 @RunWith(RobolectricTestRunner.class)
-public class ChatTests {
+public class AddParticipantTests {
 
-    //private ChatPage activity;
+    //private AddParticipantPage activity;
 
 //    @Before
 //    public void setUp() {
 //        //Test
-//        activity = Robolectric.buildActivity(ChatPage.class)
+//        activity = Robolectric.buildActivity(AddParticipantPage.class)
 //                .create()
 //                .resume()
 //                .get();
 //    }
 
     @Test
-    public void isVisible(){
+    public void searchUsers(){
 
     }
 
     @Test
-    public void doesNotSend()
+    public void searchSpecificUser()
     {
         
     }
