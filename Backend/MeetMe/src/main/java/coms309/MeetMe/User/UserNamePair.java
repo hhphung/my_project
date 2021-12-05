@@ -3,7 +3,7 @@ package coms309.MeetMe.User;
 public class UserNamePair {
   private String userNameA, userNameB;
 
-  UserNamePair(String userNameA, String userNameB) {
+  public UserNamePair(String userNameA, String userNameB) {
       this.userNameA = userNameA;
       this.userNameB = userNameB;
   }

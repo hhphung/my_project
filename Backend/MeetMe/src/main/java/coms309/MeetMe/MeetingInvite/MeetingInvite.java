@@ -27,6 +27,7 @@ public class MeetingInvite {
     @JsonIgnore
     @JoinColumn(name = "meeting")
     private Meeting meeting;
+    
 
     @Column(nullable = false)
     private Date created;

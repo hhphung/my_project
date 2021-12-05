@@ -40,7 +40,7 @@ public class MeetingController {
     }
 
     @GetMapping(value = "/name/{name}", produces = "application/json")
-    MeetingShadow getUserByName(@PathVariable String name) {
+    public MeetingShadow getUserByName(@PathVariable String name) {
         return new MeetingShadow(meetingRepository.findByName(name));
     }
 
@@ -48,6 +48,8 @@ public class MeetingController {
     List<MeetingShadow> getSearch(@PathVariable String name) {
         return MeetingShadow.build(meetingRepository.findBySearch(name));
     }
+
+
 
     @PostMapping(value = "/", produces = "application/json")
     String createMeeting(@RequestBody MeetingParams meetingParams) {
@@ -75,6 +77,8 @@ public class MeetingController {
         meetingRepository.save(meeting);
         return Stringy.success();
     }
+
+
 
     @DeleteMapping(value = "/id/{id}")
     String deleteMeeting(@PathVariable int id) {

@@ -9,10 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.*;
 
 import coms309.MeetMe.User.User;
 import coms309.MeetMe.User.UserShadow;
+
+import lombok.Data;
 
 
 @Entity
@@ -48,7 +51,7 @@ public class Meeting {
     private User admin;
 
     // Users currently allowed in the meeting
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     // @JoinColumn(nullable = true)
     @JsonIgnore
     Set<User> userParticipants;
@@ -165,6 +168,7 @@ public class Meeting {
     public String getDescription() {
         return description;
     }
+
 
     public List<String> getUserParticipants() {
         List<String> ids = new ArrayList<String>();

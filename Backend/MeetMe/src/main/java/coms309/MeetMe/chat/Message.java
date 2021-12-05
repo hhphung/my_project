@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.User.User;
 import lombok.Data;
 
@@ -17,9 +18,13 @@ public class Message {
     @Column(nullable = false, unique = true)
     private int id;
 
-    @ManyToOne(targetEntity =   User.class)
+    @ManyToOne(targetEntity = User.class)
     @JsonIgnore
     private User user;
+
+    @ManyToOne(targetEntity =Meeting.class)
+    @JsonIgnore
+    private Meeting meeting;
 
 
     @NotNull
@@ -34,8 +39,9 @@ public class Message {
 
     public Message() {};
 
-    public Message(User user, String content) {
+    public Message(User user, Meeting meeting, String content) {
         this.user = user;
+        this.meeting = meeting;
         this.content = content;
     }
 
@@ -71,5 +77,11 @@ public class Message {
         this.sent = sent;
     }
 
+    public Meeting getMeeting() {
+        return meeting;
+    }
 
+    public void setMeeting(Meeting meeting) {
+        this.meeting = meeting;
+    }
 }
