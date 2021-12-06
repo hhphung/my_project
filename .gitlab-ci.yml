@@ -2,7 +2,6 @@
 stages:
   rules:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
-
   - mavenbuild
   - maventest
   - androidbuild
