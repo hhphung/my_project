@@ -44,7 +44,7 @@ public class Availability {
         if (start == -1 || end == -1){
             return false;
         }
-        for (int i = start; i <= end; i++){
+        for (int i = start; i < end; i++){
             if (!hours.get(i)){
                 return false;
             }
