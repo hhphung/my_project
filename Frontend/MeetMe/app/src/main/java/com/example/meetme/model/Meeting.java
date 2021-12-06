@@ -35,11 +35,6 @@ public class Meeting {
     @Expose
     private Location location;
 
-    @SerializedName("duration")
-    @Expose
-    private int duration;
-
-
     @SerializedName("error")
     private String error;
 

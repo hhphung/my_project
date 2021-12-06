@@ -108,8 +108,8 @@ public class MeetingShadow {
         try {
             LocalDateTime d = LocalDateTime.of(Integer.parseInt(dateTime.substring(0, 4)),
                     Integer.parseInt(dateTime.substring(5, 7)),
-                    Integer.parseInt(dateTime.substring(8, 11)),
-                    Integer.parseInt(dateTime.substring(12, 14)),
+                    Integer.parseInt(dateTime.substring(8, 10)),
+                    Integer.parseInt(dateTime.substring(11, 13)),
                     0);
 
             DayOfWeek mDay = d.getDayOfWeek();

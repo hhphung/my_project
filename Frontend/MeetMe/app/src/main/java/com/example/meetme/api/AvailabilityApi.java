@@ -22,7 +22,7 @@ public interface AvailabilityApi {
      */
     @Headers("Content-type: application/json")
     @POST("/availability/")
-    Call<List<Boolean>> sendAvailability(@Body Availability availability);
+    Call<Availability> sendAvailability(@Body Availability availability);
 
     @Headers("Content-type: application/json")
     @GET("/availability/username/{name}")
