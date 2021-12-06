@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import coms309.MeetMe.Stringy.Stringy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +14,10 @@ import coms309.MeetMe.Location.Location;
 import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Meeting.MeetingRepository;
 import coms309.MeetMe.MeetingInvite.MeetingInvite;
+import coms309.MeetMe.MeetingInvite.MeetingInviteController;
 import coms309.MeetMe.MeetingInvite.MeetingInviteRepository;
+import coms309.MeetMe.MeetingInvite.MeetingInviteState;
+import coms309.MeetMe.MeetingRequest.UserMeetingNamePair;
 import coms309.MeetMe.User.Role;
 import coms309.MeetMe.User.User;
 import coms309.MeetMe.chat.Message;
@@ -29,6 +33,9 @@ public class meetingTest {
     MeetingRepository meet;
     @Mock
     MeetingInviteRepository invite;
+
+    @Mock
+    MeetingInviteController inviteController;
 
     @Before
     public void init() {
@@ -115,6 +122,58 @@ public class meetingTest {
         assertEquals(2, acctList.size());
         verify(invite, times(1)).findAll();
     }
+
+    @Test
+    public void getMeetInvitesByUserName(){
+        Location loc = new Location("street", "city", "state", 12345, "country");
+        User acctOne = new User("hoiproa0", "hoiproa0", Role.ADMIN);
+        Meeting one = new Meeting(acctOne, "first1", "ahahaha", "0000", 1, loc);
+        User acctTwo = new User("hoiprao1", "hoiprao1", Role.ADMIN);
+        MeetingInvite temp = new MeetingInvite(acctTwo, one, MeetingInviteState.PENDING);
+        List<MeetingInvite> list = new ArrayList<>();
+        list.add(temp);
+        UserMeetingNamePair x = new  UserMeetingNamePair(acctTwo.getName(), one.getName());
+        when(inviteController.getByUsername(acctTwo.getName())).thenReturn(list);
+        List<MeetingInvite> acctList = inviteController.getByUsername(acctTwo.getName());
+        assertEquals(1, acctList.size());
+        verify(inviteController, times(1)).getByUsername(acctTwo.getName());
+
+    }
+
+
+    @Test
+    public void postMeetInvites(){
+        Location loc = new Location("street", "city", "state", 12345, "country");
+        User acctOne = new User("hoiproa0", "hoiproa0", Role.ADMIN);
+        Meeting one = new Meeting(acctOne, "first1", "ahahaha", "0000", 1, loc);
+        User acctTwo = new User("hoiprao1", "hoiprao1", Role.ADMIN);
+        MeetingInvite temp = new MeetingInvite(acctTwo, one, MeetingInviteState.PENDING);
+        List<MeetingInvite> list = new ArrayList<>();
+        list.add(temp);
+        UserMeetingNamePair x = new  UserMeetingNamePair(acctTwo.getName(), one.getName());
+        when(inviteController.sendMeetingInvite(x)).thenReturn(Stringy.success());
+       String acctList = inviteController.sendMeetingInvite(x);
+        assertEquals(Stringy.success(), acctList);
+
+    }
+
+    @Test
+    public void acceptMeetInvites(){
+        Location loc = new Location("street", "city", "state", 12345, "country");
+        User acctOne = new User("hoiproa0", "hoiproa0", Role.ADMIN);
+        Meeting one = new Meeting(acctOne, "first1", "ahahaha", "0000", 1, loc);
+        User acctTwo = new User("hoiprao1", "hoiprao1", Role.ADMIN);
+        MeetingInvite temp = new MeetingInvite(acctTwo, one, MeetingInviteState.PENDING);
+        List<MeetingInvite> list = new ArrayList<>();
+        list.add(temp);
+        UserMeetingNamePair x = new  UserMeetingNamePair(acctTwo.getName(), one.getName());
+        when(inviteController.acceptMeetingInviteNames(x)).thenReturn(Stringy.success());
+        String acctList = inviteController.acceptMeetingInviteNames(x);
+        assertEquals(Stringy.success(), acctList);
+
+    }
+
+
 
 
 }

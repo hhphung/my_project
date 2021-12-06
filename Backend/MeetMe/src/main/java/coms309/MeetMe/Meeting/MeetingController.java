@@ -2,7 +2,6 @@ package coms309.MeetMe.Meeting;
 
 import coms309.MeetMe.Availability.Availability;
 import coms309.MeetMe.Availability.AvailabilityRepository;
-import coms309.MeetMe.Location.Location;
 import coms309.MeetMe.Stringy.Stringy;
 
 import org.springframework.beans.factory.annotation.Autowired;

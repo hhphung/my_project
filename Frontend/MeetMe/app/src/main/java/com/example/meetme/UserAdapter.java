@@ -1,5 +1,6 @@
 package com.example.meetme;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.meetme.model.User;
 import com.example.meetme.ui.AddParticipantsPage;
 import com.example.meetme.ui.DashboardPage;
+import com.example.meetme.ui.friendProfilepage;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
      * ArrayList of User objects
      */
     private ArrayList<String> users;
+
+    Context context;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -47,10 +51,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Intent myIntent = new Intent(view.getContext(), friendProfilepage.class);
+                    myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    myIntent.putExtra("friendname", textView.getText().toString());
 
-//                    finish();
-
-
+                    view.getContext().startActivity(myIntent);
                 }
             });
 
