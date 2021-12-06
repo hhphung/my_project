@@ -115,7 +115,7 @@ public class CreateMeetingPage extends AppCompatActivity {
 
                 String participants[] = participantList.getText().toString().split(", ");
 
-                int mDuration = 1;
+                int mDuration = meetingDurationInput.getSelectedItemPosition() + 1;
                 PostMeeting(mTitle, mDesc, mTime, mDate, mLocation, participants, mDuration);
 
             }
@@ -181,8 +181,8 @@ public class CreateMeetingPage extends AppCompatActivity {
             int month = Integer.parseInt(mDate.substring(0,2));
             int day = Integer.parseInt(mDate.substring(3,5));
 
-            int hour = Integer.parseInt(mTime.substring(0,2));
-            int min = Integer.parseInt(mTime.substring(mTime.length()-2));
+            int hour = Integer.parseInt(mTime.split(":")[0]);
+            int min = Integer.parseInt(mTime.split(":")[1]);
 
 
             LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, 0);
@@ -206,7 +206,7 @@ public class CreateMeetingPage extends AppCompatActivity {
             finish();
         }
         catch (NumberFormatException e){
-            errorMsg.setText("Please enter a valid, numeric zip code");
+            errorMsg.setText(e.getMessage()/*"Please enter a valid, numeric zip code"*/);
             if (errorMsg.getVisibility() == View.INVISIBLE) {
                 errorMsg.setVisibility(View.VISIBLE);
             }

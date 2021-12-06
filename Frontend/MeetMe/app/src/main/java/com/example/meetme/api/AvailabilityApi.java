@@ -26,5 +26,5 @@ public interface AvailabilityApi {
 
     @Headers("Content-type: application/json")
     @GET("/availability/username/{name}")
-    Call<List<Boolean>> getAvailability(@Path(value = "name")String username);
+    Call<Availability> getAvailability(@Path(value = "name")String username);
 }

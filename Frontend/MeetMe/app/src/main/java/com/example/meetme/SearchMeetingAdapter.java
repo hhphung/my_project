@@ -151,9 +151,8 @@ public class SearchMeetingAdapter extends RecyclerView.Adapter<SearchMeetingAdap
         //get username of current client
         final String username = globalVariable.getName();
 
-        GetAvailabilityApi().getAvailability(username).enqueue(new SlimCallback<List<Boolean>>(availability ->{
-            Availability a = new Availability(username, (Boolean[]) availability.toArray(new Boolean[168]));
-            if (a.isAvailableDuringRange(startEndTimes[0], startEndTimes[1])){
+        GetAvailabilityApi().getAvailability(username).enqueue(new SlimCallback<Availability>(availability ->{
+            if (availability.isAvailableDuringRange(startEndTimes[0], startEndTimes[1])){
                 viewHolder.getImageView().setImageDrawable(correct);
             }
             else{

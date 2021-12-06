@@ -62,7 +62,7 @@ public class ChatPage extends AppCompatActivity {
         bDisconnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mWebSocketClient.close();
+                //mWebSocketClient.close();
                 finish();
             }
         });
@@ -72,11 +72,15 @@ public class ChatPage extends AppCompatActivity {
             public void onClick(View v) {
                 // Get the message from the input
                 String message = mInput.getText().toString();
-
                 // If the message is not empty, send the message
                 if(message != null && message.length() > 0){
-                    mWebSocketClient.send(message);
-                    mInput.setText("");
+                    try {
+                        mWebSocketClient.send(message);
+                        mInput.setText("");
+                    }
+                    catch(Exception e){
+                        mOutput.setText(e.getMessage());
+                    }
                 }
             }
         });
@@ -96,11 +100,11 @@ public class ChatPage extends AppCompatActivity {
         //get username of current client
         final String username = globalVariable.getName();
 
-        final String mTitle = globalVariable.getMeetingName();
+        String mTitle = globalVariable.getMeetingName();
 
         try {
-           
-            uri = new URI("ws://coms-309-017.cs.iastate.edu:8080/chat/" + mTitle +"/"+ username);
+           mTitle = mTitle.replace(" ", "_");
+           uri = new URI("ws://coms-309-017.cs.iastate.edu:8080/chat/" + mTitle +"/"+ username);
 
         } catch (URISyntaxException e) {
             e.printStackTrace();
