@@ -17,11 +17,11 @@ public class MeetingInvite {
     @Expose
     private Date created;
 
-    @SerializedName("meetName")
+    @SerializedName("meetname")
     @Expose
     private String meeting;
 
-    @SerializedName("userName")
+    @SerializedName("sender")
     @Expose
     private String user;
 
