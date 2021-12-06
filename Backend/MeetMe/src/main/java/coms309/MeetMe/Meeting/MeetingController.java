@@ -13,7 +13,6 @@ import coms309.MeetMe.User.User;
 import coms309.MeetMe.User.UserRepository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -74,6 +73,8 @@ public class MeetingController {
 
         // Assemble location and meeting and save to database
         Meeting meeting = new Meeting(findAdmin, meetingParams.name, meetingParams.desc, meetingParams.dateTime, meetingParams.duration, meetingParams.loc);
+        findAdmin.addMeeting(meeting);
+        userRepository.save(findAdmin);
         meetingRepository.save(meeting);
         return Stringy.success();
     }
@@ -170,7 +171,6 @@ public class MeetingController {
             // Swap the found minimum element with the first
             // element
 
-            int tp = max;
             result.set(i, max);
             result.set(index, value);
 
@@ -189,40 +189,4 @@ public class MeetingController {
 
 
 
-}
-
-
-/**
- * Holds parameters that will be passed into POST meeting. 
- * @dateTime: 2007-12-03T10:15:30 format
- */
-class MeetingParams {
-
-    public String name, adminName, desc, dateTime;
-    public Location loc;
-    public int duration;
-    
-    public MeetingParams(String name, String adminName, String desc, String dateTime, int duration, String street, String city, String state, int zipcode, String country) {
-        System.out.println("Meeting created: \n name:" + name + 
-                            "\n adminName: " + adminName + 
-                            "\n desc:" + desc + 
-                            "\n desc: " + dateTime + 
-                            "\n desc: " + duration + 
-                            "\n loc: " + street + ", " + city + ", " + state + ", " + zipcode+ ", " + country);
-
-        this.name = name;
-        this.adminName = adminName;
-        this.desc = desc;
-        this.dateTime = dateTime;
-        this.duration = duration;
-        this.loc = new Location(street, city, state, zipcode, country);
-    }
-
-    public boolean isValid() {
-        return  name != null && 
-                adminName != null &&
-                desc != null &&
-                dateTime != null &&
-                loc != null;
-    }
 }

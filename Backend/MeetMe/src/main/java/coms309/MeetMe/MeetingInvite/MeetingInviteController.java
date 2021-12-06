@@ -45,7 +45,6 @@ public class MeetingInviteController {
     MeetingInvite getById(@PathVariable int id) {
         return meetingInviteRepository.findById(id);
     }
-    
 
     // get by user id or name
     @GetMapping(value = "/userid/{id}", produces = "application/json")

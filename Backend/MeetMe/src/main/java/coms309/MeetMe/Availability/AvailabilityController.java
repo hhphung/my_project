@@ -22,13 +22,14 @@ public class AvailabilityController {
 
 
     @GetMapping(value = "/", produces = "application/json")
-    public List<boolean[]> getAllAvalibility() {
+    public List<AvailabilityInput> getAllAvalibility() {
+
         List<Availability> avail = availabilityRepository.findAll();
-        List<boolean[]> reducedAva = new ArrayList<boolean[]>();
-        System.out.println(avail.size());
+        
+        List<AvailabilityInput> reducedAva = new ArrayList<AvailabilityInput>();
+        
         avail.forEach(ava -> {
-            System.out.println(ava.getHours() + " - " + ava.getUser().getName());
-            reducedAva.add(ava.getHours());
+            reducedAva.add(new AvailabilityInput(ava));
         });
 
         return reducedAva;
@@ -36,35 +37,35 @@ public class AvailabilityController {
 
 
     @GetMapping(value = "/id/{id}", produces = "application/json")
-    public boolean[] getAvailabilityByID (@PathVariable int id) {
+    public AvailabilityInput getAvailabilityByID (@PathVariable int id) {
         Availability avail = availabilityRepository.findById(id);
         if (avail == null) return null;
-        return avail.getHours();
+        return new AvailabilityInput(avail);
     }
 
 
     @GetMapping(value = "/userid/{id}", produces = "application/json")
-    public boolean[] getAvalibilityByUserID(@PathVariable int id) {
+    public AvailabilityInput getAvalibilityByUserID(@PathVariable int id) {
         Availability avail = availabilityRepository.findByUserID(id);
         if (avail == null) return null;
-        return avail.getHours();
+        return new AvailabilityInput(avail);
     }
 
 
     @GetMapping(value = "/username/{name}", produces = "application/json")
-    public boolean[] getUserAvailibilityName(@PathVariable String name) {
+    public AvailabilityInput getUserAvailibilityName(@PathVariable String name) {
         User user = userRepository.findByName(name);
         if (user == null) return null;
         Availability avail = availabilityRepository.findByUserID(user.getId());
         if (avail == null) return null;
-        return avail.getHours();
+        return new AvailabilityInput(avail);
     }
 
 
     @PostMapping(value = "/", produces = "application/json")
     public String setAvailability(@RequestBody AvailabilityInput input) {
         
-        if (input == null || input.isInvalid()) return Stringy.error("Availability is invalid");
+        if (input == null || input.getHours() == null || input.getName() == null) return Stringy.error("Availability is invalid");
     
         User user = userRepository.findByName(input.getName());
 

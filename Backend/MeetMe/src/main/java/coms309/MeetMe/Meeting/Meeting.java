@@ -9,13 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.util.*;
 
 import coms309.MeetMe.User.User;
-import coms309.MeetMe.User.UserShadow;
-
-import lombok.Data;
 
 
 @Entity
@@ -23,8 +19,8 @@ public class Meeting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private int id;
+    @Column(nullable = false, unique = true)
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -66,18 +62,6 @@ public class Meeting {
     @JsonIgnore
     Set<MeetingInvite> meetingInvites;
 
-    // // Users who requested to join the meeting but have not been accepted yet
-    // @ManyToMany
-    // // @JoinColumn(nullable = true)
-    // @JsonIgnore
-    // List<User> userRequests;
-
-    // Users who were invited to the meeting but have not accepted yet
-    // @ManyToMany
-    // // @JoinColumn(nullable = true)
-    // @JsonIgnore
-    // List<User> userInvites;
-
 
     // =============================== Constructors ================================== //
 
@@ -117,8 +101,12 @@ public class Meeting {
 
     // =============================== Getters and Setters for each field ================================== //
 
-    public int getId() {
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -171,11 +159,11 @@ public class Meeting {
 
 
     public List<String> getUserParticipants() {
-        List<String> ids = new ArrayList<String>();
+        List<String> names = new ArrayList<String>();
         userParticipants.forEach(user -> {
-            ids.add(user.getName());
+            names.add(user.getName());
         });
-        return ids;
+        return names;
     }
 
     public void addUser(User user) {

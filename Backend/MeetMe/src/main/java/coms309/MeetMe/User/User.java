@@ -230,10 +230,10 @@ public class User {
         return friendRequestsReceived.remove(friendRequestReceived);
     }
 
-    public List<Integer> getMeetingParticipation() {
-        List<Integer> ids = new ArrayList<Integer>();
+    public List<String> getMeetingParticipation() {
+        List<String> ids = new ArrayList<String>();
         meetingParticipation.forEach(meeting -> {
-            ids.add(meeting.getId());
+            ids.add(meeting.getName());
         });
         return ids;
     }

@@ -26,17 +26,31 @@ curl -d '{"name": "Admin1", "password": "arst", "role": "ADMIN"}' -H 'Content-Ty
 curl -d '{"name": "Admin2", "password": "arst", "role": "ADMIN"}' -H 'Content-Type: application/json' "$url/user/"
 curl -d '{"name": "Admin3", "password": "arst", "role": "ADMIN"}' -H 'Content-Type: application/json' "$url/user/"
 
+
 curl -d '{"name": "Meeting1", "adminName": "Admin1", "desc": "empty",
-"dateTime": "", "street": "1234", "city": "Ames", "state": "IA",
-"zipcode": 55555, "country": "USA"}' -H 'Content-Type: application/json' "$url/meeting/"
+"dateTime": "", "location": { "street": "1234", "city": "Ames", "state": "IA",
+"zipcode": 55555, "country": "USA" }}' -H 'Content-Type: application/json' "$url/meeting/"
 
-curl -d '{"name": "Meeting2", "adminName": "Admin2", "desc": "empty",
-"dateTime": "", "street": "1234", "city": "Ames", "state": "IA",
-"zipcode": 55555, "country": "USA"}' -H 'Content-Type: application/json' "$url/meeting/"
+curl -d '{"name": "Meeting2", "adminName": "Admin1", "desc": "empty",
+"dateTime": "", "location": { "street": "1234", "city": "Ames", "state": "IA",
+"zipcode": 55555, "country": "USA" }}' -H 'Content-Type: application/json' "$url/meeting/"
 
-curl -d '{"name": "Meeting3", "adminName": "Admin3", "desc": "empty",
-"dateTime": "", "street": "1234", "city": "Ames", "state": "IA",
-"zipcode": 55555, "country": "USA"}' -H 'Content-Type: application/json' "$url/meeting/"
+curl -d '{"name": "Meeting3", "adminName": "Admin1", "desc": "empty",
+"dateTime": "", "location": { "street": "1234", "city": "Ames", "state": "IA",
+"zipcode": 55555, "country": "USA" }}' -H 'Content-Type: application/json' "$url/meeting/"
+
+
+# curl -d '{"name": "Meeting1", "adminName": "Admin1", "desc": "empty",
+# "dateTime": "", "street": "1234", "city": "Ames", "state": "IA",
+# "zipcode": 55555, "country": "USA"}' -H 'Content-Type: application/json' "$url/meeting/"
+
+# curl -d '{"name": "Meeting2", "adminName": "Admin2", "desc": "empty",
+# "dateTime": "", "street": "1234", "city": "Ames", "state": "IA",
+# "zipcode": 55555, "country": "USA"}' -H 'Content-Type: application/json' "$url/meeting/"
+
+# curl -d '{"name": "Meeting3", "adminName": "Admin3", "desc": "empty",
+# "dateTime": "", "street": "1234", "city": "Ames", "state": "IA",
+# "zipcode": 55555, "country": "USA"}' -H 'Content-Type: application/json' "$url/meeting/"
 
 curl -d '{"userName": "Max", "meetingName": "Meeting1"}' -H 'Content-Type: application/json' "$url/meetingRequest/sendMeetingRequest"
 curl -d '{"userName": "Max", "meetingName": "Meeting1"}' -H 'Content-Type: application/json' "$url/meetingRequest/acceptMeetingRequestNames"

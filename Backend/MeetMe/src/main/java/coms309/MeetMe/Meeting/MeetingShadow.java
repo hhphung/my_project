@@ -63,7 +63,7 @@ public class MeetingShadow {
 
     // =============================== Getters and Setters for each field ================================== //
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

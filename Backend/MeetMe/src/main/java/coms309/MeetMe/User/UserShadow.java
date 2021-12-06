@@ -16,7 +16,7 @@ public class UserShadow {
     private Date lastSeen;
     private Role role;
 
-    private List<Integer> meetingParticipation;
+    private List<String> meetingParticipation;
     private List<String> friends;
 
     public UserShadow() {
@@ -78,7 +78,7 @@ public class UserShadow {
         return role;
     }
 
-    public List<Integer> getMeetingParticipation() {
+    public List<String> getMeetingParticipation() {
         return meetingParticipation;
     }
 
