@@ -18,6 +18,8 @@ public class MeetingInvite {
     @Column(nullable = false, unique = true)
     private Integer id;
 
+
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "user")
@@ -27,18 +29,23 @@ public class MeetingInvite {
     @JsonIgnore
     @JoinColumn(name = "meeting")
     private Meeting meeting;
-    
 
     @Column(nullable = false)
     private Date created;
+
+    @Column(nullable = false)
+    private String userName;
+
+    @Column(nullable = false)
+    private String meetName;
 
     @Enumerated(EnumType.STRING)
     private MeetingInviteState state;
 
 
     // =============================== Constructors ================================== //
-    
-    
+
+
     public MeetingInvite() {
         this.state = MeetingInviteState.PENDING;
         this.created = new Date(System.currentTimeMillis());
@@ -49,6 +56,8 @@ public class MeetingInvite {
         this.meeting = meeting;
         this.state = MeetingInviteState.PENDING;
         this.created = new Date(System.currentTimeMillis());
+        this.userName = user.getName();
+        this.meetName = meeting.getName();
     }
 
     public MeetingInvite(User user, Meeting meeting, MeetingInviteState state) {
@@ -56,6 +65,8 @@ public class MeetingInvite {
         this.meeting = meeting;
         this.state = state;
         this.created = new Date(System.currentTimeMillis());
+        this.userName = user.getName();
+        this.meetName = meeting.getName();
     }
 
 
@@ -72,14 +83,6 @@ public class MeetingInvite {
 
     public Meeting getMeeting() {
         return meeting;
-    }
-
-    public String getUserName() {
-        return user.getName();
-    }
-
-    public String getMeetingName() {
-        return meeting.getName();
     }
 
     public MeetingInviteState getState() {
@@ -101,5 +104,22 @@ public class MeetingInvite {
     public void reset() {
         created = new Date(System.currentTimeMillis());
         state = MeetingInviteState.PENDING;
+    }
+
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getMeetName() {
+        return meetName;
+    }
+
+    public void setMeetName(String meetName) {
+        this.meetName = meetName;
     }
 }
