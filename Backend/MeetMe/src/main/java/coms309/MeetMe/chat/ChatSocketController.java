@@ -78,16 +78,8 @@ public class ChatSocketController {
     public void onOpen(Session session, @PathParam("username") String username,@PathParam("meetname") String meetname)
             throws IOException {
 
-        String t =  meetname.replace("_", " ");
-
-
-
-        int i = 0;
         user = userRepository.findByName(username);
-        meet  = meetingRepository.findByName(t);
-        if(user == null){
-
-        }
+        meet  = meetingRepository.findByName(meetname.replace('_', ' '));
 
         if(meet.getUserParticipants().contains(username)){
             valid = true;
