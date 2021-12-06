@@ -133,7 +133,6 @@ public class MeetingController {
     @GetMapping(value = "/commonAvailability/")
   public CommonAvailability getCommonAvailability(){
 
-
         int [] list = new int [168];
         List<Availability>  avaList = avaRepository.findAll();
         boolean temp = false;
