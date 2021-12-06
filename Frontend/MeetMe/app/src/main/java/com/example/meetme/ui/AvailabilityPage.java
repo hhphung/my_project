@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 import com.example.meetme.model.Meeting;
 import com.example.meetme.api.SlimCallback;
@@ -36,7 +37,8 @@ public class AvailabilityPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_availability_page);
-        username = getIntent().getStringExtra("username");
+        GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+        username = globalVariable.getName();
         confirm = (Button) findViewById(R.id.activity_availability_confirm);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +61,7 @@ public class AvailabilityPage extends AppCompatActivity {
          */
         DayAvailabilityFragment fragment =  (DayAvailabilityFragment) fm.findFragmentByTag("availabilityFragment");
         if (fragment.confirmDayAvailability()){
-            //Go to dashboard
+            confirm.setEnabled(false);
         }
         else{
             currentDay++;

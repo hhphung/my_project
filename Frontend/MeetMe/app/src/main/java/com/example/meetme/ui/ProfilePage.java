@@ -75,7 +75,6 @@ public class ProfilePage extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), AvailabilityPage.class);
-                myIntent.putExtra("username", username);
                 startActivity(myIntent);
             }
         });
