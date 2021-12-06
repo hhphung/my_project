@@ -91,8 +91,10 @@ public class MeetingInvitesPage extends AppCompatActivity {
 
 
                 TextView content = new TextView(temp);
-
-                String meetingName = x.getMeeting().substring(0,9);
+                String meetingName = x.getMeeting();
+                if(meetingName.length() > 10) {
+                    meetingName = x.getMeeting().substring(0, 9);
+                }
                 if (meetingName.length() < x.getMeeting().length()){
                     meetingName = meetingName.substring(0,6) + "...";
                 }
