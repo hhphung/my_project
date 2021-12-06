@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,9 +63,20 @@ public class DashboardPage extends BaseActivity {
         GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<MeetingShadow>>(meetings->
         {
             recyclerView = findViewById(R.id.recyclerViewMeeting);
+            ArrayList<MeetingShadow> allMeetings = new ArrayList<MeetingShadow>(meetings);
+            ArrayList<MeetingShadow> participatingMeetings = new ArrayList<MeetingShadow>();
 
+            Log.d("Username is: ", username);
+            for (MeetingShadow m: allMeetings){
+                for (String participant : m.getUserParticipants()){
+                    Log.d("Participants for : " + m.getName(), ": " + participant);
+                    if (participant.equals(username)){
+                        participatingMeetings.add(m);
+                    }
+                }
+            }
 
-            DashboardMeetingAdapter dashboardMeetingAdapter = new DashboardMeetingAdapter(getApplicationContext(), new ArrayList<MeetingShadow>(meetings));
+            DashboardMeetingAdapter dashboardMeetingAdapter = new DashboardMeetingAdapter(getApplicationContext(), participatingMeetings );
 
             recyclerView.setAdapter(dashboardMeetingAdapter);
 
@@ -79,6 +91,34 @@ public class DashboardPage extends BaseActivity {
                 Toast.makeText(getApplicationContext(),"Notifications ready for " + username, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<MeetingShadow>>(meetings->
+        {
+            recyclerView = findViewById(R.id.recyclerViewMeeting);
+            ArrayList<MeetingShadow> allMeetings = new ArrayList<MeetingShadow>(meetings);
+            ArrayList<MeetingShadow> participatingMeetings = new ArrayList<MeetingShadow>();
+
+            Log.d("Username is: ", username);
+            for (MeetingShadow m: allMeetings){
+                for (String participant : m.getUserParticipants()){
+                    Log.d("Participants for : " + m.getName(), ": " + participant);
+                    if (participant.equals(username)){
+                        participatingMeetings.add(m);
+                    }
+                }
+            }
+
+            DashboardMeetingAdapter dashboardMeetingAdapter = new DashboardMeetingAdapter(getApplicationContext(), participatingMeetings );
+
+            recyclerView.setAdapter(dashboardMeetingAdapter);
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        }));
     }
 
 

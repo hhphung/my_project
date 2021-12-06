@@ -86,4 +86,8 @@ public interface UserApi {
     @POST ("/user/acceptFriendRequestNames")
     Call<String> acceptFriendRequestNames(@Body UserNamePair user);
 
+    //Sends a friend request from A to B
+    @POST ("/user/sendFriendRequest")
+    Call<UserNamePair> sendFriendRequest(@Body UserNamePair u);
+
 }

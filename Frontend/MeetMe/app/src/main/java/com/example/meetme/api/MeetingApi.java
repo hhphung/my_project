@@ -32,7 +32,7 @@ public interface MeetingApi {
     Call<MeetingShadow> getMeetingByName(@Path(value = "name") String name);
 
     @POST("/meetingInvite/sendMeetingInvite")
-    Call<String>  sendInvite(@Body UserMeetingNamePair pair);
+    Call<UserMeetingNamePair>  sendInvite(@Body UserMeetingNamePair pair);
 
     /**
      *

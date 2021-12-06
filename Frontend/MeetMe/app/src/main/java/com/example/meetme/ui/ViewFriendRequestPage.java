@@ -91,7 +91,7 @@ public class ViewFriendRequestPage extends AppCompatActivity {
                 request.setBackground(gradientDrawable);
 
 
-                ViewGroup.LayoutParams requests= new ViewGroup.LayoutParams(1000, 100);
+                ViewGroup.LayoutParams requests= new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
                 request.setLayoutParams(requests);
 
 
