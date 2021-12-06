@@ -1,10 +1,17 @@
 package com.example.meetme.model;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 public class Availability {
     /**
@@ -25,13 +32,28 @@ public class Availability {
         return username;
     }
 
-    public Availability(String username, Boolean[] hours){
+    public Availability(String username, Boolean[] hours) {
         this.username = username;
         this.hours = new ArrayList<Boolean>();
-        for (int i = 0; i < 168; i++){
+        for (int i = 0; i < 168; i++) {
             this.hours.add(hours[i]);
         }
     }
+
+    public boolean isAvailableDuringRange(int start, int end){
+        if (start == -1 || end == -1){
+            return false;
+        }
+        for (int i = start; i <= end; i++){
+            if (!hours.get(i)){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
 
     public void setUsername(String username) {
         this.username = username;
