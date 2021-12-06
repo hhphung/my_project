@@ -123,7 +123,7 @@ public class UserController {
 
         List<User> users = new ArrayList<User>();
         for (int i = 0; i < friendRequests.size(); i++) {
-            if (friendRequests.get(i).getState() == FriendRequestState.PENDING) continue;
+            if (friendRequests.get(i).getState() != FriendRequestState.PENDING) continue;
             users.add(friendRequests.get(i).getUserB());
         }
         return UserShadow.build(users);
@@ -140,7 +140,7 @@ public class UserController {
 
         List<User> users = new ArrayList<User>();
         for (int i = 0; i < friendRequests.size(); i++) {
-            if (friendRequests.get(i).getState() == FriendRequestState.PENDING) continue;
+            if (friendRequests.get(i).getState() != FriendRequestState.PENDING) continue;
             users.add(friendRequests.get(i).getUserA());
         }
         return UserShadow.build(users);
@@ -166,7 +166,7 @@ public class UserController {
         // Friend request already exists
         if (friendRequest != null) {
 
-            if (friendRequest.getState() == FriendRequestState.PENDING) return Stringy.error("Already sent");
+            if (friendRequest.getSendRequestState.PENDING) return Stringy.error("Already sent");
             
             friendRequest.reset();
         }
