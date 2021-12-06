@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
+import com.example.meetme.model.UserNamePair;
 import com.example.meetme.model.UserShadow;
 import com.example.meetme.ui.ProfilePage;
 
@@ -31,11 +33,28 @@ public class friendProfilepage extends AppCompatActivity {
         setContentView(R.layout.activity_friend_profilepage);
         Button back = findViewById(R.id.friendProfileBack);
         TextView friend = findViewById(R.id.friendProfileUsername);
-        String username = getIntent().getStringExtra("friendname");
-        GetUserApi().getUserByName(username).enqueue(new SlimCallback<UserShadow>(user ->{
-            friend.setText("Name: " + user.getName());
+        Button addFriend = findViewById(R.id.activity_friendProfile_addFriend);
+        String friendName = getIntent().getStringExtra("friendname");
+        TextView errorMsg = findViewById(R.id.activity_friendProfile_errorMsg);
+        GetUserApi().getUserByName(friendName).enqueue(new SlimCallback<UserShadow>(user ->{
+            friend.setText("User: " + user.getName());
         }));
-
+        GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+        String username = globalVariable.getName();
+        addFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserNamePair fRequest = new UserNamePair(username, friendName);
+                GetUserApi().sendFriendRequest(fRequest).enqueue(new SlimCallback<>(f ->{
+                    if (f.getMessage().equals("Success")){
+                        errorMsg.setText("Successfully sent a friend request!");
+                    }
+                    else{
+                        errorMsg.setText("Friend request failed: " + f.getReason());
+                    }
+                }));
+            }
+        });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,5 +62,12 @@ public class friendProfilepage extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        TextView errorMsg = findViewById(R.id.activity_friendProfile_errorMsg);
+        errorMsg.setText("");
     }
 }
