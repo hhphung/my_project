@@ -35,11 +35,6 @@ public class Meeting {
     @Expose
     private Location location;
 
-    @SerializedName("duration")
-    @Expose
-    private int duration;
-
-
     @SerializedName("error")
     private String error;
 
@@ -79,10 +74,12 @@ public class Meeting {
     public int[] getStartEndOfMeeting(){
         //2007-12-03T10:15:30
         try {
+
+            String dateTime = getDateTime();
             LocalDateTime d = LocalDateTime.of(Integer.parseInt(dateTime.substring(0, 4)),
                     Integer.parseInt(dateTime.substring(5, 7)),
-                    Integer.parseInt(dateTime.substring(8, 11)),
-                    Integer.parseInt(dateTime.substring(12, 14)),
+                    Integer.parseInt(dateTime.substring(8, 10)),
+                    Integer.parseInt(dateTime.substring(11, 13)),
                     0);
 
             DayOfWeek mDay = d.getDayOfWeek();

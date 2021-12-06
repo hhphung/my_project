@@ -2,6 +2,7 @@ package com.example.meetme.api;
 
 import com.example.meetme.model.Availability;
 import com.example.meetme.model.User;
+import com.example.meetme.model.UserNamePair;
 import com.example.meetme.model.UserShadow;
 
 import java.util.ArrayList;
@@ -76,5 +77,13 @@ public interface UserApi {
     @POST("user/changePassword")
     Call<User> changePassword(@Body User oldUser_newPass);
 
+    @GET("/user/{name}/friendRequestsReceived")
+    Call<List<User>> getFriendRequestsReceived(@Path(value = "name") String name);
+
+    @POST ("/user/rejectFriendRequestNames")
+    Call<String> rejectFriendRequestNames(@Body UserNamePair user);
+
+    @POST ("/user/acceptFriendRequestNames")
+    Call<String> acceptFriendRequestNames(@Body UserNamePair user);
 
 }

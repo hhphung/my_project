@@ -48,7 +48,8 @@ public class ProfilePage extends BaseActivity {
         LinearLayout friends = findViewById(R.id.friends);
         ScrollView friendsContainer = findViewById(R.id.friendsScrollView);
         LinearLayout passWordChange = findViewById(R.id.linearLayoutChangePassword);
-
+        Button toFriendRequests = findViewById(R.id.toFriendRequest);
+        Button toMeetingInvites = findViewById(R.id.toMeetingInvites);
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
 
         //get username of current client
@@ -75,7 +76,6 @@ public class ProfilePage extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), AvailabilityPage.class);
-                myIntent.putExtra("username", username);
                 startActivity(myIntent);
             }
         });
@@ -170,8 +170,23 @@ public class ProfilePage extends BaseActivity {
             }
         });
 
+        toFriendRequests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), ViewFriendRequestPage.class);
+                myIntent.putExtra("username", username);
+                startActivity(myIntent);
+            }
+        });
 
-
+        toMeetingInvites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), MeetingInvitesPage.class);
+                myIntent.putExtra("username", username);
+                startActivity(myIntent);
+            }
+        });
 
 
     }

@@ -20,9 +20,10 @@ Download the app from Google Play Store!
 
 
 ## Contributors 
+* ccannon1@iastate.edu
 * wrwilloz@iastate.edu
 * acrognes@iastate.edu
-* ...
+* hhphung@iastate.edu
 
 
 

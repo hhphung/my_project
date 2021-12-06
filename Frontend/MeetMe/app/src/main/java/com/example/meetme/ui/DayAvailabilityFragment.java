@@ -116,14 +116,14 @@ public class DayAvailabilityFragment extends Fragment {
             //TODO implement the post method here
             Availability a = new Availability(username, weeklyAvailability);
             GetAvailabilityApi().sendAvailability(a).enqueue(
-                    new SlimCallback<>(response -> {}
+                    new SlimCallback<>(response -> {
+                        Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
+                        startActivity(myIntent);
+                    }
             ));
-
-
-            Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
-            myIntent.putExtra("username", username);
-            startActivity(myIntent);
             return true;
+
+
         }
         return false;
     }
