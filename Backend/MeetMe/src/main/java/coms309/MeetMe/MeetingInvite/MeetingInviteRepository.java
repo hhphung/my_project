@@ -23,7 +23,7 @@ public interface MeetingInviteRepository extends JpaRepository<MeetingInvite, In
     @Query(value = "delete from meeting_invite where id = ?1", nativeQuery = true)
     void deleteById(int id);
 
-    @Query(value = "SELECT * FROM meeting_invite WHERE user = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM meeting_invite WHERE state = 'PENDING' and user = ?1", nativeQuery = true)
     List<MeetingInvite> findByUserId(int id);
 
     @Query(value = "SELECT * FROM meeting_invite WHERE state = 'PENDING' and user = ?1", nativeQuery = true)
