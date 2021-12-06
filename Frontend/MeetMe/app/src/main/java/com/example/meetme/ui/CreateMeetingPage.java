@@ -47,7 +47,13 @@ public class CreateMeetingPage extends AppCompatActivity {
 
     private MeetingApi m;
 
-
+    EditText meetingTitle_textbox;
+    EditText meetingDescription_textbox;
+    EditText meetingTime_textbox;
+    EditText meetingLocation_textbox;
+    EditText meetingDate_textbox;
+    Spinner meetingDurationInput;
+    TextView participantList;
     /**
      * Set up the page.
      * @param savedInstanceState
@@ -56,12 +62,12 @@ public class CreateMeetingPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
-        EditText meetingTitle_textbox = findViewById(R.id.activity_createMeeting_TitleInput);
-        EditText meetingDescription_textbox = findViewById(R.id.activity_createMeeting_DescriptionInput);
-        EditText meetingTime_textbox = findViewById(R.id.activity_createMeeting_timeInput);
-        EditText meetingLocation_textbox = findViewById(R.id.activity_createMeeting_LocationInput);
-        EditText meetingDate_textbox = findViewById(R.id.activity_createMeeting_dateInput);
-        Spinner meetingDurationInput = findViewById(R.id.activity_createMeeting_durationInput);
+        meetingTitle_textbox = findViewById(R.id.activity_createMeeting_TitleInput);
+        meetingDescription_textbox = findViewById(R.id.activity_createMeeting_DescriptionInput);
+        meetingTime_textbox = findViewById(R.id.activity_createMeeting_timeInput);
+        meetingLocation_textbox = findViewById(R.id.activity_createMeeting_LocationInput);
+        meetingDate_textbox = findViewById(R.id.activity_createMeeting_dateInput);
+        meetingDurationInput = findViewById(R.id.activity_createMeeting_durationInput);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.duration_options, android.R.layout.simple_spinner_item);
@@ -76,11 +82,7 @@ public class CreateMeetingPage extends AppCompatActivity {
         errorMsg = findViewById(R.id.activity_createMeeting_errorMsg);
         errorMsg.setText("");
 
-        TextView participantList = findViewById(R.id.activity_createMeeting_added_participants);
-
-        String participants = getIntent().getStringExtra("username list");
-
-        participantList.setText(participants);
+        participantList = findViewById(R.id.activity_createMeeting_added_participants);
 
         addparticipants.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +118,15 @@ public class CreateMeetingPage extends AppCompatActivity {
                 PostMeeting(mTitle, mDesc, mTime, mDate, mLocation, participants, mDuration);
             }
         });
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+        String participants = globalVariable.getUserParticipantsInMeeting();
+        participantList.setText(participants);
+
     }
 
 

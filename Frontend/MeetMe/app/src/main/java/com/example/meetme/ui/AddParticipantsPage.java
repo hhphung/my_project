@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
@@ -40,13 +41,13 @@ public class AddParticipantsPage extends AppCompatActivity {
         LinearLayout participants = findViewById(R.id.participants);
         Context temporaryContext = this;
 
+        GlobalClass globalVariable = (GlobalClass) getApplicationContext();
 
         toCreatePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), CreateMeetingPage.class);
-                myIntent.putExtra("username list", list.getText().toString());
-                startActivity(myIntent);
+                globalVariable.setUserParticipantsInMeeting(list.getText().toString());
+                finish();
             }
         });
 
