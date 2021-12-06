@@ -36,6 +36,12 @@ public class MeetingInvite {
     @Enumerated(EnumType.STRING)
     private MeetingInviteState state;
 
+    @Column(nullable = false)
+    private String sender;
+
+    @Column(nullable = false)
+    private String meetname;
+
 
     // =============================== Constructors ================================== //
 
@@ -50,6 +56,8 @@ public class MeetingInvite {
         this.meeting = meeting;
         this.state = MeetingInviteState.PENDING;
         this.created = new Date(System.currentTimeMillis());
+        this.meetname = meeting.getName();
+        this.sender  = meeting.getAdmin().getName();
     }
 
     public MeetingInvite(User user, Meeting meeting, MeetingInviteState state) {
@@ -57,6 +65,8 @@ public class MeetingInvite {
         this.meeting = meeting;
         this.state = state;
         this.created = new Date(System.currentTimeMillis());
+        this.meetname = meeting.getName();
+        this.sender  = meeting.getAdmin().getName();
     }
 
 
@@ -94,5 +104,21 @@ public class MeetingInvite {
     public void reset() {
         created = new Date(System.currentTimeMillis());
         state = MeetingInviteState.PENDING;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public String getMeetname() {
+        return meetname;
+    }
+
+    public void setMeetname(String meetname) {
+        this.meetname = meetname;
     }
 }
