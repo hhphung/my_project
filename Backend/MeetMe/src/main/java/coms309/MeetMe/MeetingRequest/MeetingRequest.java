@@ -72,6 +72,14 @@ public class MeetingRequest {
         return meeting;
     }
 
+    public String getUserName() {
+        return user.getName();
+    }
+
+    public String getMeetingName() {
+        return meeting.getName();
+    }
+
     public MeetingRequestState getState() {
         return state;
     }
