@@ -92,7 +92,11 @@ public class MeetingInvitesPage extends AppCompatActivity {
 
                 TextView content = new TextView(temp);
 
-                content.setText(" Meeting invite from " + x.getUser() + " for "+ x.getMeeting());
+                String meetingName = x.getMeeting().substring(0,9);
+                if (meetingName.length() < x.getMeeting().length()){
+                    meetingName = meetingName.substring(0,6) + "...";
+                }
+                content.setText(" Meeting invite from " + x.getUser() + " for "+ meetingName);
                 content.setTypeface(null, Typeface. BOLD);
                 content.setTextSize(16);
 

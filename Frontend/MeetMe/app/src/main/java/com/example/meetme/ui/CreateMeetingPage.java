@@ -117,6 +117,7 @@ public class CreateMeetingPage extends AppCompatActivity {
 
                 int mDuration = 1;
                 PostMeeting(mTitle, mDesc, mTime, mDate, mLocation, participants, mDuration);
+
             }
         });
     }
@@ -198,6 +199,7 @@ public class CreateMeetingPage extends AppCompatActivity {
             {
                 if(response.getResponseMessage().toString().equals("Success")){
                     sendInvites(participants,mTitle);
+                    globalVariable.setUserParticipantsInMeeting("");
                 }
                 errorMsg.getText();
             }));
