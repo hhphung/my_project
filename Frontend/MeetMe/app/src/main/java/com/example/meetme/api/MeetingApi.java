@@ -20,7 +20,7 @@ public interface MeetingApi {
 
     /**
      * **THIS MIGHT BE DEPRECATED**
-     * @param id user id
+     * @param id meeting name to get
      * @return On success: A meeting object sent by the server. On failure:
      * A generic JSON response indicating a failure.
      */

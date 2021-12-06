@@ -7,13 +7,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 
+import com.example.meetme.SearchMeetingAdapter;
 import com.example.meetme.GlobalClass;
-import com.example.meetme.MeetingAdapter;
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
@@ -41,8 +43,8 @@ public class SearchPage extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         EditText meetingInput = findViewById(R.id.activity_search_input);
-        Button searchButton = findViewById(R.id.activity_addParticipants_search_btn_to_search);
-        Button backButton = findViewById(R.id.activity_search_btn_to_dash);
+
+        Button searchButton = findViewById(R.id.activity_search_btn_to_search);
 
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
 
@@ -55,7 +57,8 @@ public class SearchPage extends BaseActivity {
 
             recyclerView.setNestedScrollingEnabled(false);
 
-            MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<MeetingShadow>(meetings));
+            SearchMeetingAdapter meetingAdapter = new SearchMeetingAdapter(getApplicationContext(), new ArrayList<MeetingShadow>(meetings));
+
 
             recyclerView.setAdapter(meetingAdapter);
 
@@ -63,13 +66,6 @@ public class SearchPage extends BaseActivity {
 
         }));
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), DashboardPage.class);
-                startActivity(myIntent);
-            }
-        });
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +76,7 @@ public class SearchPage extends BaseActivity {
                 {
                     recyclerView = findViewById(R.id.activity_search_results);
 
-                    MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<MeetingShadow>(meetings));
+                    SearchMeetingAdapter meetingAdapter = new SearchMeetingAdapter(getApplicationContext(), new ArrayList<MeetingShadow>(meetings));
 
                     recyclerView.setAdapter(meetingAdapter);
 
@@ -93,6 +89,14 @@ public class SearchPage extends BaseActivity {
 
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+
+
 
     @Override
     protected int getContentViewId() {

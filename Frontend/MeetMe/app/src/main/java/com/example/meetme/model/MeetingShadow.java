@@ -1,5 +1,11 @@
 package com.example.meetme.model;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class MeetingShadow {
@@ -94,5 +100,27 @@ public class MeetingShadow {
 
     public void setUserParticipants(List<String> userParticipants) {
         this.userParticipants = userParticipants;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public int[] getStartEndOfMeeting(){
+        //2007-12-03T10:15:30
+        try {
+            LocalDateTime d = LocalDateTime.of(Integer.parseInt(dateTime.substring(0, 4)),
+                    Integer.parseInt(dateTime.substring(5, 7)),
+                    Integer.parseInt(dateTime.substring(8, 11)),
+                    Integer.parseInt(dateTime.substring(12, 14)),
+                    0);
+
+            DayOfWeek mDay = d.getDayOfWeek();
+
+            int day = mDay.getValue() - 1;
+
+            int startTime = day * 24 + d.getHour();
+            int endTime = startTime + duration;
+            return new int[]{startTime, endTime};
+        } catch (Exception e){
+            return new int[]{-1,-1};
+        }
     }
 }

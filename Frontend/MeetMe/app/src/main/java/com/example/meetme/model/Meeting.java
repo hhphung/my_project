@@ -1,10 +1,15 @@
 package com.example.meetme.model;
 
+import android.os.Build;
+
 import androidx.annotation.ArrayRes;
+import androidx.annotation.RequiresApi;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +48,10 @@ public class Meeting {
     private String responseMessage;
 
 
+    @SerializedName("duration")
+    @Expose
+    private int durationHours;
+
     //String name, String adminName, String desc, String dateTime, String street,
     // String city, String state, int zipcode, String country)
 
@@ -54,14 +63,38 @@ public class Meeting {
      * @param dateTime date & time: must be in correct format
      * @param location location of meeting
      */
-    public Meeting(String name, String adminName, String desc, String dateTime, Location location)
+    public Meeting(String name, String adminName, String desc, String dateTime, Location location, int durationHours)
     {
         this.name = name;
         this.adminName = adminName;
         this.desc = desc;
         this.dateTime = dateTime;
         this.location = location;
+        this.durationHours = durationHours;
 
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public int[] getStartEndOfMeeting(){
+        //2007-12-03T10:15:30
+        try {
+            LocalDateTime d = LocalDateTime.of(Integer.parseInt(dateTime.substring(0, 4)),
+                    Integer.parseInt(dateTime.substring(5, 7)),
+                    Integer.parseInt(dateTime.substring(8, 11)),
+                    Integer.parseInt(dateTime.substring(12, 14)),
+                    0);
+
+            DayOfWeek mDay = d.getDayOfWeek();
+
+            int day = mDay.getValue() - 1;
+
+            int startTime = day * 24 + d.getHour();
+            int endTime = startTime + durationHours;
+            return new int[]{startTime, endTime};
+        } catch (Exception e){
+            return new int[]{-1,-1};
+        }
     }
 
 
@@ -111,13 +144,12 @@ public class Meeting {
         this.responseMessage = responseMessage;
     }
 
-
-    public int getDuration(){
-        return duration;
+    public int getDurationHours() {
+        return durationHours;
     }
 
-    public void setDuration(int duration){
-        this.duration = duration;
+    public void setDurationHours(int durationHours) {
+        this.durationHours = durationHours;
     }
 
     public String getError() {

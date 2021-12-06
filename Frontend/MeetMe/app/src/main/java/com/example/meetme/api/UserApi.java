@@ -48,7 +48,7 @@ public interface UserApi {
      */
     @Headers("Content-type: application/json")
     @POST("/user/")
-    Call<POST> createUser(@Body User user);
+    Call<User> createUser(@Body User user);
 
     /**
      *

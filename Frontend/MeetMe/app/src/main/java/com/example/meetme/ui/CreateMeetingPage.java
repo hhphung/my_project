@@ -10,9 +10,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.meetme.GlobalClass;
@@ -59,13 +61,20 @@ public class CreateMeetingPage extends AppCompatActivity {
         EditText meetingTime_textbox = findViewById(R.id.activity_createMeeting_timeInput);
         EditText meetingLocation_textbox = findViewById(R.id.activity_createMeeting_LocationInput);
         EditText meetingDate_textbox = findViewById(R.id.activity_createMeeting_dateInput);
+        Spinner meetingDurationInput = findViewById(R.id.activity_createMeeting_durationInput);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.duration_options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        meetingDurationInput.setAdapter(adapter);
 
         Button backButton = findViewById(R.id.activity_createMeeting_backButton);
         Button createButton = findViewById(R.id.activity_createMeeting_createMeetingButton);
         Button addparticipants = findViewById(R.id.activity_createMeeting_add_participants);
 
         errorMsg = findViewById(R.id.activity_createMeeting_errorMsg);
-
+        errorMsg.setText("");
 
         TextView participantList = findViewById(R.id.activity_createMeeting_added_participants);
 
@@ -103,13 +112,8 @@ public class CreateMeetingPage extends AppCompatActivity {
 
                 String participants[] = participantList.getText().toString().split(", ");
 
-
-                PostMeeting(mTitle, mDesc, mTime, mDate, mLocation, participants);
-
-//                if (errorMsg.getText().toString().equals("Error Message Goes Here") ||
-//                        errorMsg.getText().toString().equals("")) {
-//                    finish();
-//                }
+                int mDuration = 1;
+                PostMeeting(mTitle, mDesc, mTime, mDate, mLocation, participants, mDuration);
             }
         });
     }
@@ -148,7 +152,7 @@ public class CreateMeetingPage extends AppCompatActivity {
      * @param mLocation An array of strings representing the meeting location in format {St Address, City, State, Zip, Country}
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation, String[] participants){
+    protected void PostMeeting(String mTitle, String mDesc, String mTime, String mDate, String[] mLocation, String[] participants, int mDuration){
 
 
         try {
@@ -167,7 +171,8 @@ public class CreateMeetingPage extends AppCompatActivity {
             int hour = Integer.parseInt(mTime.substring(0,2));
             int min = Integer.parseInt(mTime.substring(mTime.length()-2));
 
-            LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, min);
+
+            LocalDateTime dateTime = LocalDateTime.of(year, month, day, hour, 0);
 
             final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
             //get username of current client
@@ -175,7 +180,7 @@ public class CreateMeetingPage extends AppCompatActivity {
 
             Location mlocation = new Location(mLocation[0], mLocation[1], mLocation[2], zipcode, mLocation[4]);
 
-            Meeting meeting = new Meeting(mTitle, username, mDesc, dateTime.toString(), mlocation);
+            Meeting meeting = new Meeting(mTitle, username, mDesc, dateTime.toString(), mlocation, mDuration);
 
             GetMeetingApi().createMeeting(meeting).enqueue(new SlimCallback<>(response ->
             {
