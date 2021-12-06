@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
@@ -30,8 +31,12 @@ public class friendProfilepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_profilepage);
         Button back = findViewById(R.id.friendProfileBack);
+
         TextView friend = findViewById(R.id.friendProfileUsername);
         String username = getIntent().getStringExtra("friendname");
+
+
+
         GetUserApi().getUserByName(username).enqueue(new SlimCallback<UserShadow>(user ->{
             friend.setText("Name: " + user.getName());
         }));
@@ -42,6 +47,7 @@ public class friendProfilepage extends AppCompatActivity {
                 finish();
             }
         });
+
 
     }
 }

@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.meetme.GlobalClass;
@@ -39,6 +40,8 @@ public class ViewFriendRequestPage extends AppCompatActivity {
         ScrollView view = findViewById(R.id.friendRequestscroll);
         LinearLayout layout = findViewById(R.id.FriendRequestlayout);
 
+        Button addFriendPage = findViewById(R.id.toAddFriends);
+
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
 
         FriendRequestFont.setTypeface(null, Typeface. BOLD);
@@ -49,6 +52,14 @@ public class ViewFriendRequestPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        addFriendPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), AddFriendsPage.class);
+                startActivity(myIntent);
             }
         });
 
