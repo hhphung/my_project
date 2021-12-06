@@ -32,15 +32,20 @@ public class friendProfilepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_profilepage);
         Button back = findViewById(R.id.friendProfileBack);
+
         TextView friend = findViewById(R.id.friendProfileUsername);
-        Button addFriend = findViewById(R.id.activity_friendProfile_addFriend);
         String friendName = getIntent().getStringExtra("friendname");
-        TextView errorMsg = findViewById(R.id.activity_friendProfile_errorMsg);
-        GetUserApi().getUserByName(friendName).enqueue(new SlimCallback<UserShadow>(user ->{
-            friend.setText("User: " + user.getName());
+
+        GetUserApi().getUserByName(friendName).enqueue(new SlimCallback<UserShadow>(user -> {
+            friend.setText("Name: " + user.getName());
         }));
+
+        Button addFriend = findViewById(R.id.activity_friendProfile_addFriend);
+        TextView errorMsg = findViewById(R.id.activity_friendProfile_errorMsg);
+
         GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         String username = globalVariable.getName();
+
         addFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +66,7 @@ public class friendProfilepage extends AppCompatActivity {
                 finish();
             }
         });
+
 
     }
 
