@@ -11,6 +11,8 @@ import java.util.List;
 import coms309.MeetMe.Meeting.Meeting;
 import coms309.MeetMe.Meeting.MeetingRepository;
 import coms309.MeetMe.MeetingInvite.MeetingInvite;
+import coms309.MeetMe.MeetingInvite.MeetingInviteState;
+import coms309.MeetMe.MeetingRequest.UserMeetingNamePair;
 import coms309.MeetMe.User.*;
 import coms309.MeetMe.chat.Message;
 import coms309.MeetMe.chat.MessageRepository;
@@ -26,14 +28,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 public class userTest {
 
-    @InjectMocks
-    UserController userController;
 
     @Mock
     UserRepository repo;
 
     @Mock
     MessageRepository messageRepository;
+
+    @Mock
+    UserController userController;
 
 
     @Before
@@ -85,6 +88,15 @@ public class userTest {
         assertEquals(2, acctList.size());
         verify(messageRepository, times(1)).findAll();
     }
+
+    @Test
+    public void getFriendRequests(){
+
+    }
+
+
+
+
 
 
 

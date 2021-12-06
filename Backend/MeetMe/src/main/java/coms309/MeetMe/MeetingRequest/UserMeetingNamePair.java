@@ -3,7 +3,7 @@ package coms309.MeetMe.MeetingRequest;
 public class UserMeetingNamePair {
   private String userName, meetingName;
 
-  UserMeetingNamePair(String userName, String meetingName) {
+  public UserMeetingNamePair(String userName, String meetingName) {
       this.userName = userName;
       this.meetingName = meetingName;
   }

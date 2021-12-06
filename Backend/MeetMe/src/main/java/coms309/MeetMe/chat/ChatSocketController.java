@@ -1,31 +1,22 @@
 package coms309.MeetMe.chat;
 
-import java.io.IOException;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-
-import javax.websocket.OnClose;
-import javax.websocket.OnError;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.server.PathParam;
-import javax.websocket.server.ServerEndpoint;
-
 import coms309.MeetMe.Meeting.Meeting;
-import coms309.MeetMe.Meeting.Meeting.*;
 import coms309.MeetMe.Meeting.MeetingController;
 import coms309.MeetMe.Meeting.MeetingRepository;
-import coms309.MeetMe.Meeting.MeetingShadow;
 import coms309.MeetMe.User.User;
 import coms309.MeetMe.User.UserRepository;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.websocket.*;
+import javax.websocket.server.PathParam;
+import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 
 @Controller      // this is needed for this to be an endpoint to springboot
 @ServerEndpoint(value = "/chat/{meetname}/{username}")  // this is Websocket url
@@ -87,9 +78,16 @@ public class ChatSocketController {
     public void onOpen(Session session, @PathParam("username") String username,@PathParam("meetname") String meetname)
             throws IOException {
 
+        String t =  meetname.replace("_", " ");
+
+
+
         int i = 0;
         user = userRepository.findByName(username);
-        meet  = meetingRepository.findByName(meetname);
+        meet  = meetingRepository.findByName(t);
+        if(user == null){
+
+        }
 
         if(meet.getUserParticipants().contains(username)){
             valid = true;
@@ -105,7 +103,7 @@ public class ChatSocketController {
             usernameSessionMap.put(username, session);
 
             //Send chat history to the newly connected user
-            sendMessageToPArticularUser(username, getChatHistory());
+            sendMessageToPArticularUser(username,   getChatHistory());
 
             // broadcast that new user joined
             String message = "User:" + username + " has Joined the Chat";
@@ -140,7 +138,15 @@ public class ChatSocketController {
 
     @OnClose
     public void onClose(Session session) throws IOException {
-        if (valid){
+       if(user == null){
+           logger.info("Entered into Close");
+
+           sessionUsernameMap.remove(session);
+           String message = "user is not valid";
+           broadcast(message);
+       }
+
+       else if (valid){
             logger.info("Entered into Close");
             // remove the user connection information
             String username = sessionUsernameMap.get(session);
@@ -151,6 +157,7 @@ public class ChatSocketController {
             String message = username + " disconnected";
             broadcast(message);
         }
+
     }
 
 
