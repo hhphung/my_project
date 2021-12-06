@@ -166,7 +166,7 @@ public class UserController {
         // Friend request already exists
         if (friendRequest != null) {
 
-            if (friendRequest.getSendRequestState.PENDING) return Stringy.error("Already sent");
+            if (friendRequest.getState() == FriendRequestState.PENDING) return Stringy.error("Already sent");
             
             friendRequest.reset();
         }
