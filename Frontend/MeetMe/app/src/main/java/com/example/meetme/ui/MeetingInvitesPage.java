@@ -60,7 +60,7 @@ public class MeetingInvitesPage extends AppCompatActivity {
 
 
 
-        GetMeetingApi().getByUsername(name) .enqueue(new SlimCallback<List<MeetingInvite>>(list ->  {
+        GetMeetingApi().getByUsername(name).enqueue(new SlimCallback<List<MeetingInvite>>(list ->  {
 
 
 

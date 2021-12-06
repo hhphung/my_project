@@ -49,8 +49,8 @@ public class RegisterPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(secPasswordInput.getText().toString().equals(passwordInput.getText().toString()) && !(secPasswordInput.getText().toString().equals(""))) {
-
                     User user = new User(usernameInput.getText().toString(), passwordInput.getText().toString());
+
                     GetUserApi().createUser(user).enqueue(new SlimCallback<User>(user1 ->{
                         if (user1.getResponse().equals("Success")) {
                             globalVariable.setName(usernameInput.getText().toString());

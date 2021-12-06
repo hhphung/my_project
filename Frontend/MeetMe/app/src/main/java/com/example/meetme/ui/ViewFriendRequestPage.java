@@ -2,6 +2,8 @@ package com.example.meetme.ui;
 
 
 
+import static com.example.meetme.api.apiClientFactory.GetUserApi;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,7 +18,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.meetme.api.apiClientFactory.GetUserApi;
 
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
