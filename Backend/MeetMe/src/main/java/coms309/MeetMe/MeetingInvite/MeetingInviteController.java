@@ -53,7 +53,7 @@ public class MeetingInviteController {
     }
 
     @GetMapping(value = "/username/{name}", produces = "application/json")
-    List<MeetingInvite> getByUsername(@PathVariable String name) {
+    public List<MeetingInvite> getByUsername(@PathVariable String name) {
         User user = userRepository.findByName(name);
         if (user == null) return null;
         return meetingInviteRepository.findByUserId(user.getId());
