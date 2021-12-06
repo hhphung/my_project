@@ -4,7 +4,6 @@ import static com.example.meetme.api.apiClientFactory.GetUserApi;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +11,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
@@ -40,6 +37,7 @@ public class ProfilePage extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Button logout = findViewById(R.id.logout);
         Button back = findViewById(R.id.profileBack);
         Button changePassword = findViewById(R.id.profileChangePassword);
         Button changeAval = findViewById(R.id.profileChangeA);
@@ -80,7 +78,13 @@ public class ProfilePage extends BaseActivity {
             }
         });
 
-
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), LoginPage.class);
+                startActivity(myIntent);
+            }
+        });
 
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -24,14 +24,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMeeting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="395dp"
+        android:layout_height="474dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_dashboard_MeetingsTitle"
-        app:layout_constraintVertical_bias="0.166" />
+        app:layout_constraintVertical_bias="0.076" />
 
     <TextView
         android:id="@+id/activity_dashboard_MeetingsTitle"
@@ -43,11 +43,12 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_dashboard_text"
-        app:layout_constraintVertical_bias="0.122" />
+        app:layout_constraintVertical_bias="0.015" />
 
-        <include
+    <include
             layout="@layout/bottom_menu_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

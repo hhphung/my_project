@@ -50,10 +50,16 @@ public class CreateMeetingPage extends AppCompatActivity {
     EditText meetingTitle_textbox;
     EditText meetingDescription_textbox;
     EditText meetingTime_textbox;
-    EditText meetingLocation_textbox;
     EditText meetingDate_textbox;
     Spinner meetingDurationInput;
     TextView participantList;
+
+    EditText meetingStreetName_textbox;
+    EditText meetingCityName_textbox;
+    EditText meetingStateName_textbox;
+    EditText meetingZipcode_textbox;
+    EditText meetingCountryName_textbox;
+
     /**
      * Set up the page.
      * @param savedInstanceState
@@ -65,9 +71,16 @@ public class CreateMeetingPage extends AppCompatActivity {
         meetingTitle_textbox = findViewById(R.id.activity_createMeeting_TitleInput);
         meetingDescription_textbox = findViewById(R.id.activity_createMeeting_DescriptionInput);
         meetingTime_textbox = findViewById(R.id.activity_createMeeting_timeInput);
-        meetingLocation_textbox = findViewById(R.id.activity_createMeeting_LocationInput);
         meetingDate_textbox = findViewById(R.id.activity_createMeeting_dateInput);
         meetingDurationInput = findViewById(R.id.activity_createMeeting_durationInput);
+
+
+        meetingStreetName_textbox = findViewById(R.id.activity_createMeeting_StreetNameInput);
+        meetingCityName_textbox = findViewById(R.id.activity_createMeeting_CityNameInput);
+        meetingStateName_textbox = findViewById(R.id.activity_createMeeting_StateNameInput);
+        meetingZipcode_textbox = findViewById(R.id.activity_createMeeting_ZipcodeInput);
+        meetingCountryName_textbox = findViewById(R.id.activity_createMeeting_CountryNameInput);
+
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.duration_options, android.R.layout.simple_spinner_item);
@@ -110,7 +123,13 @@ public class CreateMeetingPage extends AppCompatActivity {
                 String mDesc = meetingDescription_textbox.getText().toString();
                 String mTime = meetingTime_textbox.getText().toString();
                 String mDate = meetingDate_textbox.getText().toString();
-                String mLocation[] = meetingLocation_textbox.getText().toString().split(",");
+                String mLocation[] = {
+                        meetingStreetName_textbox.getText().toString(),
+                        meetingCityName_textbox.getText().toString(),
+                        meetingStateName_textbox.getText().toString(),
+                        meetingZipcode_textbox.getText().toString(),
+                        meetingCountryName_textbox.getText().toString()
+                }; // meetingLocation_textbox.getText().toString().split(",");
 
                 String participants[] = participantList.getText().toString().split(", ");
 
