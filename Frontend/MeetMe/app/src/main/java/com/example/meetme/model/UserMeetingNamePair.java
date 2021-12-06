@@ -1,7 +1,12 @@
 package com.example.meetme.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class UserMeetingNamePair {
+
+    @SerializedName("userName")
     private String username;
+    @SerializedName("meetingName")
     private String meetingName;
 
     public UserMeetingNamePair(String username, String meetingName)
