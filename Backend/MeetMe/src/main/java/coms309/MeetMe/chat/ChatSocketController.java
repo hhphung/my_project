@@ -89,7 +89,7 @@ public class ChatSocketController {
 
         int i = 0;
         user = userRepository.findByName(username);
-        meet  = meetingRepository.findByName(meetname);
+        meet  = meetingRepository.findByName(meetname.replace('_', ' '));
 
         if(meet.getUserParticipants().contains(username)){
             valid = true;

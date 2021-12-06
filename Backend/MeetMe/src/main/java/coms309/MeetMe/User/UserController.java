@@ -34,12 +34,12 @@ public class UserController {
 
 
     @GetMapping(value = "/", produces = "application/json")
-    List<UserShadow> getAllUsers() {
+    public List<UserShadow> getAllUsers() {
         return UserShadow.build(userRepository.findAll());
     }
 
     @PostMapping(value = "/", produces = "application/json")
-    String createUser(@RequestBody User user) {
+    public String createUser(@RequestBody User user) {
         if (user == null)
             return Stringy.error("Invalid request body");
 
@@ -58,18 +58,18 @@ public class UserController {
 
 
     @GetMapping(value = "/id/{id}", produces = "application/json")
-    UserShadow getUserById(@PathVariable int id) {
+    public UserShadow getUserById(@PathVariable int id) {
         return new UserShadow(userRepository.findById(id));
     }
 
 
     @GetMapping(value = "/name/{name}", produces = "application/json")
-    UserShadow getUserByName(@PathVariable String name) {
+    public UserShadow getUserByName(@PathVariable String name) {
         return new UserShadow(userRepository.findByName(name));
     }
 
     @PostMapping(path = "/login", produces = "application/json")
-    String loginUser(@RequestBody User user) {
+    public String loginUser(@RequestBody User user) {
 
         if (user == null) return Stringy.error("Null user");
 
@@ -84,7 +84,7 @@ public class UserController {
 
 
     @PostMapping(path = "/changePassword", produces = "application/json")
-    String changePassword(@RequestBody User user) {
+    public String changePassword(@RequestBody User user) {
         if (user == null) return Stringy.error("Null user");
 
         User temp = userRepository.findByName(user.getName());
@@ -99,7 +99,7 @@ public class UserController {
 
 
     @GetMapping(value = "/search/{name}", produces = "application/json")
-    List<UserShadow> getSearch(@PathVariable String name) {
+    public List<UserShadow> getSearch(@PathVariable String name) {
         return UserShadow.build(userRepository.findBySearch(name));
     }
 
@@ -114,7 +114,7 @@ public class UserController {
 
 
     @GetMapping(path = "/{name}/friendRequestsSent", produces = "application/json")
-    public List<UserShadow> getFriendRequestsSend(@PathVariable String name) {
+    public List<UserShadow> getFriendRequestsSent(@PathVariable String name) {
         User me = userRepository.findByName(name);
 
         if (me == null) return null;
@@ -166,7 +166,7 @@ public class UserController {
         // Friend request already exists
         if (friendRequest != null) {
 
-            if (friendRequest.getSendRequestState.PENDING) return Stringy.error("Already sent");
+            if (friendRequest.getState() == FriendRequestState.PENDING) return Stringy.error("Already sent");
             
             friendRequest.reset();
         }
