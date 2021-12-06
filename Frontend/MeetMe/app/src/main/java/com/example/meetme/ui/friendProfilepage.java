@@ -38,7 +38,7 @@ public class friendProfilepage extends AppCompatActivity {
 
         GetUserApi().getUserByName(friendName).enqueue(new SlimCallback<UserShadow>(user -> {
             friend.setText("Name: " + user.getName());
-        });
+        }));
 
         Button addFriend = findViewById(R.id.activity_friendProfile_addFriend);
         TextView errorMsg = findViewById(R.id.activity_friendProfile_errorMsg);

@@ -32,11 +32,12 @@ public class AddFriendsPage extends AppCompatActivity {
 
         Button searchButton = findViewById(R.id.activity_addFriend_search_btn_to_search);
         EditText usernameInput = findViewById(R.id.activity_addFriend_search_input);
+        Button backButton = findViewById(R.id.btn_to_friend_requests);
 
 
         GetUserApi().getAllUsers().enqueue(new SlimCallback<List<UserShadow>>(users->
         {
-            recyclerView = findViewById(R.id.activity_search_results);
+            recyclerView = findViewById(R.id.activity_addFriend_search_results);
 
             ArrayList<String> results = new ArrayList<String>();
 
@@ -52,6 +53,12 @@ public class AddFriendsPage extends AppCompatActivity {
 
         }));
 
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +68,7 @@ public class AddFriendsPage extends AppCompatActivity {
 
                 GetUserApi().getSearchResults(userInput).enqueue(new SlimCallback<List<UserShadow>>(users->
                 {
-                    recyclerView = findViewById(R.id.activity_search_results);
+                    recyclerView = findViewById(R.id.activity_addFriend_search_results);
 
 
                     ArrayList<String> results = new ArrayList<String>();

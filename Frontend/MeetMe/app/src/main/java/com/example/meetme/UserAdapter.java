@@ -53,6 +53,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 public void onClick(View view) {
                     Intent myIntent = new Intent(view.getContext(), friendProfilepage.class);
                     myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    myIntent.putExtra("friendname", textView.getText().toString());
 
                     view.getContext().startActivity(myIntent);
                 }

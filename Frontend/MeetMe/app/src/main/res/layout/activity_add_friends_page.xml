@@ -28,7 +28,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="15dp"
         android:text="Search"
-        app:layout_constraintBottom_toTopOf="@+id/activity_search_results"
+        app:layout_constraintBottom_toTopOf="@+id/activity_addFriend_search_results"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
@@ -43,7 +43,7 @@
         android:minHeight="48dp"
         android:paddingLeft="10dp"
         android:paddingRight="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/activity_search_results"
+        app:layout_constraintBottom_toTopOf="@+id/activity_addFriend_search_results"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,4 +51,13 @@
         app:layout_constraintVertical_bias="0.457" />
 
 
+    <Button
+        android:id="@+id/btn_to_friend_requests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
