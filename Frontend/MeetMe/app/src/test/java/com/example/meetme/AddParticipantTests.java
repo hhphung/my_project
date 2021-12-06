@@ -37,7 +37,7 @@ public class AddParticipantTests {
         Button search = activity.findViewById(R.id.activity_addParticipants_search_btn_to_search);
         search.callOnClick();
 
-        ArrayList<Button> searchResults = new ArrayList<Button>(4);
+        ArrayList<Button> searchResults = new ArrayList<Button>(5);
 
         ArrayList<Button> actList = activity.getSearchResults();
 
