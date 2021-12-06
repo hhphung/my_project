@@ -9,6 +9,7 @@ import static com.example.meetme.api.apiClientFactory.GetMeetingApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -227,7 +228,13 @@ public class CreateMeetingPage extends AppCompatActivity {
 
     public void sendInvites(String[] participants, String mTitle)
     {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         for(int i = 0; i < participants.length; i++){
+            Log.d("SendInvites: ", participants[i]);
             String user = participants[i];
             UserMeetingNamePair newPair = new UserMeetingNamePair(user, mTitle);
             GetMeetingApi().sendInvite(newPair).enqueue(new SlimCallback<>(pair -> {}));
