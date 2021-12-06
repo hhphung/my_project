@@ -33,12 +33,6 @@ public class MeetingInvite {
     @Column(nullable = false)
     private Date created;
 
-    @Column(nullable = false)
-    private String userName;
-
-    @Column(nullable = false)
-    private String meetName;
-
     @Enumerated(EnumType.STRING)
     private MeetingInviteState state;
 
@@ -56,8 +50,6 @@ public class MeetingInvite {
         this.meeting = meeting;
         this.state = MeetingInviteState.PENDING;
         this.created = new Date(System.currentTimeMillis());
-        this.userName = user.getName();
-        this.meetName = meeting.getName();
     }
 
     public MeetingInvite(User user, Meeting meeting, MeetingInviteState state) {
@@ -65,8 +57,6 @@ public class MeetingInvite {
         this.meeting = meeting;
         this.state = state;
         this.created = new Date(System.currentTimeMillis());
-        this.userName = user.getName();
-        this.meetName = meeting.getName();
     }
 
 
@@ -104,22 +94,5 @@ public class MeetingInvite {
     public void reset() {
         created = new Date(System.currentTimeMillis());
         state = MeetingInviteState.PENDING;
-    }
-
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getMeetName() {
-        return meetName;
-    }
-
-    public void setMeetName(String meetName) {
-        this.meetName = meetName;
     }
 }
