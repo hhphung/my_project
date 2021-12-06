@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
@@ -38,17 +39,16 @@ public class ViewFriendRequestPage extends AppCompatActivity {
         ScrollView view = findViewById(R.id.friendRequestscroll);
         LinearLayout layout = findViewById(R.id.FriendRequestlayout);
 
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
 
         FriendRequestFont.setTypeface(null, Typeface. BOLD);
         Context temp = this;
-        String name = getIntent().getStringExtra("username");;
+        final String name = globalVariable.getName();
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), ProfilePage.class);
-                myIntent.putExtra("username", name);
-                startActivity(myIntent);
+                finish();
             }
         });
 

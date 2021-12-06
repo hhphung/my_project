@@ -169,6 +169,7 @@ public class ProfilePage extends BaseActivity {
                 }
             }
         });
+
         toFriendRequests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,6 +178,7 @@ public class ProfilePage extends BaseActivity {
                 startActivity(myIntent);
             }
         });
+
         toMeetingInvites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

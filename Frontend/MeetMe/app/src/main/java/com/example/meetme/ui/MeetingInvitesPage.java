@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 import com.example.meetme.api.MeetingApi;
 import com.example.meetme.api.SlimCallback;
@@ -41,19 +42,18 @@ public class MeetingInvitesPage extends AppCompatActivity {
         ScrollView view = findViewById(R.id.friendRequestscroll);
         LinearLayout layout = findViewById(R.id.MeetingInvitesLayout);
 
+        final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
 
         MeetingInviteFont.setTypeface(null, Typeface. BOLD);
         Context temp = this;
-        String name = getIntent().getStringExtra("username");;
+        String name = globalVariable.getName();
 
 
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), ProfilePage.class);
-                myIntent.putExtra("username", name);
-                startActivity(myIntent);
+                finish();
             }
         });
 
