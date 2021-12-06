@@ -45,7 +45,9 @@ public class LoginPage extends AppCompatActivity {
                 startActivity(new Intent(view.getContext(),RegisterPage.class));
             }
         });
+
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+
         toDashboardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +59,11 @@ public class LoginPage extends AppCompatActivity {
                         startActivity(myIntent);
 
                     } else {
+
+                        // response.getResponse().equals("Success")
+
+                        System.out.println("::::= " + response.getResponse());
+
                         passwordInput.setError("Check Password again");
                         passwordInput.requestFocus();
 

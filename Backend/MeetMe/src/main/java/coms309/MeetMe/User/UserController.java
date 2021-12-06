@@ -3,6 +3,8 @@ package coms309.MeetMe.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import coms309.MeetMe.Availability.Availability;
+import coms309.MeetMe.Availability.AvailabilityRepository;
 import coms309.MeetMe.FriendRequest.*;
 import coms309.MeetMe.PushNotifications.service.PushNotificationService;
 import coms309.MeetMe.Stringy.Stringy;
@@ -14,6 +16,9 @@ import java.util.*;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    @Autowired
+    AvailabilityRepository availabilityRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -43,7 +48,10 @@ public class UserController {
         if (checkIfExists != null)
             return Stringy.error("User already exists");
 
+        Availability avail = new Availability(new boolean[168], user);
+        user.setAvailability(avail);
 
+        availabilityRepository.save(avail);
         userRepository.save(user);
         return Stringy.success();
     }

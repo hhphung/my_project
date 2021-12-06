@@ -67,6 +67,7 @@ public class SlimCallback<T> implements Callback<T> {
     @Override
     public void onFailure(Call<T> call, Throwable t) {
         Log.d(logTag, "Thrown: " + t.getMessage());
+        throw t;
     }
 }
 

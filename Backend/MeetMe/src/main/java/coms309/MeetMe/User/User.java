@@ -10,7 +10,6 @@ import coms309.MeetMe.MeetingRequest.MeetingRequest;
 import coms309.MeetMe.MeetingInvite.MeetingInvite;
 import coms309.MeetMe.Availability.Availability;
 import coms309.MeetMe.Meeting.Meeting;
-import coms309.MeetMe.Meeting.MeetingShadow;
 import coms309.MeetMe.Stringy.Stringy;
 import coms309.MeetMe.FriendRequest.*;
 

@@ -51,6 +51,10 @@ public class Availability {
         return user;
     }
 
+    public String getUserName() {
+        return user.getName();
+    }
+
     public void setUser(User user) {
         this.user = user;
     }
