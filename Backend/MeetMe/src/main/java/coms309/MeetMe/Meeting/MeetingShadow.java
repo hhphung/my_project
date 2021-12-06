@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class MeetingShadow {
 
-    private int id;
+    private Integer id;
 
     private String name;
 
@@ -35,6 +35,7 @@ public class MeetingShadow {
     }
 
     public MeetingShadow(Meeting meeting) {
+        this.id = meeting.getId();
         this.admin = meeting.getAdmin().getName();
         this.name = meeting.getName();
         this.description = meeting.getDescription();
