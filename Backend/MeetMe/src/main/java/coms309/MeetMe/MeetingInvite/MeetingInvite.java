@@ -74,6 +74,14 @@ public class MeetingInvite {
         return meeting;
     }
 
+    public String getUserName() {
+        return user.getName();
+    }
+
+    public String getMeetingName() {
+        return meeting.getName();
+    }
+
     public MeetingInviteState getState() {
         return state;
     }
