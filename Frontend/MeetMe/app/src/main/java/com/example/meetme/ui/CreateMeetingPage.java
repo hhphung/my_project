@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 import com.example.meetme.api.MeetingApi;
+import com.example.meetme.model.Location;
 import com.example.meetme.model.Meeting;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
@@ -172,8 +173,9 @@ public class CreateMeetingPage extends AppCompatActivity {
             //get username of current client
             final String username = globalVariable.getName();
 
-            Meeting meeting = new Meeting(mTitle, username, mDesc, dateTime.toString(), mLocation[0],
-                    mLocation[1], mLocation[2], zipcode, mLocation[4]);
+            Location mlocation = new Location(mLocation[0], mLocation[1], mLocation[2], zipcode, mLocation[4]);
+
+            Meeting meeting = new Meeting(mTitle, username, mDesc, dateTime.toString(), mlocation);
 
             GetMeetingApi().createMeeting(meeting).enqueue(new SlimCallback<>(response ->
             {

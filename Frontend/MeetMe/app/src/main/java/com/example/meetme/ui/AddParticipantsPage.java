@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
+import com.example.meetme.model.UserShadow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +56,8 @@ public class AddParticipantsPage extends AppCompatActivity {
                 String searchText = searchInput.getText().toString();
 
                 if(participants.getChildCount() == 0) {
-                    GetUserApi().getSearchResults(searchText).enqueue(new SlimCallback<List<User>>(participantNames -> {
-                        for (User m : participantNames) {
+                    GetUserApi().getSearchResults(searchText).enqueue(new SlimCallback<List<UserShadow>>(participantNames -> {
+                        for (UserShadow m : participantNames) {
                             Button user = new Button(temporaryContext);
                             user.setOnClickListener(new View.OnClickListener() {
                                 @Override

@@ -17,6 +17,7 @@ import com.example.meetme.MeetingAdapter;
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
+import com.example.meetme.model.MeetingShadow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,13 +49,13 @@ public class SearchPage extends BaseActivity {
         //get username of current client
         final String username = globalVariable.getName();
 
-        GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<Meeting>>(meetings->
+        GetMeetingApi().getAllMeetings().enqueue(new SlimCallback<List<MeetingShadow>>(meetings->
         {
             recyclerView = findViewById(R.id.activity_search_results);
 
             recyclerView.setNestedScrollingEnabled(false);
 
-            MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
+            MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<MeetingShadow>(meetings));
 
             recyclerView.setAdapter(meetingAdapter);
 
@@ -75,11 +76,11 @@ public class SearchPage extends BaseActivity {
             public void onClick(View view) {
                 meetingName = meetingInput.getText().toString();
 
-                GetMeetingApi().getResults(meetingName).enqueue(new SlimCallback<List<Meeting>>(meetings->
+                GetMeetingApi().getResults(meetingName).enqueue(new SlimCallback<List<MeetingShadow>>(meetings->
                 {
                     recyclerView = findViewById(R.id.activity_search_results);
 
-                    MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<Meeting>(meetings));
+                    MeetingAdapter meetingAdapter = new MeetingAdapter(getApplicationContext(), new ArrayList<MeetingShadow>(meetings));
 
                     recyclerView.setAdapter(meetingAdapter);
 

@@ -18,12 +18,14 @@ import com.example.meetme.R;
 import com.example.meetme.UserAdapter;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.Meeting;
+import com.example.meetme.model.MeetingShadow;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 /**
  * For viewing an individual meeting an its attributes
@@ -54,10 +56,10 @@ public class ViewMeetingPage extends AppCompatActivity {
         Button chatButton = findViewById(R.id.chatBtn);
 
         TextView meetingName = findViewById(R.id.meeting_name_title_view);
-        TextView meetingDesc = findViewById(R.id.description);
-        TextView meetingDateTime = findViewById(R.id.dateTime);
-        TextView meetingLocation = findViewById(R.id.location);
-        TextView meetingAdminName = findViewById(R.id.adminName);
+        TextView meetingDesc = findViewById(R.id.viewMeeting_description);
+        TextView meetingDateTime = findViewById(R.id.viewMeeting_dateTime);
+        TextView meetingLocation = findViewById(R.id.viewMeeting_location);
+        TextView meetingAdminName = findViewById(R.id.viewMeeting_adminName);
 
 
 
@@ -92,16 +94,24 @@ public class ViewMeetingPage extends AppCompatActivity {
         });
 
         // Get meeting info and display it
-        GetMeetingApi().getMeetingByName(meetingNameStr).enqueue(new SlimCallback<Meeting>(meeting -> {
-            meetingAdminName.setText(meeting.getAdminName());
-            meetingDesc.setText(meeting.getDesc());
-            meetingDateTime.setText(meeting.getDateTime());
-            meetingLocation.setText(meeting.getCountry());
+        GetMeetingApi().getMeetingByName(meetingNameStr).enqueue(new SlimCallback<MeetingShadow>(meeting -> {
+            String adminName = meeting.getAdmin();
+            String desc = meeting.getDescription();
+            String dateTime = meeting.getDateTime();
+            String Location = meeting.getLocation().getAddress();
+
+            meetingAdminName.setText(adminName);
+            meetingDesc.setText(desc);
+            meetingDateTime.setText(dateTime);
+            meetingLocation.setText(Location);
 
 
             recyclerView = findViewById(R.id.participantsRecycler);
 
-            UserAdapter userAdapter = new UserAdapter(meeting.getParticipants());
+            ArrayList<String> participants = new ArrayList<String>();
+            participants.addAll(meeting.getUserParticipants());
+
+            UserAdapter userAdapter = new UserAdapter(participants);
 
             recyclerView.setAdapter(userAdapter);
 

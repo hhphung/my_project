@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
+import com.example.meetme.model.UserShadow;
 import com.example.meetme.ui.ProfilePage;
 
 /**
@@ -31,7 +32,7 @@ public class friendProfilepage extends AppCompatActivity {
         Button back = findViewById(R.id.friendProfileBack);
         TextView friend = findViewById(R.id.friendProfileUsername);
         String username = getIntent().getStringExtra("friendname");
-        GetUserApi().getUserByName(username).enqueue(new SlimCallback<User>(user ->{
+        GetUserApi().getUserByName(username).enqueue(new SlimCallback<UserShadow>(user ->{
             friend.setText("Name: " + user.getName());
         }));
 

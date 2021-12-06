@@ -19,6 +19,7 @@ import com.example.meetme.GlobalClass;
 import com.example.meetme.R;
 import com.example.meetme.api.SlimCallback;
 import com.example.meetme.model.User;
+import com.example.meetme.model.UserShadow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class ProfilePage extends BaseActivity {
         final String username = globalVariable.getName();
 
 
-        GetUserApi().getUserByName(username).enqueue(new SlimCallback<User>(user ->{
+        GetUserApi().getUserByName(username).enqueue(new SlimCallback<UserShadow>(user ->{
             userNameDisplay.setText(user.getName());
         }));
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meetme.model.Meeting;
+import com.example.meetme.model.MeetingShadow;
 import com.example.meetme.ui.ViewMeetingPage;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
     /**
      *list of meeting objects to be instantiated
      */
-    private ArrayList<Meeting> meetings;
+    private ArrayList<MeetingShadow> meetings;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -83,7 +84,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
     /**
      * Initialize the dataset of the Adapter.
      */
-    public MeetingAdapter(Context context, ArrayList<Meeting> meetings) {
+    public MeetingAdapter(Context context, ArrayList<MeetingShadow> meetings) {
         this.context = context;
         this.meetings = meetings;
     }

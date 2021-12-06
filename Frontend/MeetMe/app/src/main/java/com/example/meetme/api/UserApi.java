@@ -2,6 +2,7 @@ package com.example.meetme.api;
 
 import com.example.meetme.model.Availability;
 import com.example.meetme.model.User;
+import com.example.meetme.model.UserShadow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public interface UserApi {
      * @return A user of given id
      */
     @GET("/user/{id}")
-    Call<User> getUserById(@Path(value = "id") int id);
+    Call<UserShadow> getUserById(@Path(value = "id") int id);
 
     /**
      * Returns a user with the given name.
@@ -32,13 +33,13 @@ public interface UserApi {
      * @return A user of given name
      */
     @GET("/user/name/{username}")
-    Call<User> getUserByName(@Path(value = "username") String username);
+    Call<UserShadow> getUserByName(@Path(value = "username") String username);
 
     /**
      * Returns a list of users with similar input on the search
      */
     @GET("/user/search/{name}")
-    Call<List<User>> getSearchResults(@Path(value = "name") String name);
+    Call<List<UserShadow>> getSearchResults(@Path(value = "name") String name);
 
     /**
      * Send a new user to the server.
@@ -54,7 +55,7 @@ public interface UserApi {
      * @return a list of all users
      */
     @GET("/user/")
-    Call<List<User>> getAllUsers();
+    Call<List<UserShadow>> getAllUsers();
 
     /**
      * Checks if a user can login
