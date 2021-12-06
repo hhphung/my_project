@@ -1,6 +1,7 @@
 package com.example.meetme.api;
 
 import com.example.meetme.model.Meeting;
+import com.example.meetme.model.MeetingInvite;
 import com.example.meetme.model.MeetingShadow;
 import com.example.meetme.model.UserMeetingNamePair;
 
@@ -50,4 +51,16 @@ public interface MeetingApi {
 
     @GET("/meeting/search/{name}")
     Call<List<MeetingShadow>> getResults(@Path(value = "name") String name);
+
+
+
+    @GET("/meetingInvite/username/{name}")
+    Call< List<MeetingInvite>> getByUsername (@Path(value = "name") String name);
+
+    @POST("/meetingInvite/acceptMeetingInviteId")
+    Call<String>  acceptMeetingInviteId (@Body int id);
+
+    @POST("/meetingInvite/rejectMeetingInviteId")
+    Call<String> rejectMeetingInviteId (@Body int id);
+
 }
