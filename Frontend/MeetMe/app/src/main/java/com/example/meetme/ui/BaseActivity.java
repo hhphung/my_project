@@ -71,6 +71,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     @Override
     public boolean onNavigationItemSelected (@NonNull MenuItem item) {
         navigationView.postDelayed(() -> {
+            //finish();
             int itemId = item.getItemId();
             if (itemId == R.id.action_dashboard) {
                 Intent i = new Intent(this, DashboardPage.class);
@@ -89,7 +90,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 i.putExtra("username", username);
                 startActivity(i);
             }
-            //finish();
+
         }, 300);
         return true;
     }

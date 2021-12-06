@@ -9,8 +9,10 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface AvailabilityApi {
     /**
@@ -21,4 +23,8 @@ public interface AvailabilityApi {
     @Headers("Content-type: application/json")
     @POST("/availability/")
     Call<List<Boolean>> sendAvailability(@Body Availability availability);
+
+    @Headers("Content-type: application/json")
+    @GET("/availability/username/{name}")
+    Call<List<Boolean>> getAvailability(@Path(value = "name")String username);
 }

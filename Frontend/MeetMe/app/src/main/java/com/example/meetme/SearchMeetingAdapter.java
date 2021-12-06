@@ -1,24 +1,35 @@
 package com.example.meetme;
 
+import static com.example.meetme.api.apiClientFactory.GetAvailabilityApi;
+import static com.example.meetme.api.apiClientFactory.GetMeetingApi;
+
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.meetme.api.SlimCallback;
+import com.example.meetme.model.Availability;
 import com.example.meetme.model.Meeting;
 import com.example.meetme.ui.ViewMeetingPage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * MeetingAdapter class allows us to manipulate Array lists of meeting objects to display in RecyclerViews
  */
-public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHolder> {
+public class SearchMeetingAdapter extends RecyclerView.Adapter<SearchMeetingAdapter.ViewHolder> {
 
     /**
      * context to provide for view
@@ -39,11 +50,9 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
          * textview object
          */
         private final TextView textView;
-
-        /**
-         * string
-         */
-        private String username;
+        private ImageView imageView;
+        public Context context;
+        public View view;
 
         /**
          * constructor for viewholder with given context and view
@@ -53,8 +62,14 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         public ViewHolder(Context context, View view) {
             super(view);
             // Define click listener for the ViewHolder's View
-
+            this.context = context;
+            this.view = view;
             textView = (TextView) view.findViewById(R.id.name);
+            imageView = (ImageView) view.findViewById(R.id.search_badge);
+            imageView.setVisibility(View.VISIBLE);
+
+            //imageView.setImageDrawable(wrong);
+
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -78,12 +93,14 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
         public TextView getTextView() {
             return textView;
         }
+
+        public ImageView getImageView(){ return imageView; }
     }
 
     /**
      * Initialize the dataset of the Adapter.
      */
-    public MeetingAdapter(Context context, ArrayList<Meeting> meetings) {
+    public SearchMeetingAdapter(Context context, ArrayList<Meeting> meetings) {
         this.context = context;
         this.meetings = meetings;
     }
@@ -94,12 +111,13 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
      * @param viewType
      * @return new view object
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_meeting, viewGroup, false);
+                .inflate(R.layout.search_card_meeting, viewGroup, false);
 
         return new ViewHolder(context, view);
     }
@@ -109,12 +127,39 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.ViewHold
      * @param viewHolder
      * @param position
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.getTextView().setText(meetings.get(position).getName());
+
+        Drawable correct = ResourcesCompat.getDrawable(viewHolder.view.getResources(), R.drawable.correct, null);
+        Drawable wrong = ResourcesCompat.getDrawable(viewHolder.view.getResources(), R.drawable.wrong, null);
+
+        final int[] startEndTimes = new int[2];
+        //imageView.setImageDrawable(wrong);
+        GetMeetingApi().getMeetingByName(viewHolder.getTextView().getText().toString()).enqueue(new SlimCallback<Meeting>(m->{
+            int[] times = m.getStartEndOfMeeting();
+            startEndTimes[0] = times[0];
+            startEndTimes[1] = times[1];
+        }));
+        final GlobalClass globalVariable = (GlobalClass) context;
+
+        //get username of current client
+        final String username = globalVariable.getName();
+
+        GetAvailabilityApi().getAvailability(username).enqueue(new SlimCallback<List<Boolean>>(availability ->{
+            Availability a = new Availability(username, (Boolean[]) availability.toArray(new Boolean[168]));
+            if (a.isAvailableDuringRange(startEndTimes[0], startEndTimes[1])){
+                viewHolder.getImageView().setImageDrawable(correct);
+            }
+            else{
+                viewHolder.getImageView().setImageDrawable(wrong);
+            }
+        }));
+        viewHolder.getImageView().setVisibility(View.VISIBLE);
     }
 
     /**
