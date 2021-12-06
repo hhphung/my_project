@@ -1,61 +1,52 @@
 # Example  .gitlab-ci.yml file
 stages:
-  rules:
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
-  - mavenbuild
-  - maventest
-  - androidbuild
-  - androidtest
-  - mavendeploy
+    - springboot
+    - android
+    - deploy
 
 maven-build:   #this is a JOB
-  stage: mavenbuild
+  only:
+    refs:
+      - main
+    changes:
+      - Backend/**/*   
+  stage: springboot
   tags:
     - springboot_tag  # this is LINK to the shell runner on the remote-server 
   script:
     - cd Backend/MeetMe
     - mvn package -B
-
-maven-test:
-  stage: maventest
-  tags:
-    - springboot_tag
-  script:
-    - cd Backend/MeetMe
     - mvn test
   artifacts:
     paths:
       - Backend/MeetMe/target/*.jar
 
 android-build: #this is another job
+  only:
+    refs:
+      - main
+    changes:
+      - Frontend/**/*  
   image: javiersantos/android-ci:latest      # this is a directive to DOCKER
-  stage: androidbuild
+  stage: android
   tags:
-   - android_tag         #this is LINK to the docker runner on the remote-server        
+   - android_tag  
   before_script:
     - export GRADLE_USER_HOME=`pwd`/Frontend/.gradle
     - chmod +x ./Frontend/MeetMe/gradlew
   script:
     - cd Frontend/MeetMe
     - ./gradlew assemble
-
-
-
-android-test:
-  image: javiersantos/android-ci:latest      # this is a directive to DOCKER
-  stage: androidtest
-  tags:
-   - android_tag    
-  before_script:
-    - export GRADLE_USER_HOME=`pwd`/Frontend/.gradle
-    - chmod +x ./Frontend/MeetMe/gradlew
-  script:
-    - cd Frontend/MeetMe
     - ./gradlew build 
 
 # Below job builds, deploys, executes jar as service.
 auto-deploy:
-  stage: mavendeploy  #do make a stage with same name!
+  only:
+    refs:
+      - main
+    changes:
+      - Backend/**/*  
+  stage: deploy
   tags:
    - springboot_tag
   script:
