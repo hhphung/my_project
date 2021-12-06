@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,25 +141,28 @@ public class SearchMeetingAdapter extends RecyclerView.Adapter<SearchMeetingAdap
         Drawable wrong = ResourcesCompat.getDrawable(viewHolder.view.getResources(), R.drawable.wrong, null);
 
         final int[] startEndTimes = new int[2];
+        final GlobalClass globalVariable = (GlobalClass) context;
+
+        //get username of current client
+        final String username = globalVariable.getName();
         //imageView.setImageDrawable(wrong);
         GetMeetingApi().getMeetingByName(viewHolder.getTextView().getText().toString()).enqueue(new SlimCallback<MeetingShadow>(m->{
             int[] times = m.getStartEndOfMeeting();
             startEndTimes[0] = times[0];
             startEndTimes[1] = times[1];
+            Log.i("SearchmeetingAdapter", "MeetingName: " + viewHolder.getTextView().getText().toString() +
+                    ". Start: " + startEndTimes[0] + ". End: " + startEndTimes[1]);
+            GetAvailabilityApi().getAvailability(username).enqueue(new SlimCallback<Availability>(availability ->{
+                if (availability.isAvailableDuringRange(startEndTimes[0], startEndTimes[1])){
+                    viewHolder.getImageView().setImageDrawable(correct);
+                }
+                else{
+                    viewHolder.getImageView().setImageDrawable(wrong);
+                }
+            }));
         }));
-        final GlobalClass globalVariable = (GlobalClass) context;
 
-        //get username of current client
-        final String username = globalVariable.getName();
 
-        GetAvailabilityApi().getAvailability(username).enqueue(new SlimCallback<Availability>(availability ->{
-            if (availability.isAvailableDuringRange(startEndTimes[0], startEndTimes[1])){
-                viewHolder.getImageView().setImageDrawable(correct);
-            }
-            else{
-                viewHolder.getImageView().setImageDrawable(wrong);
-            }
-        }));
         viewHolder.getImageView().setVisibility(View.VISIBLE);
     }
 
